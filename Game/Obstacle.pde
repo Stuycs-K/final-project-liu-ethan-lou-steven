@@ -11,3 +11,11 @@ class Obstacle {
     return ycor;
   }
 }
+
+class Block extends Obstacle {
+  
+}
+
+class Spike extends Obstacle {
+
+}
