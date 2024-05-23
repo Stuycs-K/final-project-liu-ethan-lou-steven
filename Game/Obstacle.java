@@ -10,12 +10,7 @@ class Obstacle {
   public float getY() {
     return ycor;
   }
-}
-
-class Block extends Obstacle {
+  public void display() {
+  }
   
-}
-
-class Spike extends Obstacle {
-
 }
