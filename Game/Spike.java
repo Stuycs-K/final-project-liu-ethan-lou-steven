@@ -1,0 +1,3 @@
+class Spike extends Obstacle {
+
+}
