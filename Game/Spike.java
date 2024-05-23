@@ -21,7 +21,7 @@ class Spike extends Obstacle {
   public float getHeight() {
     return h;
   }
-  public boolean isTouching(float x, float y) {
-    return (y <= getY()) && (getY() - y) <= Math.sqrt(3) * (x - getX()) && (getY() - y) <= Math.sqrt(3) * (getX() + w - x);
+  public boolean isTouching(Sprite s) {
+    return (s.getY() <= getY()) && (getY() - s.getY()) <= 2 * h * (s.getX() - getX()) && (getY() - s.getY()) <= 2 * h * (getX() + w - s.getX());
   }
 }

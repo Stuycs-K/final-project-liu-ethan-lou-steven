@@ -20,7 +20,7 @@ class Sprite {
   }
   
   public boolean getAlive() {
-    return isAlive();
+    return isAlive;
   }
   
   public boolean isJumping() {

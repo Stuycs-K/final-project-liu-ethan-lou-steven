@@ -5,6 +5,9 @@ public void display(Block b) {
   fill(255);
   rect(b.getX()-shift, b.getY()-b.getHeight(), b.getWidth(), b.getHeight());
 }
+public void display(Spike s) {
+  fill(255);
+  triangle(s.getX(), s.getY(), s.getX() + s.getWidth()/2, s.getY() + s.getHeight(), s.getX() + s.getWidth(), s.getY());
 void setup() {
   size(500, 500);
   for (int i=0; i<=2000; i++) {
