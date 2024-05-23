@@ -7,14 +7,16 @@ public void display(Block b) {
 }
 public void display(Spike s) {
   fill(255);
-  triangle(s.getX(), s.getY(), s.getX() + s.getWidth()/2, s.getY() + s.getHeight(), s.getX() + s.getWidth(), s.getY());
+  triangle(s.getX()-shift, s.getY(), s.getX() + s.getWidth()/2, s.getY() - s.getHeight(), s.getX() + s.getWidth(), s.getY());
+}
 void setup() {
   size(500, 500);
   for (int i=0; i<=2000; i++) {
     wall.add(new Block(i*10, 450, 10));
   }
   wall.add(new Block(1000, 440, 10));
-  spike.add(new Spike(15, 6));
+  //spike.add(new Spike(15, 440, 10));
+  spike.add(new Spike(1010, 440, 10));
   
 }
 void draw() {
@@ -22,9 +24,8 @@ void draw() {
   for (int i=0; i<wall.size(); i++) {
     display(wall.get(i));
   }
-  //for (int i=0; i<spike.size(); i++) {
-  //  display(spike.get(i));
-  //}
-  //translate(-1, 0);
+  for (int i=0; i<spike.size(); i++) {
+    display(spike.get(i));
+  }
   shift+=2;
 }
