@@ -9,6 +9,8 @@
 
 
 ## GROUP MEMBER 2
+* Wrote the Spike class methods and constructors.
+* Tested with branches.
 
 ### date x
 
