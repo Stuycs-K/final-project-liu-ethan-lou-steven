@@ -28,6 +28,7 @@ class Sprite {
   }
   
   public void jump() {
+    
   }
     
 }
