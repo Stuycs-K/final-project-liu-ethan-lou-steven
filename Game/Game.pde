@@ -1,7 +1,7 @@
 ArrayList<Block> wall = new ArrayList<Block>();
 ArrayList<Spike> spike = new ArrayList<Spike>();
 Sprite s;
-float shift=0;
+int shift=0;
 public void display(Sprite s) {
   fill(123);
   rect(s.getX(), s.getY()-20, 20, 20);
@@ -31,6 +31,14 @@ void draw() {
   for (int i=0; i<spike.size(); i++) {
     display(spike.get(i));
   }
+  if (s.isJumping()) {
+    s.updateJump(shift/2);
+  }
   display(s);
   shift+=2;
+}
+void keyPressed() {
+  if (key==' ') {
+    s.jump(shift/2);
+  }
 }
