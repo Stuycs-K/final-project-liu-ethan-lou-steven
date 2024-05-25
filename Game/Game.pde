@@ -3,8 +3,8 @@ ArrayList<Spike> spike = new ArrayList<Spike>();
 Sprite s;
 float shift=0;
 public void display(Sprite s) {
-  fill(255);
-  rect(s.getX(), s.getY()-10, 10, 10);
+  fill(123);
+  rect(s.getX(), s.getY()-20, 20, 20);
 }
 public void display(Block b) {
   fill(255);
@@ -17,12 +17,11 @@ public void display(Spike s) {
 void setup() {
   size(500, 500);
   for (int i=0; i<=2000; i++) {
-    wall.add(new Block(i*10, 450, 10));
+    wall.add(new Block(i*20, 450, 20));
   }
-  wall.add(new Block(1000, 440, 10));
-  //spike.add(new Spike(15, 440, 10));
-  spike.add(new Spike(1010, 440, 10));
-  s = new Sprite(100, 440);
+  wall.add(new Block(500, 430, 20));
+  wall.add(new Block(800, 430, 20, 40));
+  s = new Sprite(100, 430);
 }
 void draw() {
   background(12);
