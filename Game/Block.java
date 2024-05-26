@@ -34,11 +34,12 @@ class Block extends Obstacle {
     if (s.getX()>x || s.getX()+s.getWidth()<x || s.getY()<y-h || s.getY()-s.getHeight()>y) {
       return 0;
     }
-    if (s.getY()==y-h || s.getY()-s.getHeight()==y) {
+    if (s.getY()>y-h || s.getY()-s.getHeight()>y) {
       return 2;
     }
     return 1;
   }
+  
   public boolean isTouchingJump(Sprite s) {
     return false;
   }
