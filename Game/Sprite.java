@@ -1,5 +1,5 @@
 class Sprite {
-  private float xcor, ycor, h, w, v_initial, y_initial;
+  private float xcor, ycor, h, w, v_initial=60, y_initial;
   private int jumpTime;
   private boolean isAlive, isJumping;
   private static int G = 30;
