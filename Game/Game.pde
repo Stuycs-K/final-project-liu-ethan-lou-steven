@@ -1,7 +1,7 @@
 import java.util.*;
 ArrayList<Block> wall = new ArrayList<Block>();
 ArrayList<Spike> spike = new ArrayList<Spike>();
-ArrayList<Block> inScreen = new ArrayList<Block>();
+ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
 int lastIndexWall;
 Sprite s;
 int shift=0;
@@ -46,8 +46,8 @@ void setup() {
 }
 void draw() {
   background(12);
-  while (inScreen.get(0).getX() < shift) {
-    inScreen.remove(0);
+  while (inScreen.peek().getX() < shift) {
+    inScreen.removeFirst();
   }
   while (wall.get(lastIndexWall).getX() < shift + width) {
     inScreen.add(wall.get(lastIndexWall));
@@ -64,10 +64,12 @@ void draw() {
   if (s.isJumping()) {
     s.updateJump(2 * shift);
   }
-  for (int i = 0; i < inScreen.size(); i++) {
-    if (inScreen.get(i).isTouching(s) == 2) {
+  Iterator<Block> it = inScreen.iterator();
+  while (it.hasNext()) {
+    Block curr=it.next();
+    if (curr.isTouching(s) == 2) {
       s.setJump(false);
-      s.setY(inScreen.get(i).getY() - inScreen.get(i).getHeight());
+      s.setY(curr.getY() - curr.getHeight());
     }
     //System.out.println(s.isJumping());
   }
