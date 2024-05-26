@@ -19,6 +19,7 @@
 ### 5/26/24
 * Fixed jumping in midair.
 * Changed inScreen from ArrayList to ArrayDeque.
+* Made Sprite falling from a Block smoother.
 
 ## Steven Lou
 ### 5/22/24
