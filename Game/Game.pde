@@ -2,9 +2,9 @@ import java.util.*;
 ArrayList<Block> wall = new ArrayList<Block>();
 ArrayList<Spike> spike = new ArrayList<Spike>();
 ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
-int lastIndexWall;
+int lastIndexWall, shift=0, lastJumpTime;
+float lastY=430;
 Sprite s;
-int shift=0;
 public void display(Sprite s) {
   fill(123);
   rect(s.getX()-shift, s.getY()-20, 20, 20);
@@ -65,20 +65,29 @@ void draw() {
     s.updateJump(2 * shift);
   }
   Iterator<Block> it = inScreen.iterator();
+  boolean isTouchingBlock=false;
   while (it.hasNext()) {
     Block curr=it.next();
     if (curr.isTouching(s) == 2) {
       s.setJump(false);
+      lastJumpTime=2*shift-s.getJumpTime();
       s.setY(curr.getY() - curr.getHeight());
+      isTouchingBlock=true;
     }
     //System.out.println(s.isJumping());
+  }
+  if (!isTouchingBlock && s.getY()<430 && !s.isJumping()) {
+    s.setJump(true);
+    s.setJumpTime(2*shift-lastJumpTime);
+    s.setY_initial(lastY);
   }
   //System.out.println(wall.get(10).isTouching(s));
   display(s);
   shift+=3;
 }  
 void keyPressed() {
-  if (key==' ') {
+  if (key==' ' && !s.isJumping()) {
     s.jump(2 * shift);
+    lastY=s.getY();
   }
 }

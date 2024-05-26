@@ -31,7 +31,7 @@ class Block extends Obstacle {
   //Takes in a Sprite and determines if it lies on or within the block. 0 - not touching. 1 - touching the left or right side. 2 - touching the top or bottom.
   public int isTouching(Sprite s) {
     float x=this.getX(), y=this.getY();
-    if (s.getX()>x || s.getX()+s.getWidth()<x || s.getY()<y-h || s.getY()-s.getHeight()>y) {
+    if (s.getX()>x+w || s.getX()+s.getWidth()<x || s.getY()<y-h || s.getY()-s.getHeight()>y) {
       return 0;
     }
     if (s.getY()>y-h || s.getY()-s.getHeight()>y) {

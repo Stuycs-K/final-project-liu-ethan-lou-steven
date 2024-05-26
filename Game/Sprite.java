@@ -35,11 +35,18 @@ class Sprite {
   public boolean getAlive() {
     return isAlive;
   }
-  
+  public void setY_initial(float y) {
+    y_initial=y;
+  }
   public void setJump(boolean j) {
     isJumping = j;
   }
-  
+  public void setJumpTime(int v) {
+    jumpTime=v;
+  }
+  public int getJumpTime() {
+    return jumpTime;
+  }
   public boolean isJumping() {
     return isJumping;
   }
