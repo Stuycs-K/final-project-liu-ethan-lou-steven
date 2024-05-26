@@ -1,5 +1,5 @@
 class Sprite {
-  private float xcor, ycor, h, w, v_initial, y_initial;
+  private float xcor, ycor, h, w, v_initial=60, y_initial;
   private int jumpTime;
   private boolean isAlive, isJumping;
   private static int G = 30;
@@ -35,11 +35,18 @@ class Sprite {
   public boolean getAlive() {
     return isAlive;
   }
-  
+  public void setY_initial(float y) {
+    y_initial=y;
+  }
   public void setJump(boolean j) {
     isJumping = j;
   }
-  
+  public void setJumpTime(int v) {
+    jumpTime=v;
+  }
+  public int getJumpTime() {
+    return jumpTime;
+  }
   public boolean isJumping() {
     return isJumping;
   }

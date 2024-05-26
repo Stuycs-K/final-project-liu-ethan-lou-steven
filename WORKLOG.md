@@ -12,6 +12,15 @@
 * Wrote display(Block).
 * Successfully displayed scrolling screen with blocks.
 
+### 5/25/24
+* Wrote isTouching() for Block class.
+* Started coding jump() with bugs.
+
+### 5/26/24
+* Fixed jumping in midair.
+* Changed inScreen from ArrayList to ArrayDeque.
+* Made Sprite falling from a Block smoother.
+
 ## Steven Lou
 ### 5/22/24
 * Wrote the Spike class methods and constructors.
