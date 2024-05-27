@@ -2,8 +2,8 @@ import java.util.*;
 ArrayList<Block> wall = new ArrayList<Block>();
 ArrayList<Spike> spike = new ArrayList<Spike>();
 ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
-int lastIndexWall, shift=0, lastJumpTime;
-float lastY=430;
+int lastIndexWall, shift=0, lastJumpTime=0;
+float lastY=30f;
 Sprite s;
 public void display(Sprite s) {
   fill(123);
@@ -18,7 +18,11 @@ public void display(Spike s) {
   fill(255);
   triangle(s.getX()-shift, s.getY(), s.getX() - shift + s.getWidth()/2, s.getY() - s.getHeight(), s.getX() - shift + s.getWidth(), s.getY());
 }
- 
+public void restart() {
+  shift=0;
+  inScreen.clear();
+  setup();
+}
 void setup() {
   size(500, 500);
   lastIndexWall = 0;
@@ -27,8 +31,8 @@ void setup() {
     if (i == 25) {
       wall.add(new Block(500, 430, 20));
     }
-    if (i == 40) {
-      wall.add(new Block(800, 430, 20, 40));
+    if (i % 40==0) {
+      wall.add(new Block(i*20, 430, 20, 40));
     }
   }
   s = new Sprite(100, 430);
@@ -74,7 +78,16 @@ void draw() {
       s.setY(curr.getY() - curr.getHeight());
       isTouchingBlock=true;
     }
+    else if (curr.isTouching(s)==1) {
+      println("died");
+      s.setAlive(false);
+      restart();
+      break;
+    }
     //System.out.println(s.isJumping());
+  }
+  if (!s.getAlive()) {
+    return;
   }
   if (!isTouchingBlock && s.getY()<430 && !s.isJumping()) {
     s.setJump(true);
@@ -84,6 +97,7 @@ void draw() {
   //System.out.println(wall.get(10).isTouching(s));
   display(s);
   shift+=3;
+  //shift+=1;
 }  
 void keyPressed() {
   if (key==' ' && !s.isJumping()) {
