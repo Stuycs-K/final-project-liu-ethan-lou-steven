@@ -34,7 +34,7 @@ class Block extends Obstacle {
     if (s.getX()>x+w || s.getX()+s.getWidth()<x || s.getY()<y-h || s.getY()-s.getHeight()>y) {
       return 0;
     }
-    if (s.getY()>y-h || s.getY()-s.getHeight()>y) {
+    if (s.getY()>=y-h && s.getY()<y || s.getY()-s.getHeight()<=y && s.getY()>y) {
       return 2;
     }
     return 1;

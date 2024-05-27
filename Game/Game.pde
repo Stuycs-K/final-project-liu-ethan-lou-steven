@@ -2,7 +2,7 @@ import java.util.*;
 ArrayList<Block> wall = new ArrayList<Block>();
 ArrayList<Spike> spike = new ArrayList<Spike>();
 ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
-int lastIndexWall, shift=0, lastJumpTime;
+int lastIndexWall, shift=0, lastJumpTime=0;
 float lastY=430;
 Sprite s;
 public void display(Sprite s) {
@@ -18,7 +18,11 @@ public void display(Spike s) {
   fill(255);
   triangle(s.getX()-shift, s.getY(), s.getX() - shift + s.getWidth()/2, s.getY() - s.getHeight(), s.getX() - shift + s.getWidth(), s.getY());
 }
- 
+public void restart() {
+  shift=0;
+  inScreen.clear();
+  setup();
+}
 void setup() {
   size(500, 500);
   lastIndexWall = 0;
@@ -74,7 +78,16 @@ void draw() {
       s.setY(curr.getY() - curr.getHeight());
       isTouchingBlock=true;
     }
+    else if (curr.isTouching(s)==1) {
+      //println("died");
+      s.setAlive(false);
+      restart();
+      break;
+    }
     //System.out.println(s.isJumping());
+  }
+  if (!s.getAlive()) {
+    return;
   }
   if (!isTouchingBlock && s.getY()<430 && !s.isJumping()) {
     s.setJump(true);

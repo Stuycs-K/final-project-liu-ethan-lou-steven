@@ -31,7 +31,9 @@ class Sprite {
   public float getY() {
     return ycor;
   }
-  
+  public void setAlive(boolean b) {
+    isAlive=b;
+  }
   public boolean getAlive() {
     return isAlive;
   }
@@ -56,6 +58,7 @@ class Sprite {
     ycor = y_initial - (float)(v_initial*t-0.5*G*(t*t));
   }
   public void jump(int jumpTime) {
+    ycor--;
     this.jumpTime=jumpTime;
     v_initial=60;
     isJumping = true;
