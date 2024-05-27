@@ -2,7 +2,8 @@ import java.util.*;
 ArrayList<Block> wall = new ArrayList<Block>();
 ArrayList<Spike> spike = new ArrayList<Spike>();
 ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
-int lastIndexWall, shift=0, lastJumpTime=0, lastY=30;
+int lastIndexWall, shift=0, lastJumpTime=0;
+float lastY=30f;
 Sprite s;
 public void display(Sprite s) {
   fill(123);
@@ -30,8 +31,8 @@ void setup() {
     if (i == 25) {
       wall.add(new Block(500, 430, 20));
     }
-    if (i == 40) {
-      wall.add(new Block(800, 430, 20, 40));
+    if (i % 40==0) {
+      wall.add(new Block(i*20, 430, 20, 40));
     }
   }
   s = new Sprite(100, 430);
