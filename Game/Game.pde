@@ -2,8 +2,7 @@ import java.util.*;
 ArrayList<Block> wall = new ArrayList<Block>();
 ArrayList<Spike> spike = new ArrayList<Spike>();
 ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
-int lastIndexWall, shift=0, lastJumpTime=0;
-float lastY=430;
+int lastIndexWall, shift=0, lastJumpTime=0, lastY=30;
 Sprite s;
 public void display(Sprite s) {
   fill(123);
@@ -79,7 +78,7 @@ void draw() {
       isTouchingBlock=true;
     }
     else if (curr.isTouching(s)==1) {
-      //println("died");
+      println("died");
       s.setAlive(false);
       restart();
       break;
@@ -97,6 +96,7 @@ void draw() {
   //System.out.println(wall.get(10).isTouching(s));
   display(s);
   shift+=3;
+  //shift+=1;
 }  
 void keyPressed() {
   if (key==' ' && !s.isJumping()) {

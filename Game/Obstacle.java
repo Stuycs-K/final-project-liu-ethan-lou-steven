@@ -1,13 +1,13 @@
 class Obstacle {
-  private float xcor, ycor;
-  public Obstacle(float x, float y) {
+  private int xcor, ycor;
+  public Obstacle(int x, int y) {
     xcor=x;
     ycor=y;
   }
-  public float getX() {
+  public int getX() {
     return xcor;
   }
-  public float getY() {
+  public int getY() {
     return ycor;
   }
   public void display() {

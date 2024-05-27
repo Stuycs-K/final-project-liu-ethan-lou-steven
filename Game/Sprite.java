@@ -1,9 +1,9 @@
 class Sprite {
-  private float xcor, ycor, h, w, v_initial=60, y_initial;
+  private int xcor, ycor, h, w, v_initial=60, y_initial;
   private int jumpTime;
   private boolean isAlive, isJumping;
   private static int G = 30;
-  public Sprite(float x, float y) {
+  public Sprite(int x, int y) {
     xcor = x;
     ycor = y;
     isAlive = true;
@@ -13,22 +13,22 @@ class Sprite {
     v_initial=0;
     y_initial=y;
   }
-  public float getHeight() {
+  public int getHeight() {
     return h;
   }
-  public float getX() {
+  public int getX() {
     return xcor;
   }
-  public float setX(float value) {
+  public int setX(int value) {
     return xcor = value;
   }
-  public float setY(float value) {
+  public int setY(int value) {
     return ycor = value;
   }
-  public float getWidth() {
+  public int getWidth() {
     return w;
   }
-  public float getY() {
+  public int getY() {
     return ycor;
   }
   public void setAlive(boolean b) {
@@ -37,7 +37,7 @@ class Sprite {
   public boolean getAlive() {
     return isAlive;
   }
-  public void setY_initial(float y) {
+  public void setY_initial(int y) {
     y_initial=y;
   }
   public void setJump(boolean j) {
@@ -55,7 +55,7 @@ class Sprite {
   public void updateJump(int currTime) {
     float t = (float) ((currTime-jumpTime)/60.0);
     //System.out.println(t);
-    ycor = y_initial - (float)(v_initial*t-0.5*G*(t*t));
+    ycor = y_initial - Math.round((float)(v_initial*t-0.5*G*(t*t)));
   }
   public void jump(int jumpTime) {
     ycor--;

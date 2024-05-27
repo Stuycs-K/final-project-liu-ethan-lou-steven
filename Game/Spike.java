@@ -1,24 +1,24 @@
 class Spike extends Obstacle {
-  private float h, w;
-  public Spike(float x, float y){
+  private int h, w;
+  public Spike(int x, int y){
     super(x, y);
-    h = (float) (Math.sqrt(3) / 2);
+    h = (int) (Math.sqrt(3) / 2);
     w = 1;
   }
-  public Spike(float x, float y, float w){
+  public Spike(int x, int y, int w){
     super(x, y);
     this.w = w;
-    this.h = (float) (Math.sqrt(3) / 2 * w);
+    this.h = (int) (Math.sqrt(3) / 2 * w);
   }
-  public Spike(float x, float y, float w, float h){
+  public Spike(int x, int y, int w, int h){
     super(x, y);
     this.w = w;
     this.h = h;
   }
-  public float getWidth() {
+  public int getWidth() {
     return w;
   }
-  public float getHeight() {
+  public int getHeight() {
     return h;
   }
   public boolean isTouching(Sprite s) {
