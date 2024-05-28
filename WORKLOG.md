@@ -23,6 +23,10 @@
 * Implemented death restart.
 * Tried fixing jumping onto blocks issue.
 
+### 5/27/24
+* Fixed sprite falling out of the screen
+* Made sprite falling from block more smooth.
+
 ## Steven Lou
 ### 5/22/24
 * Wrote the Spike class methods and constructors.
