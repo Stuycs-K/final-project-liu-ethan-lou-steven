@@ -3,10 +3,21 @@ ArrayList<Block> wall = new ArrayList<Block>();
 ArrayList<Spike> spike = new ArrayList<Spike>();
 ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
 int lastIndexWall, shift=0;
+float angle=0;
 Sprite s;
 public void display(Sprite s) {
   fill(123);
-  rect(s.getX()-shift, s.getY()-20, 20, 20);
+  float x1 = s.getX() + 10 + (float) (-10 * Math.sqrt(2) * Math.cos(angle) - (-10) * Math.sqrt(2) * Math.sin(angle));
+  float y1 = s.getY() - 10 - (float) (-10 * Math.sqrt(2) * Math.sin(angle) + (-10) * Math.sqrt(2) * Math.cos(angle));
+  float x2 = s.getX() + 10 + (float) (10 * Math.sqrt(2) * Math.cos(angle) - (-10) * Math.sqrt(2) * Math.sin(angle));
+  float y2 = s.getY() - 10 - (float) (10 * Math.sqrt(2) * Math.sin(angle) + (-10) * Math.sqrt(2) * Math.cos(angle));
+  float x3 = s.getX() + 10 + (float) (-10 * Math.sqrt(2) * Math.cos(angle) - (10) * Math.sqrt(2) * Math.sin(angle));
+  float y3 = s.getY() - 10 - (float) (-10 * Math.sqrt(2) * Math.sin(angle) + (10) * Math.sqrt(2) * Math.cos(angle));
+  float x4 = s.getX() + 10 + (float) (10 * Math.sqrt(2) * Math.cos(angle) - (10) * Math.sqrt(2) * Math.sin(angle));
+  float y4 = s.getY() - 10 - (float) (10 * Math.sqrt(2) * Math.sin(angle) + (10) * Math.sqrt(2) * Math.cos(angle));
+  quad(x1-shift, y1, x2-shift, y2, x4-shift, y4, x3-shift, y3);
+  angle+=0.1;
+  //rect(s.getX()-shift, s.getY()-20, 20, 20);
   s.setX(s.getX() + 3);
 }
 public void display(Block b) {
