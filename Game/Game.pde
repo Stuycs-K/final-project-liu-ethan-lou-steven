@@ -3,7 +3,7 @@ ArrayList<Block> wall = new ArrayList<Block>();
 ArrayList<Spike> spike = new ArrayList<Spike>();
 ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
 int lastIndexWall, shift=0, speed=3;
-Sprite s;
+Sprite s; Button edit;
 PrintWriter inp;
 public void display(Sprite s) {
   fill(123);
@@ -19,8 +19,10 @@ public void display(Spike s) {
   triangle(s.getX()-shift, s.getY(), s.getX() - shift + s.getWidth()/2, s.getY() - s.getHeight(), s.getX() - shift + s.getWidth(), s.getY());
 }
 public void display(Button b) {
-  fill(30);
-  rect(b.
+  fill(color(255, 0, 0));
+  rect(b.getX(), b.getY()-b.getHeight(), b.getWidth(), b.getHeight());
+  fill(0);
+  text(b.getLabel(), (2*b.getX()+b.getWidth())/2-3*b.getLabel().length(), (2*b.getY()-b.getHeight())/2+5);
 }
 public void restart() {
   shift=0;
@@ -59,9 +61,11 @@ void setup() {
       break;
     }
   }
+  edit = new Button(0, 30, 30, 100, "Edit Map");
 }
 void draw() {
   background(12);
+  display(edit);
   while (inScreen.peek().getX() < shift) {
     inScreen.removeFirst();
   }
