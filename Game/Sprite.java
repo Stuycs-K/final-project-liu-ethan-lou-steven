@@ -64,5 +64,10 @@ class Sprite {
     isJumping = true;
     y_initial=ycor;
   }
-    
+  public void fall(int jumpTime) {
+    this.jumpTime=jumpTime;
+    v_initial=0;
+    isJumping=true;
+    y_initial=ycor;
+  }
 }
