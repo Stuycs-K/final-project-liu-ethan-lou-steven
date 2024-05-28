@@ -4,6 +4,7 @@ ArrayList<Spike> spike = new ArrayList<Spike>();
 ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
 int lastIndexWall, shift=0, speed=3;
 Sprite s;
+PrintWriter inp;
 public void display(Sprite s) {
   fill(123);
   rect(s.getX()-shift, s.getY()-20, 20, 20);
@@ -25,6 +26,12 @@ public void restart() {
 void setup() {
   size(500, 500);
   lastIndexWall = 0;
+  String[] wallCoords = loadStrings("walls.txt");
+  for (int i=0; i<wallCoords.length; i++) {
+     int space=wallCoords[i].indexOf(' ');
+     int x=Integer.parseInt(wallCoords[i].substring(0, space)), y=Integer.parseInt(wallCoords[i].substring(space+1));
+     wall.add(new Block(x, y, 20));
+  }
   for (int i=0; i<=2000; i++) {
     wall.add(new Block(i*20, 450, 20));
     if (i == 25) {
@@ -101,7 +108,7 @@ void draw() {
   //shift+=1;
 }  
 void keyPressed() {
-  if (key==' ' && !s.isJumping()) {
+  if (key==' ' && !s.isJumping()) {  
     s.jump(2 * shift);
   }
 }
