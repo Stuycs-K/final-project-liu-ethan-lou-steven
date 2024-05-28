@@ -18,6 +18,10 @@ public void display(Spike s) {
   fill(255);
   triangle(s.getX()-shift, s.getY(), s.getX() - shift + s.getWidth()/2, s.getY() - s.getHeight(), s.getX() - shift + s.getWidth(), s.getY());
 }
+public void display(Button b) {
+  fill(30);
+  rect(b.
+}
 public void restart() {
   shift=0;
   inScreen.clear();
