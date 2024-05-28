@@ -2,12 +2,12 @@ import java.util.*;
 ArrayList<Block> wall = new ArrayList<Block>();
 ArrayList<Spike> spike = new ArrayList<Spike>();
 ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
-int lastIndexWall, shift=0;
+int lastIndexWall, shift=0, speed=3;
 Sprite s;
 public void display(Sprite s) {
   fill(123);
   rect(s.getX()-shift, s.getY()-20, 20, 20);
-  s.setX(s.getX() + 3);
+  s.setX(s.getX() + speed);
 }
 public void display(Block b) {
   fill(255);
@@ -29,10 +29,12 @@ void setup() {
     wall.add(new Block(i*20, 450, 20));
     if (i == 25) {
       wall.add(new Block(500, 430, 20));
+      wall.add(new Block(580, 430, 20, 40));
+      wall.add(new Block(660, 430, 20, 60));
     }
-    if (i % 40==0) {
-      wall.add(new Block(i*20, 430, 20, 40));
-    }
+    //if (i % 40==0) {
+    //  wall.add(new Block(i*20, 430, 20, 40));
+    //}
   }
   s = new Sprite(100, 430);
   for (int i = 0; i < wall.size(); i++) {
@@ -95,7 +97,7 @@ void draw() {
   }
   //System.out.println(wall.get(10).isTouching(s));
   display(s);
-  shift+=3;
+  shift+=speed;
   //shift+=1;
 }  
 void keyPressed() {
