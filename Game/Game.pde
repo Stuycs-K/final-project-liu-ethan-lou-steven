@@ -22,7 +22,11 @@ public void display(Sprite s) {
 public void display(Block b) {
   fill(255);
   rect(b.getX()-shift, b.getY()-b.getHeight(), b.getWidth(), b.getHeight());
-}
+  if (b.hasJumpPad()) {
+    fill(255, 250, 205);
+    ellipse(b.getX() + b.getWidth()/2 - shift, b.getY() - b.getHeight(), b.getWidth(), 5);
+  }
+}     
 public void display(Spike s) {
   fill(255);
   triangle(s.getX()-shift, s.getY(), s.getX() - shift + s.getWidth()/2, s.getY() - s.getHeight(), s.getX() - shift + s.getWidth(), s.getY());
@@ -41,6 +45,7 @@ void setup() {
       wall.add(new Block(500, 430, 20));
       wall.add(new Block(580, 430, 20, 40));
       wall.add(new Block(660, 430, 20, 60));
+      wall.add(new Block(740, 430, 20, 80, true));
     }
     //if (i % 40==0) {
     //  wall.add(new Block(i*20, 430, 20, 40));
@@ -83,10 +88,13 @@ void draw() {
   boolean isTouchingBlock=false;
   while (it.hasNext()) {
     Block curr=it.next();
-    if (curr.isTouching(s) == 2) {
+    if (curr.isTouching(s) == 2 && !curr.hasJumpPad()) {
       s.setJump(false);
       s.setY(curr.getY() - curr.getHeight());
       isTouchingBlock=true;
+    }
+    else if (curr.isTouching(s) == 2 && curr.hasJumpPad()) {
+      s.jump(2 * shift);
     }
     else if (curr.isTouching(s)==1) {
       println("died");
