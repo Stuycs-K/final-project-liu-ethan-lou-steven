@@ -53,7 +53,6 @@ class Block extends Obstacle {
     }
     return 2;
   }
-  
   public boolean isTouchingJump(Sprite s) {
     return false;
   }

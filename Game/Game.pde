@@ -1,6 +1,6 @@
 import java.util.*;
-ArrayList<Block> wall = new ArrayList<Block>();
-ArrayList<Spike> spike = new ArrayList<Spike>();
+Set<Block> wall = new HashSet<Block>();
+Set<Spike> spike = new HashSet<Spike>();
 //ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
 int lastIndexWall, shift=0, speed=3;
 Sprite s; Button menu;
@@ -57,17 +57,17 @@ void setup() {
     //}
   }
   s = new Sprite(100, 430);
-  for (int i = 0; i < wall.size(); i++) {
-    if (wall.get(i).getX() >= 0 && wall.get(i).getX() < width) {
-      //inScreen.add(wall.get(i));
-      //System.out.println(inScreen.get(i).getX());
-      lastIndexWall++;
-      //System.out.println(lastIndexWall);
-    }
-    else {
-      break;
-    }
-  }
+  //for (int i = 0; i < wall.size(); i++) {
+  //  if (wall.get(i).getX() >= 0 && wall.get(i).getX() < width) {
+  //    //inScreen.add(wall.get(i));
+  //    //System.out.println(inScreen.get(i).getX());
+  //    lastIndexWall++;
+  //    //System.out.println(lastIndexWall);
+  //  }
+  //  else {
+  //    break;
+  //  }
+  //}
   menu = new Button(0, 30, 30, 100, "Edit Map");
 }
 void draw() {
@@ -82,11 +82,11 @@ void draw() {
   //    lastIndexWall++;
   //  }
   //}
-  for (int i=0; i<wall.size(); i++) {
-    display(wall.get(i));
+  for (Block i : wall) {
+    display(i);
   }
-  for (int i=0; i<spike.size(); i++) {
-    display(spike.get(i));
+  for (Spike i : spike) {
+    display(i);
   }
   if (mode.equals("Edit Map")) {
     return;
@@ -111,8 +111,7 @@ void draw() {
   //  }
   //  //System.out.println(s.isJumping());
   //}
-  for (int i=0; i<wall.size(); i++) {
-    Block curr=wall.get(i);
+  for (Block curr : wall) {
     if (curr.isTouching(s) == 2) {
       s.setJump(false);
       s.setY(curr.getY() - curr.getHeight());
@@ -125,8 +124,7 @@ void draw() {
       break;
     }
   }
-  for (int i=0; i<spike.size(); i++) {
-    Spike curr=spike.get(i);
+  for (Spike curr : spike) {
     if (curr.isTouching(s)>0) {
       println("died");
       s.setAlive(false);
@@ -168,6 +166,19 @@ void mouseClicked() {
   else if (mode.equals("Edit Map")) {
     int x=((int)((mouseX+shift)/20))*20, y=((int)(mouseY/20)+1)*20;
     //println(mouseX+" "+mouseY+" "+x+" "+y);
+    boolean isTouchingBlock=false;
+    Block b = new Block(20, 20);
+    for (Block i : wall) {
+      if (i.getX()==x && i.getY()==y) {
+        isTouchingBlock = true;
+        b=i;
+        break;
+      }
+    }
+    if (isTouchingBlock) {
+      wall.remove(b);
+      return;
+    }
     wall.add(new Block((float)x, (float)y, 20));
   }
 }
