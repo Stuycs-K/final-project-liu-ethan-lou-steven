@@ -1,7 +1,7 @@
 import java.util.*;
 ArrayList<Block> wall = new ArrayList<Block>();
 ArrayList<Spike> spike = new ArrayList<Spike>();
-ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
+//ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
 int lastIndexWall, shift=0, speed=3;
 Sprite s; Button menu;
 String mode = "Play";
@@ -26,7 +26,7 @@ public void display(Button b) {
 }
 public void restart() {
   shift=0;
-  inScreen.clear();
+  //inScreen.clear();
   setup();
 }
 void setup() {
@@ -49,7 +49,7 @@ void setup() {
   s = new Sprite(100, 430);
   for (int i = 0; i < wall.size(); i++) {
     if (wall.get(i).getX() >= 0 && wall.get(i).getX() < width) {
-      inScreen.add(wall.get(i));
+      //inScreen.add(wall.get(i));
       //System.out.println(inScreen.get(i).getX());
       lastIndexWall++;
       //System.out.println(lastIndexWall);
@@ -63,15 +63,15 @@ void setup() {
 void draw() {
   background(12);
   display(menu);
-  while (inScreen.peek().getX() < shift) {
-    inScreen.removeFirst();
-  }
-  while (wall.get(lastIndexWall).getX() < shift + width) {
-    inScreen.add(wall.get(lastIndexWall));
-    if (lastIndexWall < wall.size()-1) {
-      lastIndexWall++;
-    }
-  }
+  //while (inScreen.peek().getX() < shift) {
+  //  inScreen.removeFirst();
+  //}
+  //while (wall.get(lastIndexWall).getX() < shift + width) {
+  //  inScreen.add(wall.get(lastIndexWall));
+  //  if (lastIndexWall < wall.size()-1) {
+  //    lastIndexWall++;
+  //  }
+  //}
   for (int i=0; i<wall.size(); i++) {
     display(wall.get(i));
   }
@@ -84,10 +84,25 @@ void draw() {
   if (s.isJumping()) {
     s.updateJump(2 * shift);
   }
-  Iterator<Block> it = inScreen.iterator();
+  //Iterator<Block> it = inScreen.iterator();
   boolean isTouchingBlock=false;
-  while (it.hasNext()) {
-    Block curr=it.next();
+  //while (it.hasNext()) {
+  //  Block curr=it.next();
+  //  if (curr.isTouching(s) == 2) {
+  //    s.setJump(false);
+  //    s.setY(curr.getY() - curr.getHeight());
+  //    isTouchingBlock=true;
+  //  }
+  //  else if (curr.isTouching(s)==1) {
+  //    println("died");
+  //    s.setAlive(false);
+  //    restart();
+  //    break;
+  //  }
+  //  //System.out.println(s.isJumping());
+  //}
+  for (int i=0; i<wall.size(); i++) {
+    Block curr=wall.get(i);
     if (curr.isTouching(s) == 2) {
       s.setJump(false);
       s.setY(curr.getY() - curr.getHeight());
@@ -99,7 +114,20 @@ void draw() {
       restart();
       break;
     }
-    //System.out.println(s.isJumping());
+  }
+  for (int i=0; i<spike.size(); i++) {
+    Spike curr=spike.get(i);
+    if (!curr.isTouching(s)) {
+      s.setJump(false);
+      s.setY(curr.getY() - curr.getHeight());
+      isTouchingBlock=true;
+    }
+    else if (curr.isTouching(s)) {
+      println("died");
+      s.setAlive(false);
+      restart();
+      break;
+    }
   }
   if (!s.getAlive()) {
     return;
