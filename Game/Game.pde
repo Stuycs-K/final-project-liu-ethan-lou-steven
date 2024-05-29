@@ -39,14 +39,11 @@ void setup() {
      wall.add(new Block(x, y, 20));
   }
   for (int i=0; i<=2000; i++) {
-    wall.add(new Block(i*20, 450, 20));
-    if (i == 25) {
-      wall.add(new Block(500, 430, 20));
-      wall.add(new Block(580, 430, 20, 40));
-      wall.add(new Block(660, 430, 20, 60));
-    }
-    //if (i % 40==0) {
-    //  wall.add(new Block(i*20, 430, 20, 40));
+    wall.add(new Block(i*20, 440, 20));
+    //if (i == 25) {
+    //  wall.add(new Block(500, 420, 20));
+    //  wall.add(new Block(580, 420, 20, 40));
+    //  wall.add(new Block(660, 420, 20, 60));
     //}
   }
   s = new Sprite(100, 430);
@@ -81,7 +78,7 @@ void draw() {
   for (int i=0; i<spike.size(); i++) {
     display(spike.get(i));
   }
-  if (menu.getLabel().equals("Play")) {
+  if (mode.equals("Edit Map")) {
     return;
   }
   if (s.isJumping()) {
@@ -128,5 +125,10 @@ void mouseClicked() {
     String temp=mode;
     mode=menu.getLabel();
     menu.setLabel(temp);
+  }
+  else if (mode.equals("Edit Map")) {
+    int x=((int)((mouseX+shift)/20))*20, y=((int)(mouseY/20)+1)*20;
+    println(mouseX+" "+mouseY+" "+x+" "+y);
+    wall.add(new Block((float)x, (float)y, 20));
   }
 }
