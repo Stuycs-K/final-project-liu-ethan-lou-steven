@@ -46,6 +46,7 @@ void setup() {
       wall.add(new Block(580, 430, 20, 40));
       wall.add(new Block(660, 430, 20, 60));
       wall.add(new Block(740, 430, 20, 80, true));
+      spike.add(new Spike(660, 370, 20));
     }
     //if (i % 40==0) {
     //  wall.add(new Block(i*20, 430, 20, 40));
@@ -126,13 +127,14 @@ void draw() {
       angle = PI/2;
     }
     else if (angle <= PI) {
-      angle = PI
+      angle = PI;
     }
     else if (angle <= 3 * PI/2) {
       angle = 3 * PI/2;
     }
     else {
       angle = 0;
+    }
   }
   shift+=speed;
   //shift+=1;
