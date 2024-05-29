@@ -27,6 +27,10 @@
 * Fixed sprite falling out of the screen
 * Made sprite falling from block more smooth.
 
+### 5/28/24
+* Wrote Button class.
+* Worked on Edit mode. When the user clicks, new Blocks spawn there.
+
 ## Steven Lou
 ### 5/22/24
 * Wrote the Spike class methods and constructors.

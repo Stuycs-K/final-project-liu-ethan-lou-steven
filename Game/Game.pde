@@ -128,7 +128,7 @@ void mouseClicked() {
   }
   else if (mode.equals("Edit Map")) {
     int x=((int)((mouseX+shift)/20))*20, y=((int)(mouseY/20)+1)*20;
-    println(mouseX+" "+mouseY+" "+x+" "+y);
+    //println(mouseX+" "+mouseY+" "+x+" "+y);
     wall.add(new Block((float)x, (float)y, 20));
   }
 }
