@@ -2,7 +2,7 @@ import java.util.*;
 ArrayList<Block> wall = new ArrayList<Block>();
 ArrayList<Spike> spike = new ArrayList<Spike>();
 ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
-int lastIndexWall, shift=0;
+int lastIndexWall, shift=0, speed=3;
 float angle=0;
 Sprite s;
 public void display(Sprite s) {
@@ -17,7 +17,7 @@ public void display(Sprite s) {
   float y4 = s.getY() - 10 - (float) (-10 * Math.sin(angle) - (10) * Math.cos(angle));
   quad(x1-shift, y1, x2-shift, y2, x4-shift, y4, x3-shift, y3);
   //rect(s.getX()-shift, s.getY()-20, 20, 20);
-  s.setX(s.getX() + 3);
+  s.setX(s.getX() + speed);
 }
 public void display(Block b) {
   fill(255);
@@ -39,10 +39,12 @@ void setup() {
     wall.add(new Block(i*20, 450, 20));
     if (i == 25) {
       wall.add(new Block(500, 430, 20));
+      wall.add(new Block(580, 430, 20, 40));
+      wall.add(new Block(660, 430, 20, 60));
     }
-    if (i % 40==0) {
-      wall.add(new Block(i*20, 430, 20, 40));
-    }
+    //if (i % 40==0) {
+    //  wall.add(new Block(i*20, 430, 20, 40));
+    //}
   }
   s = new Sprite(100, 430);
   for (int i = 0; i < wall.size(); i++) {
@@ -111,8 +113,7 @@ void draw() {
   if (isTouchingBlock && (angle != 0 || angle != PI/2 || angle != PI || angle != 3*PI/2)) {
     angle = (float) (Math.ceil(angle * 2 / PI) * PI / 2);
   }
-    
-  shift+=3;
+  shift+=speed;
   //shift+=1;
 }  
 void keyPressed() {
