@@ -3,13 +3,9 @@ ArrayList<Block> wall = new ArrayList<Block>();
 ArrayList<Spike> spike = new ArrayList<Spike>();
 //ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
 int lastIndexWall, shift=0, speed=3;
-<<<<<<< HEAD
 Sprite s; Button menu;
 String mode = "Play";
-=======
 float angle=0;
-Sprite s;
->>>>>>> 0f2d8157f52ef1bda4bdd32ff94dce622d9e03c8
 public void display(Sprite s) {
   fill(123);
   float x1 = s.getX() + 10 + (float) (-10 * Math.cos(angle) - (-10) * Math.sin(angle));
@@ -131,12 +127,7 @@ void draw() {
   }
   for (int i=0; i<spike.size(); i++) {
     Spike curr=spike.get(i);
-    if (!curr.isTouching(s)) {
-      s.setJump(false);
-      s.setY(curr.getY() - curr.getHeight());
-      isTouchingBlock=true;
-    }
-    else if (curr.isTouching(s)) {
+    if (curr.isTouching(s)>0) {
       println("died");
       s.setAlive(false);
       restart();
