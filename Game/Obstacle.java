@@ -10,7 +10,5 @@ class Obstacle {
   public float getY() {
     return ycor;
   }
-  public void display() {
-  }
   
 }
