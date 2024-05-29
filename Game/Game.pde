@@ -3,11 +3,25 @@ ArrayList<Block> wall = new ArrayList<Block>();
 ArrayList<Spike> spike = new ArrayList<Spike>();
 //ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
 int lastIndexWall, shift=0, speed=3;
+<<<<<<< HEAD
 Sprite s; Button menu;
 String mode = "Play";
+=======
+float angle=0;
+Sprite s;
+>>>>>>> 0f2d8157f52ef1bda4bdd32ff94dce622d9e03c8
 public void display(Sprite s) {
   fill(123);
-  rect(s.getX()-shift, s.getY()-20, 20, 20);
+  float x1 = s.getX() + 10 + (float) (-10 * Math.cos(angle) - (-10) * Math.sin(angle));
+  float y1 = s.getY() - 10 - (float) (10 * Math.sin(angle) - (-10) * Math.cos(angle));
+  float x2 = s.getX() + 10 + (float) (10 * Math.cos(angle) - (-10) * Math.sin(angle));
+  float y2 = s.getY() - 10 - (float) (-10 * Math.sin(angle) - (-10) * Math.cos(angle));
+  float x3 = s.getX() + 10 + (float) (-10 * Math.cos(angle) - (10) * Math.sin(angle));
+  float y3 = s.getY() - 10 - (float) (10 * Math.sin(angle) - (10) * Math.cos(angle));
+  float x4 = s.getX() + 10 + (float) (10 * Math.cos(angle) - (10) * Math.sin(angle));
+  float y4 = s.getY() - 10 - (float) (-10 * Math.sin(angle) - (10) * Math.cos(angle));
+  quad(x1-shift, y1, x2-shift, y2, x4-shift, y4, x3-shift, y3);
+  //rect(s.getX()-shift, s.getY()-20, 20, 20);
   s.setX(s.getX() + speed);
 }
 public void display(Block b) {
@@ -140,6 +154,12 @@ void draw() {
   }
   //System.out.println(wall.get(10).isTouching(s));
   display(s);
+  if (!isTouchingBlock) {
+    angle += PI/20;
+  }
+  if (isTouchingBlock && (angle != 0 || angle != PI/2 || angle != PI || angle != 3*PI/2)) {
+    angle = (float) (Math.ceil(angle * 2 / PI) * PI / 2);
+  }
   shift+=speed;
   //shift+=1;
 }  

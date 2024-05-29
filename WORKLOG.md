@@ -41,3 +41,12 @@
 * Wrote display(Spike).
 * Helped with window scrolling.
 
+### 5/26/24
+* jump() gravity physics fixed
+* Created inScreen ArrayList for interactions with other blocks
+* Tried to implement isTouching() with Sprite (has bugs)
+
+### 5/28/24
+* Spinning feature added to sprite display
+* Incorporated spinning feature with touching blocks
+* Fixed spike isTouching() to work with sprite
