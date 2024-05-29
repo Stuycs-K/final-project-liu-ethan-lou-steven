@@ -2,7 +2,7 @@ class Sprite {
   private float xcor, ycor, h, w, v_initial=60, y_initial;
   private int jumpTime;
   private boolean isAlive, isJumping;
-  private static float G = 30;
+  private static float G = 80;
   public Sprite(float x, float y) {
     xcor = x;
     ycor = y;
@@ -60,7 +60,7 @@ class Sprite {
   public void jump(int jumpTime) {
     ycor--;
     this.jumpTime=jumpTime;
-    v_initial=60;
+    v_initial=100;
     isJumping = true;
     y_initial=ycor;
   }
