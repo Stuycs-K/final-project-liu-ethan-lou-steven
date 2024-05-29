@@ -116,10 +116,23 @@ void draw() {
   //System.out.println(wall.get(10).isTouching(s));
   display(s);
   if (!isTouchingBlock) {
-    angle += PI/20;
+    angle += PI/10;
+    if (angle >= 2 * PI) {
+      angle -= 2 * PI;
+    }
   }
-  if (isTouchingBlock && (angle != 0 || angle != PI/2 || angle != PI || angle != 3*PI/2)) {
-    angle = (float) (Math.ceil(angle * 2 / PI) * PI / 2);
+  if (isTouchingBlock) {
+    if (angle <= PI/2) {
+      angle = PI/2;
+    }
+    else if (angle <= PI) {
+      angle = PI
+    }
+    else if (angle <= 3 * PI/2) {
+      angle = 3 * PI/2;
+    }
+    else {
+      angle = 0;
   }
   shift+=speed;
   //shift+=1;

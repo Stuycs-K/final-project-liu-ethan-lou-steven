@@ -27,9 +27,6 @@ class Spike extends Obstacle {
       //System.out.println(s.getY());
       return 0;
     }
-    if (s.getX()+s.getWidth()<x || s.getX()>=x) {
-      return 2;
-    }
     if (s.getY()<y-2 * h/3) {
       return 1;
     }
