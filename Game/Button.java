@@ -26,4 +26,7 @@ class Button {
   public String getLabel() {
     return label;
   }
+  public void setLabel(String newLabel) {
+    label=newLabel;
+  }
 }

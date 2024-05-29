@@ -3,8 +3,8 @@ ArrayList<Block> wall = new ArrayList<Block>();
 ArrayList<Spike> spike = new ArrayList<Spike>();
 ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
 int lastIndexWall, shift=0, speed=3;
-Sprite s; Button edit;
-PrintWriter inp;
+Sprite s; Button menu;
+String mode = "Play";
 public void display(Sprite s) {
   fill(123);
   rect(s.getX()-shift, s.getY()-20, 20, 20);
@@ -61,11 +61,11 @@ void setup() {
       break;
     }
   }
-  edit = new Button(0, 30, 30, 100, "Edit Map");
+  menu = new Button(0, 30, 30, 100, "Edit Map");
 }
 void draw() {
   background(12);
-  display(edit);
+  display(menu);
   while (inScreen.peek().getX() < shift) {
     inScreen.removeFirst();
   }
@@ -80,6 +80,9 @@ void draw() {
   }
   for (int i=0; i<spike.size(); i++) {
     display(spike.get(i));
+  }
+  if (menu.getLabel().equals("Play")) {
+    return;
   }
   if (s.isJumping()) {
     s.updateJump(2 * shift);
@@ -118,5 +121,12 @@ void draw() {
 void keyPressed() {
   if (key==' ' && !s.isJumping()) {  
     s.jump(2 * shift);
+  }
+}
+void mouseClicked() {
+  if (menu.isTouching(mouseX, mouseY)) {
+    String temp=mode;
+    mode=menu.getLabel();
+    menu.setLabel(temp);
   }
 }
