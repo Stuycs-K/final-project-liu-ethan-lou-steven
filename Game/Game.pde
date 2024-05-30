@@ -53,6 +53,7 @@ void setup() {
      wall.add(new Block(x, y, 20));
   }
   for (int i=0; i<=2000; i++) {
+<<<<<<< HEAD
     wall.add(new Block(i*20, 450, 20));
     if (i == 25) {
       wall.add(new Block(500, 430, 20));
@@ -61,6 +62,16 @@ void setup() {
       wall.add(new Block(740, 430, 20, 80, true));
       spike.add(new Spike(660, 370, 20));
     }
+=======
+    wall.add(new Block(i*20, 440, 20));
+    //if (i == 25) {
+    //  wall.add(new Block(500, 420, 20));
+    //  wall.add(new Block(580, 420, 20, 40));
+    //  wall.add(new Block(660, 420, 20, 60));
+    //  wall.add(new Block(740, 430, 20, 80, true));
+    //  spike.add(new Spike(660, 370, 20));
+    //}
+>>>>>>> 58db69952823274f1645bafd7c90e91559b912d2
     //if (i % 40==0) {
     //  wall.add(new Block(i*20, 430, 20, 40));
     //}
@@ -192,19 +203,39 @@ void mouseClicked() {
   else if (mode.equals("Edit Map")) {
     int x=((int)((mouseX+shift)/20))*20, y=((int)(mouseY/20)+1)*20;
     //println(mouseX+" "+mouseY+" "+x+" "+y);
-    boolean isTouchingBlock=false;
+    boolean isTouchingBlock=false, isTouchingJump=false, isTouchingSpike=false;
     Block b = new Block(20, 20);
     for (Block i : wall) {
       if (i.getX()==x && i.getY()==y) {
         isTouchingBlock = true;
         b=i;
+        isTouchingJump=i.hasJumpPad();
         break;
       }
     }
-    if (isTouchingBlock) {
-      wall.remove(b);
-      return;
+    Spike rem = new Spike(20, 20);
+    for (Spike i : spike) {
+      if (i.getX()==x && i.getY()==y) {
+        rem=i;
+        isTouchingSpike=true;
+        break;
+      }
     }
-    wall.add(new Block((float)x, (float)y, 20));
+    if (isTouchingBlock && !b.hasJumpPad()) {
+      wall.remove(b);
+      b.setJumpPad(true);
+      wall.add(b);
+    }
+    else if (isTouchingBlock) {
+      wall.remove(b);
+      Spike temp = new Spike(b.getX(), b.getY(), b.getHeight());
+      spike.add(temp);
+    }
+    else if (!isTouchingBlock && !isTouchingSpike) {
+      wall.add(new Block((float)x, (float)y, 20));
+    }
+    else {
+      spike.remove(rem);
+    }
   }
 }
