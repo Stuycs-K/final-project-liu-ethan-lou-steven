@@ -217,14 +217,18 @@ void mouseClicked() {
     }
     else if (isTouchingBlock) {
       wall.remove(b);
+      Text.remove(b);
       Spike temp = new Spike(b.getX(), b.getY(), b.getHeight());
       spike.add(temp);
+      Text.add(temp);
     }
     else if (!isTouchingBlock && !isTouchingSpike) {
       wall.add(new Block((float)x, (float)y, 20));
+      Text.add(new Block((float)x, (float)y, 20));
     }
     else {
       spike.remove(rem);
+      Text.remove(rem);
     }
   }
 }
