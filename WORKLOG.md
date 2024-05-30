@@ -31,6 +31,11 @@
 * Wrote Button class.
 * Worked on Edit mode. When the user clicks, new Blocks spawn there.
 
+### 5/29/24
+* Can now delete walls.
+* Now when you click, you rotate between a block, block with jump pad, and a spike.
+* Changed ArrayLists into Sets for quicker add and remove runtimes.
+
 ## Steven Lou
 ### 5/22/24
 * Wrote the Spike class methods and constructors.
