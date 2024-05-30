@@ -55,3 +55,8 @@
 * Spinning feature added to sprite display
 * Incorporated spinning feature with touching blocks
 * Fixed spike isTouching() to work with sprite
+
+### 5/29/24
+* Added jump pad feature to walls
+* Fixed spike isTouching() bugs
+* Fixed spinning display bugs
