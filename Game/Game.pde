@@ -53,24 +53,16 @@ void setup() {
      wall.add(new Block(x, y, 20));
   }
   for (int i=0; i<=2000; i++) {
-<<<<<<< HEAD
     wall.add(new Block(i*20, 440, 20));
     //if (i == 25) {
     //  wall.add(new Block(500, 420, 20));
     //  wall.add(new Block(580, 420, 20, 40));
     //  wall.add(new Block(660, 420, 20, 60));
-=======
-    wall.add(new Block(i*20, 450, 20));
-    if (i == 25) {
-      wall.add(new Block(500, 430, 20));
-      wall.add(new Block(580, 430, 20, 40));
-      wall.add(new Block(660, 430, 20, 60));
-      wall.add(new Block(740, 430, 20, 80, true));
-      spike.add(new Spike(660, 370, 20));
-    }
+    //  wall.add(new Block(740, 430, 20, 80, true));
+    //  spike.add(new Spike(660, 370, 20));
+    //}
     //if (i % 40==0) {
     //  wall.add(new Block(i*20, 430, 20, 40));
->>>>>>> STeven
     //}
   }
   s = new Sprite(100, 430);
@@ -113,7 +105,6 @@ void draw() {
   }
   //Iterator<Block> it = inScreen.iterator();
   boolean isTouchingBlock=false;
-<<<<<<< HEAD
   //while (it.hasNext()) {
   //  Block curr=it.next();
   //  if (curr.isTouching(s) == 2) {
@@ -130,12 +121,7 @@ void draw() {
   //  //System.out.println(s.isJumping());
   //}
   for (Block curr : wall) {
-    if (curr.isTouching(s) == 2) {
-=======
-  while (it.hasNext()) {
-    Block curr=it.next();
     if (curr.isTouching(s) == 2 && !curr.hasJumpPad()) {
->>>>>>> STeven
       s.setJump(false);
       s.setY(curr.getY() - curr.getHeight());
       isTouchingBlock=true;
