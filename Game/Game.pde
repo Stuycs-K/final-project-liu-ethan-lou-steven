@@ -166,19 +166,39 @@ void mouseClicked() {
   else if (mode.equals("Edit Map")) {
     int x=((int)((mouseX+shift)/20))*20, y=((int)(mouseY/20)+1)*20;
     //println(mouseX+" "+mouseY+" "+x+" "+y);
-    boolean isTouchingBlock=false;
+    boolean isTouchingBlock=false, isTouchingJump=false, isTouchingSpike=false;
     Block b = new Block(20, 20);
     for (Block i : wall) {
       if (i.getX()==x && i.getY()==y) {
         isTouchingBlock = true;
         b=i;
+        isTouchingJump=i.hasJumpPad();
         break;
       }
     }
-    if (isTouchingBlock) {
-      wall.remove(b);
-      return;
+    Spike rem = new Spike(20, 20);
+    for (Spike i : spike) {
+      if (i.getX()==x && i.getY()==y) {
+        rem=i;
+        isTouchingSpike=true;
+        break;
+      }
     }
-    wall.add(new Block((float)x, (float)y, 20));
+    if (isTouchingBlock && !b.hasJumpPad()) {
+      wall.remove(b);
+      b.setJumpPad(true);
+      wall.add(b);
+    }
+    else if (isTouchingBlock) {
+      wall.remove(b);
+      Spike temp = new Spike(b.getX(), b.getY(), b.getHeight());
+      spike.add(temp);
+    }
+    else if (!isTouchingBlock && !isTouchingSpike) {
+      wall.add(new Block((float)x, (float)y, 20));
+    }
+    else {
+      spike.remove(rem);
+    }
   }
 }

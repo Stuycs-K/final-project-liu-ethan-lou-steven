@@ -28,6 +28,7 @@ class Block extends Obstacle {
   public float getHeight(){return h;}
   public float getWidth(){return w;}
   public boolean hasJumpPad(){return jumpPad;}
+  public void setJumpPad(boolean b){jumpPad=b;}
   //Takes in a Sprite and determines if it lies on or within the block. 0 - not touching. 1 - touching the left or right side. 2 - touching the top or bottom.
   public float isTouching(Sprite s) {
     float x=this.getX(), y=this.getY();
