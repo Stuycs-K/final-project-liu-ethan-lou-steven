@@ -23,7 +23,11 @@ public void display(Sprite s) {
 public void display(Block b) {
   fill(255);
   rect(b.getX()-shift, b.getY()-b.getHeight(), b.getWidth(), b.getHeight());
-}
+  if (b.hasJumpPad()) {
+    fill(255, 250, 205);
+    ellipse(b.getX() + b.getWidth()/2 - shift, b.getY() - b.getHeight(), b.getWidth(), 5);
+  }
+}     
 public void display(Spike s) {
   fill(255);
   triangle(s.getX()-shift, s.getY(), s.getX() - shift + s.getWidth()/2, s.getY() - s.getHeight(), s.getX() - shift + s.getWidth(), s.getY());
@@ -49,11 +53,16 @@ void setup() {
      wall.add(new Block(x, y, 20));
   }
   for (int i=0; i<=2000; i++) {
-    wall.add(new Block(i*20, 440, 20));
-    //if (i == 25) {
-    //  wall.add(new Block(500, 420, 20));
-    //  wall.add(new Block(580, 420, 20, 40));
-    //  wall.add(new Block(660, 420, 20, 60));
+    wall.add(new Block(i*20, 450, 20));
+    if (i == 25) {
+      wall.add(new Block(500, 430, 20));
+      wall.add(new Block(580, 430, 20, 40));
+      wall.add(new Block(660, 430, 20, 60));
+      wall.add(new Block(740, 430, 20, 80, true));
+      spike.add(new Spike(660, 370, 20));
+    }
+    //if (i % 40==0) {
+    //  wall.add(new Block(i*20, 430, 20, 40));
     //}
   }
   s = new Sprite(100, 430);
@@ -112,10 +121,13 @@ void draw() {
   //  //System.out.println(s.isJumping());
   //}
   for (Block curr : wall) {
-    if (curr.isTouching(s) == 2) {
+    if (curr.isTouching(s) == 2 && !curr.hasJumpPad()) {
       s.setJump(false);
       s.setY(curr.getY() - curr.getHeight());
       isTouchingBlock=true;
+    }
+    else if (curr.isTouching(s) == 2 && curr.hasJumpPad()) {
+      s.jump(2 * shift);
     }
     else if (curr.isTouching(s)==1) {
       println("died");
@@ -144,10 +156,24 @@ void draw() {
   //System.out.println(wall.get(10).isTouching(s));
   display(s);
   if (!isTouchingBlock) {
-    angle += PI/20;
+    angle += PI/10;
+    if (angle >= 2 * PI) {
+      angle -= 2 * PI;
+    }
   }
-  if (isTouchingBlock && (angle != 0 || angle != PI/2 || angle != PI || angle != 3*PI/2)) {
-    angle = (float) (Math.ceil(angle * 2 / PI) * PI / 2);
+  if (isTouchingBlock) {
+    if (angle <= PI/2) {
+      angle = PI/2;
+    }
+    else if (angle <= PI) {
+      angle = PI;
+    }
+    else if (angle <= 3 * PI/2) {
+      angle = 3 * PI/2;
+    }
+    else {
+      angle = 0;
+    }
   }
   shift+=speed;
   //shift+=1;
