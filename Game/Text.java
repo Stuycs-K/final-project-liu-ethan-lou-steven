@@ -34,7 +34,7 @@ class Text {
     File tempFile = new File("tempSpikes.txt");
     BufferedReader reader = new BufferedReader(new FileReader(file));
     BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
-    String check = ""+b.getX()+" "+b.getY()+" "+b.hasJumpPad();
+    String check = ""+b.getX()+" "+b.getY();
     while (reader.ready()) {
       String s = reader.readLine();
       if (s.equals(check)) {

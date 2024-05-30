@@ -212,8 +212,10 @@ void mouseClicked() {
     }
     if (isTouchingBlock && !b.hasJumpPad()) {
       wall.remove(b);
+      Text.remove(b);
       b.setJumpPad(true);
       wall.add(b);
+      Text.add(b);
     }
     else if (isTouchingBlock) {
       wall.remove(b);
