@@ -45,14 +45,18 @@ public void restart() {
 }
 void setup() {
   size(500, 500);
+  //Text.deleteAll();
   lastIndexWall = 0;
-  String[] wallCoords = loadStrings("walls.txt");
-  for (int i=0; i<wallCoords.length; i++) {
-     int space=wallCoords[i].indexOf(' ');
-     int x=Integer.parseInt(wallCoords[i].substring(0, space)), y=Integer.parseInt(wallCoords[i].substring(space+1));
-     wall.add(new Block(x, y, 20));
-  }
+  Text.readBlocks(wall);
+  Text.readSpikes(spike);
   for (int i=0; i<=2000; i++) {
+    //if (i == 25) {
+    //  wall.add(new Block(500, 430, 20));
+    //  wall.add(new Block(580, 430, 20, 40));
+    //  wall.add(new Block(660, 430, 20, 60));
+    //  wall.add(new Block(740, 430, 20, 80, true));
+    //  spike.add(new Spike(660, 370, 20));
+    //}
     wall.add(new Block(i*20, 440, 20));
     //if (i == 25) {
     //  wall.add(new Block(500, 420, 20));
@@ -212,10 +216,10 @@ void mouseClicked() {
     }
     if (isTouchingBlock && !b.hasJumpPad()) {
       wall.remove(b);
-      //Text.remove(b);
-      b.setJumpPad(true);
-      wall.add(b);
-      //Text.add(b);
+      Text.remove(b);
+      Block temp = new Block(b.getX(), b.getY(), b.getWidth(), b.getHeight(), true);
+      wall.add(temp);
+      Text.add(temp);
     }
     else if (isTouchingBlock) {
       wall.remove(b);
