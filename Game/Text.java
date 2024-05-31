@@ -9,11 +9,16 @@ class Text {
   }
   public static void add(Block b) {
     try {
+      File f = new File("/usr/local/processing-4.3/walls.txt");
+      System.out.println(f.exists());
+      System.out.println(f.getAbsolutePath());
       FileWriter writer = new FileWriter("walls.txt", true);
       writer.write(b.getX()+" "+b.getY()+" "+b.hasJumpPad()+"\n");
+      System.out.println("added");
       writer.close();
     }
     catch (IOException e) {
+      e.printStackTrace();
     }
   }
   public static void add(Spike b) {
@@ -34,7 +39,7 @@ class Text {
       String check = ""+b.getX()+" "+b.getY()+" "+b.hasJumpPad();
       while (reader.ready()) {
         String s = reader.readLine();
-        //System.out.print(s);
+        System.out.print(s);
         if (s.equals(check)) {
           continue;
         }
@@ -73,6 +78,7 @@ class Text {
   public static void readBlocks(ArrayList<Block> walls) {
     try {
       BufferedReader reader = new BufferedReader(new FileReader("walls.txt"));
+      System.out.println("hry");
       while (reader.ready()) {
         String s = reader.readLine();
         String[] arr = s.split(" ", 0);
