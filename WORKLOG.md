@@ -36,6 +36,10 @@
 * Now when you click, you rotate between a block, block with jump pad, and a spike.
 * Changed ArrayLists into Sets for quicker add and remove runtimes.
 
+### 5/30/24
+* Wrote Text class.
+* Worked on saving the blocks and spikes into files so that the map stays when you run it again.
+
 ## Steven Lou
 ### 5/22/24
 * Wrote the Spike class methods and constructors.

@@ -1,6 +1,12 @@
 import java.util.*;
 import java.io.*;
 class Text {
+  public static void deleteAll() {
+    File wall = new File("walls.txt");
+    File spikes = new File("spikes.txt");
+    wall.delete();
+    spikes.delete();
+  }
   public static void add(Block b) {
     try {
       FileWriter writer = new FileWriter("walls.txt", true);
@@ -28,15 +34,16 @@ class Text {
       String check = ""+b.getX()+" "+b.getY()+" "+b.hasJumpPad();
       while (reader.ready()) {
         String s = reader.readLine();
+        //System.out.print(s);
         if (s.equals(check)) {
           continue;
         }
-        writer.write(s);
+        writer.write(s+"\n");
       }
       writer.close();
       reader.close();
-      tempFile.renameTo(file);
       file.delete();
+      tempFile.renameTo(file);
     }
     catch (IOException e) {
     }
@@ -53,12 +60,12 @@ class Text {
         if (s.equals(check)) {
           continue;
         }
-        writer.write(s);
+        writer.write(s+"\n");
       }
       writer.close();
       reader.close();
-      tempFile.renameTo(file);
       file.delete();
+      tempFile.renameTo(file);
     }
     catch (IOException e) {
     }
@@ -69,8 +76,23 @@ class Text {
       while (reader.ready()) {
         String s = reader.readLine();
         String[] arr = s.split(" ", 0);
-        Block b = new Block(Integer.parseInt(arr[0]), Integer.parseInt(arr[1]), 20, 20, Boolean.parseBoolean(arr[2]));
+        Block b = new Block(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), 20, 20, Boolean.parseBoolean(arr[2]));
         walls.add(b);
+      }
+      reader.close();
+    }
+    catch (IOException e) {
+      
+    }
+  }
+  public static void readSpikes(ArrayList<Spike> spikes) {
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader("spikes.txt"));
+      while (reader.ready()) {
+        String s = reader.readLine();
+        String[] arr = s.split(" ", 0);
+        Spike b = new Spike(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), 20);
+        spikes.add(b);
       }
       reader.close();
     }
