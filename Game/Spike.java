@@ -23,7 +23,7 @@ class Spike extends Obstacle {
   }
   public int isTouching(Sprite s) {
     float x=this.getX() + w/3 , y=this.getY();
-    if (s.getX()>x+w || s.getX()+s.getWidth()<x || s.getY()<y-2 * h/3 || s.getY()-s.getHeight()>y) {
+    if (s.getX()>x+w/3 || s.getX()+s.getWidth()<x || s.getY()<y-h/2 || s.getY()-s.getHeight()>y) {
       //System.out.println(s.getY());
       return 0;
     }
