@@ -1,6 +1,6 @@
 import java.util.*;
-Set<Block> wall = new HashSet<Block>();
-Set<Spike> spike = new HashSet<Spike>();
+ArrayList<Block> wall = new ArrayList<Block>();
+ArrayList<Spike> spike = new ArrayList<Spike>();
 //ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
 int lastIndexWall, shift=0, speed=3;
 Sprite s; Button menu;
@@ -45,7 +45,7 @@ public void restart() {
 }
 void setup() {
   size(500, 500);
-  lastIndexWall = 0;
+  //lastIndexWall = 0;
   String[] wallCoords = loadStrings("walls.txt");
   for (int i=0; i<wallCoords.length; i++) {
      int space=wallCoords[i].indexOf(' ');
@@ -53,16 +53,6 @@ void setup() {
      wall.add(new Block(x, y, 20));
   }
   for (int i=0; i<=2000; i++) {
-<<<<<<< HEAD
-    wall.add(new Block(i*20, 450, 20));
-    if (i == 25) {
-      wall.add(new Block(500, 430, 20));
-      wall.add(new Block(580, 430, 20, 40));
-      wall.add(new Block(660, 430, 20, 60));
-      wall.add(new Block(740, 430, 20, 80, true));
-      spike.add(new Spike(660, 370, 20));
-    }
-=======
     wall.add(new Block(i*20, 440, 20));
     //if (i == 25) {
     //  wall.add(new Block(500, 420, 20));
@@ -71,7 +61,6 @@ void setup() {
     //  wall.add(new Block(740, 430, 20, 80, true));
     //  spike.add(new Spike(660, 370, 20));
     //}
->>>>>>> 58db69952823274f1645bafd7c90e91559b912d2
     //if (i % 40==0) {
     //  wall.add(new Block(i*20, 430, 20, 40));
     //}
@@ -79,7 +68,7 @@ void setup() {
   s = new Sprite(100, 430);
   //for (int i = 0; i < wall.size(); i++) {
   //  if (wall.get(i).getX() >= 0 && wall.get(i).getX() < width) {
-  //    //inScreen.add(wall.get(i));
+  //    inScreen.add(wall.get(i));
   //    //System.out.println(inScreen.get(i).getX());
   //    lastIndexWall++;
   //    //System.out.println(lastIndexWall);
@@ -116,29 +105,11 @@ void draw() {
   }
   //Iterator<Block> it = inScreen.iterator();
   boolean isTouchingBlock=false;
-  //while (it.hasNext()) {
-  //  Block curr=it.next();
-  //  if (curr.isTouching(s) == 2) {
-  //    s.setJump(false);
-  //    s.setY(curr.getY() - curr.getHeight());
-  //    isTouchingBlock=true;
-  //  }
-  //  else if (curr.isTouching(s)==1) {
-  //    println("died");
-  //    s.setAlive(false);
-  //    restart();
-  //    break;
-  //  }
-  //  //System.out.println(s.isJumping());
-  //}
-  for (Block curr : wall) {
-    if (curr.isTouching(s) == 2 && !curr.hasJumpPad()) {
+  for (Block curr: wall) {
+    if (curr.isTouching(s) == 2) {
       s.setJump(false);
       s.setY(curr.getY() - curr.getHeight());
       isTouchingBlock=true;
-    }
-    else if (curr.isTouching(s) == 2 && curr.hasJumpPad()) {
-      s.jump(2 * shift);
     }
     else if (curr.isTouching(s)==1) {
       println("died");
@@ -146,7 +117,24 @@ void draw() {
       restart();
       break;
     }
+    //System.out.println(s.isJumping());
   }
+  //for (Block curr : wall) {
+  //  if (curr.isTouching(s) == 2 && !curr.hasJumpPad()) {
+  //    s.setJump(false);
+  //    s.setY(curr.getY() - curr.getHeight());
+  //    isTouchingBlock=true;
+  //  }
+  //  else if (curr.isTouching(s) == 2 && curr.hasJumpPad()) {
+  //    s.jump(2 * shift, 150);
+  //  }
+  //  else if (curr.isTouching(s)==1) {
+  //    println("died");
+  //    s.setAlive(false);
+  //    restart();
+  //    break;
+  //  }
+  //}
   for (Spike curr : spike) {
     if (curr.isTouching(s)>0) {
       println("died");
@@ -158,7 +146,7 @@ void draw() {
   if (!s.getAlive()) {
     return;
   }
-  if (!isTouchingBlock && s.getY()<430 && !s.isJumping()) {
+  if (!isTouchingBlock && !s.isJumping()) {
     //if (s.getX()>=520) {
     //  println(s.getX()+" "+s.getY());
     //}
@@ -191,7 +179,7 @@ void draw() {
 }  
 void keyPressed() {
   if (key==' ' && !s.isJumping()) {  
-    s.jump(2 * shift);
+    s.jump(2 * shift, 100);
   }
 }
 void mouseClicked() {

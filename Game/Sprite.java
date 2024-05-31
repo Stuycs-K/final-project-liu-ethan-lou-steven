@@ -57,10 +57,10 @@ class Sprite {
     //System.out.prfloatln(t);
     ycor = y_initial - Math.round((float)(v_initial*t-0.5*G*(t*t)));
   }
-  public void jump(int jumpTime) {
+  public void jump(int jumpTime, float speed) {
     ycor--;
     this.jumpTime=jumpTime;
-    v_initial=100;
+    v_initial=speed;
     isJumping = true;
     y_initial=ycor;
   }
