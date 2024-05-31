@@ -1,6 +1,6 @@
 import java.util.*;
-Set<Block> wall = new HashSet<Block>();
-Set<Spike> spike = new HashSet<Spike>();
+ArrayList<Block> wall = new ArrayList<Block>();
+ArrayList<Spike> spike = new ArrayList<Spike>();
 //ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
 int lastIndexWall, shift=0, speed=3;
 Sprite s; Button menu;
@@ -212,25 +212,25 @@ void mouseClicked() {
     }
     if (isTouchingBlock && !b.hasJumpPad()) {
       wall.remove(b);
-      Text.remove(b);
+      //Text.remove(b);
       b.setJumpPad(true);
       wall.add(b);
-      Text.add(b);
+      //Text.add(b);
     }
     else if (isTouchingBlock) {
       wall.remove(b);
-      Text.remove(b);
+      //Text.remove(b);
       Spike temp = new Spike(b.getX(), b.getY(), b.getHeight());
       spike.add(temp);
-      Text.add(temp);
+      //Text.add(temp);
     }
     else if (!isTouchingBlock && !isTouchingSpike) {
       wall.add(new Block((float)x, (float)y, 20));
-      Text.add(new Block((float)x, (float)y, 20));
+      //Text.add(new Block((float)x, (float)y, 20));
     }
     else {
       spike.remove(rem);
-      Text.remove(rem);
+      //Text.remove(rem);
     }
   }
 }
