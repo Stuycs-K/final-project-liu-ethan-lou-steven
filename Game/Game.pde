@@ -1,6 +1,6 @@
 import java.util.*;
-Set<Block> wall = new HashSet<Block>();
-Set<Spike> spike = new HashSet<Spike>();
+ArrayList<Block> wall = new ArrayList<Block>();
+ArrayList<Spike> spike = new ArrayList<Spike>();
 //ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
 int lastIndexWall, shift=0, speed=3;
 Sprite s; Button menu;
@@ -53,16 +53,13 @@ void setup() {
      wall.add(new Block(x, y, 20));
   }
   for (int i=0; i<=2000; i++) {
-<<<<<<< HEAD
-    wall.add(new Block(i*20, 450, 20));
-    if (i == 25) {
-      wall.add(new Block(500, 430, 20));
-      wall.add(new Block(580, 430, 20, 40));
-      wall.add(new Block(660, 430, 20, 60));
-      wall.add(new Block(740, 430, 20, 80, true));
-      spike.add(new Spike(660, 370, 20));
-    }
-=======
+    //if (i == 25) {
+    //  wall.add(new Block(500, 430, 20));
+    //  wall.add(new Block(580, 430, 20, 40));
+    //  wall.add(new Block(660, 430, 20, 60));
+    //  wall.add(new Block(740, 430, 20, 80, true));
+    //  spike.add(new Spike(660, 370, 20));
+    //}
     wall.add(new Block(i*20, 440, 20));
     //if (i == 25) {
     //  wall.add(new Block(500, 420, 20));
@@ -71,7 +68,6 @@ void setup() {
     //  wall.add(new Block(740, 430, 20, 80, true));
     //  spike.add(new Spike(660, 370, 20));
     //}
->>>>>>> 58db69952823274f1645bafd7c90e91559b912d2
     //if (i % 40==0) {
     //  wall.add(new Block(i*20, 430, 20, 40));
     //}
