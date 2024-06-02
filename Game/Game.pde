@@ -2,7 +2,7 @@ import java.util.*;
 TreeSet<Block> wall = new TreeSet<Block>();
 TreeSet<Spike> spike = new TreeSet<Spike>();
 //ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
-int lastIndexWall, shift=0, speed=3;
+int lastIndexWall, shift=0, speed=3, editShift=0;
 Sprite s; Button menu;
 String mode = "Play";
 float angle=0;
@@ -168,6 +168,8 @@ void mouseClicked() {
     String temp=mode;
     mode=menu.getLabel();
     menu.setLabel(temp);
+    shift-=editShift;
+    editShift=0;
   }
   else if (mode.equals("Edit Map")) {
     int x=((int)((mouseX+shift)/20))*20, y=((int)(mouseY/20)+1)*20;
@@ -212,5 +214,12 @@ void mouseClicked() {
       spike.remove(rem);
       Text.remove(rem);
     }
+  }
+}
+void mouseWheel(MouseEvent event) {
+  if (mode.equals("Edit Map")) {
+    float num=20*(event.getCount());
+    editShift+=num;
+    shift+=num;
   }
 }
