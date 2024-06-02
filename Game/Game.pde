@@ -1,6 +1,6 @@
 import java.util.*;
-ArrayList<Block> wall = new ArrayList<Block>();
-ArrayList<Spike> spike = new ArrayList<Spike>();
+TreeSet<Block> wall = new TreeSet<Block>();
+TreeSet<Spike> spike = new TreeSet<Spike>();
 //ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
 int lastIndexWall, shift=0, speed=3;
 Sprite s; Button menu;
@@ -46,52 +46,19 @@ public void restart() {
 }
 void setup() {
   size(500, 500);
-  //lastIndexWall = 0;
-  String[] wallCoords = loadStrings("walls.txt");
-  for (int i=0; i<wallCoords.length; i++) {
-     int space=wallCoords[i].indexOf(' ');
-     int x=Integer.parseInt(wallCoords[i].substring(0, space)), y=Integer.parseInt(wallCoords[i].substring(space+1));
-     wall.add(new Block(x, y, 20));
-  }
+  //Text.deleteAll();
+  lastIndexWall = 0;
+  Text.readBlocks(wall);
+  Text.readSpikes(spike);
   for (int i=0; i<=2000; i++) {
     wall.add(new Block(i*20, 440, 20));
-    //if (i == 25) {
-    //  wall.add(new Block(500, 420, 20));
-    //  wall.add(new Block(580, 420, 20, 40));
-    //  wall.add(new Block(660, 420, 20, 60));
-    //  wall.add(new Block(740, 430, 20, 80, true));
-    //  spike.add(new Spike(660, 370, 20));
-    //}
-    //if (i % 40==0) {
-    //  wall.add(new Block(i*20, 430, 20, 40));
-    //}
   }
   s = new Sprite(100, 430);
-  //for (int i = 0; i < wall.size(); i++) {
-  //  if (wall.get(i).getX() >= 0 && wall.get(i).getX() < width) {
-  //    inScreen.add(wall.get(i));
-  //    //System.out.println(inScreen.get(i).getX());
-  //    lastIndexWall++;
-  //    //System.out.println(lastIndexWall);
-  //  }
-  //  else {
-  //    break;
-  //  }
-  //}
   menu = new Button(0, 30, 30, 100, "Edit Map");
 }
 void draw() {
   background(12);
   display(menu);
-  //while (inScreen.peek().getX() < shift) {
-  //  inScreen.removeFirst();
-  //}
-  //while (wall.get(lastIndexWall).getX() < shift + width) {
-  //  inScreen.add(wall.get(lastIndexWall));
-  //  if (lastIndexWall < wall.size()-1) {
-  //    lastIndexWall++;
-  //  }
-  //}
   for (Block i : wall) {
     display(i);
   }
@@ -104,7 +71,6 @@ void draw() {
   if (s.isJumping()) {
     s.updateJump(2 * shift);
   }
-  //Iterator<Block> it = inScreen.iterator();
   boolean isTouchingBlock=false;
   for (Block curr: wall) {
     if (curr.isTouching(s) == 2 && !curr.hasJumpPad()) {
@@ -150,13 +116,9 @@ void draw() {
   if (!s.getAlive()) {
     return;
   }
-  if (!isTouchingBlock && !s.isJumping()) {
-    //if (s.getX()>=520) {
-    //  println(s.getX()+" "+s.getY());
-    //}
+  if (!isTouchingBlock && s.getY()<430 && !s.isJumping()) {
     s.fall(2*shift);
   }
-  //System.out.println(wall.get(10).isTouching(s));
   display(s);
   if (!isTouchingBlock) {
     angle += PI/10;
@@ -220,19 +182,25 @@ void mouseClicked() {
     }
     if (isTouchingBlock && !b.hasJumpPad()) {
       wall.remove(b);
-      b.setJumpPad(true);
-      wall.add(b);
+      Text.remove(b);
+      Block temp = new Block(b.getX(), b.getY(), b.getWidth(), b.getHeight(), true);
+      wall.add(temp);
+      Text.add(temp);
     }
     else if (isTouchingBlock) {
       wall.remove(b);
+      Text.remove(b);
       Spike temp = new Spike(b.getX(), b.getY(), b.getHeight());
       spike.add(temp);
+      Text.add(temp);
     }
     else if (!isTouchingBlock && !isTouchingSpike) {
       wall.add(new Block((float)x, (float)y, 20));
+      Text.add(new Block((float)x, (float)y, 20));
     }
     else {
       spike.remove(rem);
+      Text.remove(rem);
     }
   }
 }

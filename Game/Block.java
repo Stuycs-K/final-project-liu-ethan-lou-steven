@@ -1,4 +1,4 @@
-class Block extends Obstacle {
+class Block extends Obstacle implements Comparable<Block> {
   private boolean jumpPad;
   private float h, w;
   public Block(float xcor, float ycor) {
@@ -50,5 +50,13 @@ class Block extends Obstacle {
   }
   public boolean isTouchingJump(Sprite s) {
     return false;
+  }
+  public int compareTo(Block b2) {
+    if (this.getX()==b2.getX()) {
+      return (int) (this.getY()-b2.getY());
+    }
+    else {
+      return (int) (this.getX()-b2.getX());
+    }
   }
 }
