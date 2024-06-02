@@ -6,6 +6,7 @@ int lastIndexWall, shift=0, speed=3;
 Sprite s; Button menu;
 String mode = "Play";
 float angle=0;
+boolean invincible = false;
 public void display(Sprite s) {
   fill(123);
   float x1 = s.getX() + 10 + (float) (-10 * Math.cos(angle) - (-10) * Math.sin(angle)) + speed;
@@ -48,8 +49,17 @@ void setup() {
   size(500, 500);
   //Text.deleteAll();
   lastIndexWall = 0;
+  //Text.readBlockString(wall);
+  //Text.readSpikeString(spike);
   Text.readBlocks(wall);
   Text.readSpikes(spike);
+  //for (Block i : wall) {
+  //  print(i.getX()+" "+i.getY()+" "+i.hasJumpPad()+"\\n");
+  //}
+  //println("\n");
+  //for (Spike i : spike) {
+  //  print(i.getX()+" "+i.getY()+"\\n");
+  //}
   for (int i=0; i<=2000; i++) {
     wall.add(new Block(i*20, 440, 20));
   }
@@ -78,10 +88,10 @@ void draw() {
       s.setY(curr.getY() - curr.getHeight());
       isTouchingBlock=true;
     }
-    else if (curr.isTouching(s) == 2 && curr.hasJumpPad()) {
+    else if (curr.isTouching(s) == 2 && curr.hasJumpPad() && !invincible) {
       s.jump(2 * shift, 150);
     }
-    else if (curr.isTouching(s)==1) {
+    else if (curr.isTouching(s)==1 && !invincible) {
       println("died");
       s.setAlive(false);
       restart();
@@ -106,7 +116,7 @@ void draw() {
   //  }
   //}
   for (Spike curr : spike) {
-    if (curr.isTouching(s)>0) {
+    if (curr.isTouching(s)>0 && !invincible) {
       println("died");
       s.setAlive(false);
       restart();
@@ -144,15 +154,15 @@ void draw() {
   shift+=speed;
   if (keyPressed) {
     if (key==' ' && !s.isJumping()) {  
-    s.jump(2 * shift, 100);
+      s.jump(2 * shift, 100);
     }
   }
 }  
-//void keyPressed() {
-//  if (key==' ' && !s.isJumping()) {  
-//    s.jump(2 * shift, 100);
-//  }
-//}
+void keyPressed() {
+  if (key=='w') {
+    invincible = !invincible;
+  }
+}
 void mouseClicked() {
   if (menu.isTouching(mouseX, mouseY)) {
     String temp=mode;
