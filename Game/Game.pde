@@ -1,6 +1,6 @@
 import java.util.*;
 TreeSet<Block> wall = new TreeSet<Block>();
-ArrayList<Spike> spike = new ArrayList<Spike>();
+TreeSet<Spike> spike = new TreeSet<Spike>();
 //ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
 int lastIndexWall, shift=0, speed=3;
 Sprite s; Button menu;

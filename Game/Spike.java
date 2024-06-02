@@ -1,4 +1,4 @@
-class Spike extends Obstacle {
+class Spike extends Obstacle implements Comparable<Spike> {
   private float h, w;
   public Spike(float x, float y){
     super(x, y);
@@ -28,5 +28,13 @@ class Spike extends Obstacle {
       return 0;
     }
     return 1;
+  }
+  public int compareTo(Spike s2) {
+    if (this.getX()==s2.getX()) {
+      return (int) (this.getY()-s2.getY());
+    }
+    else {
+      return (int) (this.getX()-s2.getX());
+    }
   }
 }

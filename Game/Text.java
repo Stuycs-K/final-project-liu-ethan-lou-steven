@@ -86,7 +86,7 @@ class Text {
       
     }
   }
-  public static void readSpikes(ArrayList<Spike> spikes) {
+  public static void readSpikes(TreeSet<Spike> spikes) {
     try {
       BufferedReader reader = new BufferedReader(new FileReader("spikes.txt"));
       while (reader.ready()) {
