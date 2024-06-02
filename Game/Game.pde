@@ -1,5 +1,5 @@
 import java.util.*;
-ArrayList<Block> wall = new ArrayList<Block>();
+TreeSet<Block> wall = new TreeSet<Block>();
 ArrayList<Spike> spike = new ArrayList<Spike>();
 //ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
 int lastIndexWall, shift=0, speed=3;

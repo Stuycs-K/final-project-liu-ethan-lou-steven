@@ -71,7 +71,7 @@ class Text {
     catch (IOException e) {
     }
   }
-  public static void readBlocks(ArrayList<Block> walls) {
+  public static void readBlocks(TreeSet<Block> walls) {
     try {
       BufferedReader reader = new BufferedReader(new FileReader("walls.txt"));
       while (reader.ready()) {
