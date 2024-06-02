@@ -8,13 +8,13 @@ String mode = "Play";
 float angle=0;
 public void display(Sprite s) {
   fill(123);
-  float x1 = s.getX() + 10 + (float) (-10 * Math.cos(angle) - (-10) * Math.sin(angle));
+  float x1 = s.getX() + 10 + (float) (-10 * Math.cos(angle) - (-10) * Math.sin(angle)) + speed;
   float y1 = s.getY() - 10 - (float) (10 * Math.sin(angle) - (-10) * Math.cos(angle));
-  float x2 = s.getX() + 10 + (float) (10 * Math.cos(angle) - (-10) * Math.sin(angle));
+  float x2 = s.getX() + 10 + (float) (10 * Math.cos(angle) - (-10) * Math.sin(angle)) + speed;
   float y2 = s.getY() - 10 - (float) (-10 * Math.sin(angle) - (-10) * Math.cos(angle));
-  float x3 = s.getX() + 10 + (float) (-10 * Math.cos(angle) - (10) * Math.sin(angle));
+  float x3 = s.getX() + 10 + (float) (-10 * Math.cos(angle) - (10) * Math.sin(angle)) + speed;
   float y3 = s.getY() - 10 - (float) (10 * Math.sin(angle) - (10) * Math.cos(angle));
-  float x4 = s.getX() + 10 + (float) (10 * Math.cos(angle) - (10) * Math.sin(angle));
+  float x4 = s.getX() + 10 + (float) (10 * Math.cos(angle) - (10) * Math.sin(angle)) + speed;
   float y4 = s.getY() - 10 - (float) (-10 * Math.sin(angle) - (10) * Math.cos(angle));
   quad(x1-shift, y1, x2-shift, y2, x4-shift, y4, x3-shift, y3);
   //rect(s.getX()-shift, s.getY()-20, 20, 20);
@@ -41,6 +41,7 @@ public void display(Button b) {
 public void restart() {
   shift=0;
   //inScreen.clear();
+  delay(1000);
   setup();
 }
 void setup() {
@@ -71,14 +72,14 @@ void draw() {
     s.updateJump(2 * shift);
   }
   boolean isTouchingBlock=false;
-  for (Block curr : wall) {
+  for (Block curr: wall) {
     if (curr.isTouching(s) == 2 && !curr.hasJumpPad()) {
       s.setJump(false);
       s.setY(curr.getY() - curr.getHeight());
       isTouchingBlock=true;
     }
     else if (curr.isTouching(s) == 2 && curr.hasJumpPad()) {
-      s.jump(2 * shift);
+      s.jump(2 * shift, 150);
     }
     else if (curr.isTouching(s)==1) {
       println("died");
@@ -86,7 +87,24 @@ void draw() {
       restart();
       break;
     }
+    //System.out.println(s.isJumping());
   }
+  //for (Block curr : wall) {
+  //  if (curr.isTouching(s) == 2 && !curr.hasJumpPad()) {
+  //    s.setJump(false);
+  //    s.setY(curr.getY() - curr.getHeight());
+  //    isTouchingBlock=true;
+  //  }
+  //  else if (curr.isTouching(s) == 2 && curr.hasJumpPad()) {
+  //    s.jump(2 * shift, 150);
+  //  }
+  //  else if (curr.isTouching(s)==1) {
+  //    println("died");
+  //    s.setAlive(false);
+  //    restart();
+  //    break;
+  //  }
+  //}
   for (Spike curr : spike) {
     if (curr.isTouching(s)>0) {
       println("died");
@@ -122,14 +140,19 @@ void draw() {
       angle = 0;
     }
   }
-  shift+=speed;
   //shift+=1;
-}  
-void keyPressed() {
-  if (key==' ' && !s.isJumping()) {  
-    s.jump(2 * shift);
+  shift+=speed;
+  if (keyPressed) {
+    if (key==' ' && !s.isJumping()) {  
+    s.jump(2 * shift, 100);
+    }
   }
-}
+}  
+//void keyPressed() {
+//  if (key==' ' && !s.isJumping()) {  
+//    s.jump(2 * shift, 100);
+//  }
+//}
 void mouseClicked() {
   if (menu.isTouching(mouseX, mouseY)) {
     String temp=mode;

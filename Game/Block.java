@@ -36,12 +36,6 @@ class Block extends Obstacle implements Comparable<Block> {
       //System.out.println(s.getY());
       return 0;
     }
-    if (s.getX()+s.getWidth()<x || s.getX()>=x) {
-      return 2;
-    }
-    if (s.getY()<y-h) {
-      return 1;
-    }
     float left=Math.max(0, s.getX()+s.getWidth()-x), down=Math.max(0, s.getY()-(y-h));
     //if (s.getX()+s.getWidth()>=x && s.getY()>y-h && s.getX()<x) {
     //  return 1;
