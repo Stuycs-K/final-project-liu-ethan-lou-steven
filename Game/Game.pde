@@ -49,8 +49,17 @@ void setup() {
   size(500, 500);
   //Text.deleteAll();
   lastIndexWall = 0;
-  Text.readBlocks(wall);
-  Text.readSpikes(spike);
+  Text.readBlockString(wall);
+  Text.readSpikeString(spike);
+  //Text.readBlocks(wall);
+  //Text.readSpikes(spike);
+  //for (Block i : wall) {
+  //  print(i.getX()+" "+i.getY()+" "+i.hasJumpPad()+"\\n");
+  //}
+  //println("\n");
+  //for (Spike i : spike) {
+  //  print(i.getX()+" "+i.getY()+"\\n");
+  //}
   for (int i=0; i<=2000; i++) {
     wall.add(new Block(i*20, 440, 20));
   }
