@@ -20,8 +20,12 @@ class Text {
     }
   }
   public static void deleteAll() {
-    File wall = new File("/Users/steven/Documents/APCS/final-project-liu-ethan-lou-steven/Game/walls.txt");
-    File spikes = new File("/Users/steven/Documents/APCS/final-project-liu-ethan-lou-steven/Game/spikes.txt");
+    File file = new File("walls.txt");
+    String absolutePath = file.getAbsolutePath();
+    File wall = new File(absolutePath);
+    file = new File("spikes.txt");
+    absolutePath = file.getAbsolutePath();
+    File spikes = new File(absolutePath);
     System.out.println(wall.getAbsoluteFile().exists());
     System.out.println(wall.exists());
     System.out.println(spikes.exists());
@@ -37,7 +41,7 @@ class Text {
   }
   public static void add(Block b) {
     try {
-      FileWriter writer = new FileWriter("/Users/steven/Documents/APCS/final-project-liu-ethan-lou-steven/Game/walls.txt", true);
+      FileWriter writer = new FileWriter("walls.txt", true);
       writer.write(b.getX()+" "+b.getY()+" "+b.hasJumpPad()+"\n");
       writer.close();
     }
@@ -47,7 +51,9 @@ class Text {
   }
   public static void add(Spike b) {
     try {
-      FileWriter writer = new FileWriter("/Users/steven/Documents/APCS/final-project-liu-ethan-lou-steven/Game/spikes.txt", true);
+      File file = new File("spikes.txt");
+      String absolutePath = file.getAbsolutePath();
+      FileWriter writer = new FileWriter(absolutePath, true);
       writer.write(b.getX()+" "+b.getY()+"\n");
       writer.close();
     }
@@ -56,8 +62,12 @@ class Text {
   }
   public static void remove(Block b) {
     try {
-      File file = new File("/Users/steven/Documents/APCS/final-project-liu-ethan-lou-steven/Game/walls.txt");
-      File tempFile = new File("/Users/steven/Documents/APCS/final-project-liu-ethan-lou-steven/Game/tempWalls.txt");
+      File get = new File("walls.txt");
+      String absolutePath = get.getAbsolutePath();
+      File file = new File(absolutePath);
+      get = new File("tempWalls.txt");
+      absolutePath = get.getAbsolutePath();
+      File tempFile = new File(absolutePath);
       BufferedReader reader = new BufferedReader(new FileReader(file));
       BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
       String check = ""+b.getX()+" "+b.getY()+" "+b.hasJumpPad();
@@ -85,8 +95,12 @@ class Text {
   }
   public static void remove(Spike b) {
     try {
-      File file = new File("/Users/steven/Documents/APCS/final-project-liu-ethan-lou-steven/Game/spikes.txt");
-      File tempFile = new File("/Users/steven/Documents/APCS/final-project-liu-ethan-lou-steven/Game/tempSpikes.txt");
+      File get = new File("spikes.txt");
+      String absolutePath = get.getAbsolutePath();
+      File file = new File(absolutePath);
+      get = new File("tempSpikes.txt");
+      absolutePath = get.getAbsolutePath();
+      File tempFile = new File(absolutePath);
       BufferedReader reader = new BufferedReader(new FileReader(file));
       BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
       String check = ""+b.getX()+" "+b.getY();
@@ -113,15 +127,18 @@ class Text {
   }
   public static void readBlocks(TreeSet<Block> walls) {
     try {
-      BufferedReader reader = new BufferedReader(new FileReader("/Users/steven/Documents/APCS/final-project-liu-ethan-lou-steven/Game/walls.txt"));
+      File file = new File("walls.txt");
+      String absolutePath = file.getAbsolutePath();
+      BufferedReader reader = new BufferedReader(new FileReader(absolutePath));
       while (reader.ready()) {
         String s = reader.readLine();
         String[] arr = s.split(" ", 0);
+        Block b;
         if (arr.length > 3) {
-          Block b = new Block(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), 20, 20, Boolean.parseBoolean(arr[2]), Float.parseFloat(arr[3]), Float.parseFloat(arr[5]));
+          b = new Block(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3]), Boolean.parseBoolean(arr[4]));
         }
         else {
-          Block b = new Block(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), 20, 20, Boolean.parseBoolean(arr[2]));
+          b = new Block(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), 20, 20, Boolean.parseBoolean(arr[2]));
         }
         walls.add(b);
       }
@@ -133,11 +150,19 @@ class Text {
   }
   public static void readSpikes(TreeSet<Spike> spikes) {
     try {
-      BufferedReader reader = new BufferedReader(new FileReader("/Users/steven/Documents/APCS/final-project-liu-ethan-lou-steven/Game/spikes.txt"));
+      File file = new File("walls.txt");
+      String absolutePath = file.getAbsolutePath();
+      BufferedReader reader = new BufferedReader(new FileReader(absolutePath));
       while (reader.ready()) {
         String s = reader.readLine();
         String[] arr = s.split(" ", 0);
-        Spike b = new Spike(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), 20);
+        Spike b;
+        if (arr.length > 2) {
+          b = new Spike(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3]));
+        }
+        else {
+          b = new Spike(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), 20);
+        }
         spikes.add(b);
       }
       reader.close();

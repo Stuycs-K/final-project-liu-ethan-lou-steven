@@ -47,7 +47,7 @@ public void restart() {
 }
 void setup() {
   size(500, 500);
-  Text.deleteAll();
+  //Text.deleteAll();
   //lastIndexWall = 0;
   //Text.readBlockString(wall);
   //Text.readSpikeString(spike);
@@ -154,7 +154,7 @@ void draw() {
   shift+=speed;
   if (keyPressed) {
     if (key==' ' && !s.isJumping()) {  
-      s.jump(2 * shift, 100);
+      s.jump(2 * shift, 110);
     }
   }
 }  
