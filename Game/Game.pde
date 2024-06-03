@@ -49,10 +49,11 @@ void setup() {
   size(500, 500);
   //Text.deleteAll();
   //lastIndexWall = 0;
-  //Text.readBlockString(wall);
-  //Text.readSpikeString(spike);
-  Text.readBlocks(wall);
-  Text.readSpikes(spike);
+  Text.readBlockString(wall);
+  Text.readSpikeString(spike);
+  //Text.printFile("StereoMadnessWalls.txt");
+  //Text.readBlocks(wall);
+  //Text.readSpikes(spike);
   //for (Block i : wall) {
   //  print(i.getX()+" "+i.getY()+" "+i.hasJumpPad()+"\\n");
   //}
