@@ -99,7 +99,13 @@ class Text {
       }
       writer.close();
       reader.close();
-      file.renameTo(tempFile);
+      file.delete();
+      try {
+        tempFile.createNewFile();
+      }
+      catch (IOException e) {
+        e.printStackTrace();
+      }
       tempFile.renameTo(file);
     }
     catch (IOException e) {
@@ -111,7 +117,12 @@ class Text {
       while (reader.ready()) {
         String s = reader.readLine();
         String[] arr = s.split(" ", 0);
-        Block b = new Block(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), 20, 20, Boolean.parseBoolean(arr[2]));
+        if (arr.length > 3) {
+          Block b = new Block(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), 20, 20, Boolean.parseBoolean(arr[2]), Float.parseFloat(arr[3]), Float.parseFloat(arr[5]));
+        }
+        else {
+          Block b = new Block(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), 20, 20, Boolean.parseBoolean(arr[2]));
+        }
         walls.add(b);
       }
       reader.close();
