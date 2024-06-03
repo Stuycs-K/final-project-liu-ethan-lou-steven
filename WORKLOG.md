@@ -40,6 +40,12 @@
 * Wrote Text class.
 * Worked on saving the blocks and spikes into files so that the map stays when you run it again.
 
+### 6/2/24
+* Convert ArrayLists to TreeSets
+* Wrote compareTo() functions for Block and Spike
+* Worked on mouseWheel() functionality in edit mode.
+* Stored Block and Spike coordinates in Strings.
+
 ## Steven Lou
 ### 5/22/24
 * Wrote the Spike class methods and constructors.
