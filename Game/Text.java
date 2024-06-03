@@ -157,7 +157,7 @@ class Text {
     try {
       //File file = new File("StereoMadnessWalls.txt");
       //String absolutePath = file.getAbsolutePath();
-      BufferedReader reader = new BufferedReader(new FileReader("tempWalls.txt"));
+      BufferedReader reader = new BufferedReader(new FileReader("walls.txt"));
       while (reader.ready()) {
         String s = reader.readLine();
         String[] arr = s.split(" ", 0);
@@ -180,7 +180,7 @@ class Text {
     try {
       //File file = new File("StereoMadnessSpikes.txt");
       //String absolutePath = file.getAbsolutePath();
-      BufferedReader reader = new BufferedReader(new FileReader("tempSpikes.txt"));
+      BufferedReader reader = new BufferedReader(new FileReader("spikes.txt"));
       while (reader.ready()) {
         String s = reader.readLine();
         String[] arr = s.split(" ", 0);
