@@ -20,24 +20,14 @@ class Text {
     }
   }
   public static void deleteAll() {
-    File wall = new File("/Users/steven/Documents/APCS/final-project-liu-ethan-lou-steven/Game/walls.txt");
-    File spikes = new File("/Users/steven/Documents/APCS/final-project-liu-ethan-lou-steven/Game/spikes.txt");
-    System.out.println(wall.getAbsoluteFile().exists());
-    System.out.println(wall.exists());
-    System.out.println(spikes.exists());
+    File wall = new File("walls.txt");
+    File spikes = new File("spikes.txt");
     wall.delete();
     spikes.delete();
-    try {
-      wall.createNewFile();
-      spikes.createNewFile();
-    }
-    catch (IOException e) {
-      e.printStackTrace();
-    }
   }
   public static void add(Block b) {
     try {
-      FileWriter writer = new FileWriter("/Users/steven/Documents/APCS/final-project-liu-ethan-lou-steven/Game/walls.txt", true);
+      FileWriter writer = new FileWriter("walls.txt", true);
       writer.write(b.getX()+" "+b.getY()+" "+b.hasJumpPad()+"\n");
       writer.close();
     }
@@ -47,7 +37,7 @@ class Text {
   }
   public static void add(Spike b) {
     try {
-      FileWriter writer = new FileWriter("/Users/steven/Documents/APCS/final-project-liu-ethan-lou-steven/Game/spikes.txt", true);
+      FileWriter writer = new FileWriter("spikes.txt", true);
       writer.write(b.getX()+" "+b.getY()+"\n");
       writer.close();
     }
@@ -56,8 +46,8 @@ class Text {
   }
   public static void remove(Block b) {
     try {
-      File file = new File("/Users/steven/Documents/APCS/final-project-liu-ethan-lou-steven/Game/walls.txt");
-      File tempFile = new File("/Users/steven/Documents/APCS/final-project-liu-ethan-lou-steven/Game/tempWalls.txt");
+      File file = new File("walls.txt");
+      File tempFile = new File("tempWalls.txt");
       BufferedReader reader = new BufferedReader(new FileReader(file));
       BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
       String check = ""+b.getX()+" "+b.getY()+" "+b.hasJumpPad();
@@ -72,12 +62,6 @@ class Text {
       writer.close();
       reader.close();
       file.delete();
-      try {
-        tempFile.createNewFile();
-      }
-      catch (IOException e) {
-        e.printStackTrace();
-      }
       tempFile.renameTo(file);
     }
     catch (IOException e) {
@@ -85,8 +69,8 @@ class Text {
   }
   public static void remove(Spike b) {
     try {
-      File file = new File("/Users/steven/Documents/APCS/final-project-liu-ethan-lou-steven/Game/spikes.txt");
-      File tempFile = new File("/Users/steven/Documents/APCS/final-project-liu-ethan-lou-steven/Game/tempSpikes.txt");
+      File file = new File("spikes.txt");
+      File tempFile = new File("tempSpikes.txt");
       BufferedReader reader = new BufferedReader(new FileReader(file));
       BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
       String check = ""+b.getX()+" "+b.getY();
@@ -99,7 +83,7 @@ class Text {
       }
       writer.close();
       reader.close();
-      file.renameTo(tempFile);
+      file.delete();
       tempFile.renameTo(file);
     }
     catch (IOException e) {
@@ -107,7 +91,7 @@ class Text {
   }
   public static void readBlocks(TreeSet<Block> walls) {
     try {
-      BufferedReader reader = new BufferedReader(new FileReader("/Users/steven/Documents/APCS/final-project-liu-ethan-lou-steven/Game/walls.txt"));
+      BufferedReader reader = new BufferedReader(new FileReader("walls.txt"));
       while (reader.ready()) {
         String s = reader.readLine();
         String[] arr = s.split(" ", 0);
@@ -122,7 +106,7 @@ class Text {
   }
   public static void readSpikes(TreeSet<Spike> spikes) {
     try {
-      BufferedReader reader = new BufferedReader(new FileReader("/Users/steven/Documents/APCS/final-project-liu-ethan-lou-steven/Game/spikes.txt"));
+      BufferedReader reader = new BufferedReader(new FileReader("spikes.txt"));
       while (reader.ready()) {
         String s = reader.readLine();
         String[] arr = s.split(" ", 0);
