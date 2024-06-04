@@ -48,7 +48,7 @@ public void restart() {
 }
 void setup() {
   size(500, 500);
-  edit.begin();
+  //edit.deleteAll();
   //lastIndexWall = 0;
   //Text.readBlockString(wall);
   //Text.readSpikeString(spike);

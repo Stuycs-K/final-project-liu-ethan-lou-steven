@@ -6,6 +6,7 @@ class Text {
   //static String Blockinfo = "720.0 420.0 false\n.0 420.0 false\n800.0 400.0 false\n880.0 380.0 false\n2040.0 380.0 20 10 false\n2120.0 360.0 20 10 false\n2200.0 340.0 20 10 false\n2280.0 320.0 20 10 false\n2360.0 300.0 20 10 false\n2460.0 320.0 false\n2480.0 420.0 400 120 false\n880.0 420.0 20 40 false\n1200.0 420.0 160 20 false\n1420.0 420.0 220 20 false\n1700.0 420.0 280 40 false\n2440.0 320.0 false\n2580.0 280.0 20 10 false\n2600.0 280.0 20 10 false\n2720.0 280.0 20 10 false\n2740.0 280.0 20 10 false\n2880.0 420.0 200 100 false\n2940.0 290.0 20 10 false\n2960.0 290.0 20 10 false\n2980.0 290.0 20 10 false\n3000.0 290.0 20 10 false\n3080.0 420.0 100 120 false\n3300.0 360.0 false\n3320.0 360.0 false\n3340.0 360.0 false\n3360.0 360.0 false\n3420.0 350.0 20 10 false\n3440.0 350.0 20 10 false\n3460.0 350.0 20 10 false\n3480.0 350.0 20 10 false\n3180.0 420.0 120 80 false\n3540.0 370.0 20 10 false\n3560.0 370.0 20 10 false\n3580.0 370.0 20 10 false\n3600.0 370.0 20 10 false\n3620.0 370.0 20 10 false\n3640.0 370.0 20 10 false\n3660.0 370.0 20 10 false\n3700.0 390.0 20 10 false\n3720.0 390.0 20 10 false\n3740.0 390.0 20 10 false\n3760.0 390.0 20 10 false\n3780.0 390.0 20 10 false\n3860.0 370.0 20 10 false\n3940.0 350.0 20 10 false\n4020.0 330.0 20 10 false\n4100.0 310.0 20 10 false\n4180.0 290.0 20 10 false\n4220.0 360.0 false\n4240.0 360.0 false\n4260.0 360.0 false\n4280.0 360.0 false\n4300.0 360.0 false\n4320.0 360.0 false\n4340.0 420.0 1000 80 false\n4260.0 270.0 20 10 false\n5320.0 360.0 true\n";
   //static String Spikeinfo = "340.0 420.0\n500.0 420.0\n20 10\n520.0 420.0\n680.0 420.0\n700.0 420.0\n740.0 420.0\n760.0 420.0\n780.0 420.0\n820.0 420.0\n840.0 420.0\n860.0 420.0\n1080.0 420.0\n1100.0 420.0\n1360.0 420.0\n1380.0 420.0\n1400.0 420.0\n1640.0 420.0\n1660.0 420.0\n1680.0 420.0\n1840.0 380.0\n2560.0 300.0\n2580.0 300.0\n2600.0 300.0\n2620.0 300.0\n2700.0 300.0\n2720.0 300.0\n2740.0 300.0\n2760.0 300.0\n2940.0 280.0\n2960.0 280.0\n2980.0 280.0\n3000.0 280.0\n3160.0 300.0\n3180.0 340.0\n3480.0 340.0\n3660.0 360.0\n4260.0 260.0\n4380.0 340.0\n4400.0 340.0\n4420.0 340.0\n4480.0 340.0\n4500.0 340.0\n4520.0 340.0\n4600.0 340.0\n4620.0 340.0\n4640.0 340.0\n4720.0 340.0\n4740.0 340.0\n4760.0 340.0\n4840.0 340.0\n4860.0 340.0\n4880.0 340.0\n4960.0 340.0\n4980.0 340.0\n5000.0 340.0\n5100.0 340.0\n5120.0 340.0\n5140.0 340.0\n5220.0 340.0\n5240.0 340.0\n5260.0 340.0\n";
   PrintWriter walls, spikes;
+  BufferedReader readWalls, readSpikes;
   
   //public static void printFile(String filename) {
   //  try {
@@ -58,67 +59,85 @@ class Text {
     this.spikes = createWriter("spikes.txt");
   }
   
-  public void begin() {
-    this.walls = createWriter("walls.txt");
-    this.spikes = createWriter("spikes.txt");
-  }
-  
   public void add(Block b) {
-    String[] wallLines = loadStrings("walls.txt");
-    walls = createWriter("walls.txt");
-    for (int i = 0; i < wallLines.length; i++) {
-      walls.println(wallLines[i]);
+    try {
+      readWalls = createReader("walls.txt");
+      walls = createWriter("walls.txt");
+      while(readWalls.ready()) {
+        String s = readWalls.readLine();
+        walls.println(s);
+      }
+      walls.println(b.getX()+" "+b.getY() + " " + b.hasJumpPad());
+      walls.flush();
+      walls.close();
+      readWalls.close();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
-    walls.println(b.getX()+" "+b.getY()+" "+b.hasJumpPad());
-    walls.flush();
-    walls.close();
   }
   
   public void add(Spike b) {
-    String[] spikeLines = loadStrings("spikes.txt");
-    spikes = createWriter("spikes.txt");
-    for (int i = 0; i < spikeLines.length; i++) {
-      spikes.println(spikeLines[i]);
+    try {
+      readSpikes = createReader("spikes.txt");
+      spikes = createWriter("spikes.txt");
+      while(readSpikes.ready()) {
+        String s = readSpikes.readLine();
+        spikes.println(s);
+      }
+      spikes.println(b.getX()+" "+b.getY());
+      spikes.flush();
+      spikes.close();
+      readSpikes.close();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
-    spikes.println(b.getX()+" "+b.getY());
-    spikes.flush();
-    spikes.close();
   }
   
   public void remove(Block b) {
-    String[] wallLines = loadStrings("walls.txt");
-    walls = createWriter("walls.txt");
-    String check = b.getX()+" "+b.getY()+" "+b.hasJumpPad();
-    for (int i = 0; i < wallLines.length; i++) {
-      if (check.equals(wallLines[i])) {
-        break;
+    try {
+      readWalls = createReader("walls.txt");
+      walls = createWriter("walls.txt");
+      String check = b.getX()+" "+b.getY() + " " + b.hasJumpPad();
+      while(readWalls.ready()) {
+        String s = readWalls.readLine();
+        if (s.equals(check)) {
+          continue;
+        }
+        walls.println(s);
       }
-      walls.println(wallLines[i]);
+      walls.flush();
+      walls.close();
+      readWalls.close();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
-    walls.flush();
-    walls.close();
   }
   public void remove(Spike b) {
-    String[] spikeLines = loadStrings("spikes.txt");
-    spikes = createWriter("spikes.txt");
-    String check = b.getX()+" "+b.getY();
-    for (int i = 0; i < spikeLines.length; i++) {
-      if (check.equals(spikeLines[i])) {
-        break;
+    try {
+      readSpikes = createReader("spikes.txt");
+      spikes = createWriter("spikes.txt");
+      String check = b.getX()+" "+b.getY();
+      while(readSpikes.ready()) {
+        String s = readSpikes.readLine();
+        if (s.equals(check)){
+          continue;
+        }
+        spikes.println(s);
       }
-      spikes.println(spikeLines[i]);
+      spikes.flush();
+      spikes.close();
+      readSpikes.close();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
-    spikes.println();
-    spikes.flush();
-    spikes.close();
   }
   public void readBlocks(TreeSet<Block> walls) {
     try {
       //File file = new File("StereoMadnessWalls.txt");
       //String absolutePath = file.getAbsolutePath();
-      BufferedReader reader = createReader("walls.txt");
-      while (reader.ready()) {
-        String s = reader.readLine();
+      readWalls = createReader("walls.txt");
+      while (readWalls.ready()) {
+        String s = readWalls.readLine();
         String[] arr = s.split(" ", 0);
         Block b;
         if (arr.length > 3) {
@@ -129,7 +148,7 @@ class Text {
         }
         walls.add(b);
       }
-      reader.close();
+      readWalls.close();
     }
     catch (IOException e) {
       e.printStackTrace();
@@ -139,9 +158,9 @@ class Text {
     try {
       //File file = new File("StereoMadnessSpikes.txt");
       //String absolutePath = file.getAbsolutePath();
-      BufferedReader reader = createReader("spikes.txt");
-      while (reader.ready()) {
-        String s = reader.readLine();
+      readSpikes = createReader("spikes.txt");
+      while (readSpikes.ready()) {
+        String s = readSpikes.readLine();
         String[] arr = s.split(" ", 0);
         Spike b;
         if (arr.length > 2) {
@@ -152,26 +171,10 @@ class Text {
         }
         spikes.add(b);
       }
-      reader.close();
+      readSpikes.close();
     }
     catch (IOException e) {
       e.printStackTrace();
-    }
-  }
-  public void write() {
-    walls = createWriter("walls.txt");
-    spikes = createWriter("spikes.txt");
-    String[] wallLines = loadStrings("walls.txt");
-    String[] spikesLines = loadStrings("spikes.txt");
-    walls.flush();
-    walls.close();
-    spikes.flush();
-    spikes.close();
-    for (int i = 0; i < wallLines.length; i++) {
-      walls.println(wallLines[i]);
-    }
-    for (int i = 0; i < spikesLines.length; i++) {
-      walls.println(spikesLines[i]);
     }
   }
 }
