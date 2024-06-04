@@ -163,6 +163,14 @@ void keyPressed() {
   if (key=='w') {
     invincible = !invincible;
   }
+  else if (key=='s') {
+    if (s.getMode().equals("cube")) {
+      s.setMode("ship");
+    }
+    else {
+      s.setMode("cube");
+    }
+  }
 }
 void mouseClicked() {
   if (menu.isTouching(mouseX, mouseY)) {

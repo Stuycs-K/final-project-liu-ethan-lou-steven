@@ -3,6 +3,7 @@ class Sprite {
   private int jumpTime;
   private boolean isAlive, isJumping;
   private static float G = 80;
+  private String mode = "cube";
   public Sprite(float x, float y) {
     xcor = x;
     ycor = y;
@@ -12,6 +13,9 @@ class Sprite {
     jumpTime=0;
     v_initial=0;
     y_initial=y;
+  }
+  public String getMode() {
+    return mode;
   }
   public float getHeight() {
     return h;
@@ -24,6 +28,9 @@ class Sprite {
   }
   public float setY(float value) {
     return ycor = value;
+  }
+  public void setMode(String s) {
+    mode=s;
   }
   public float getWidth() {
     return w;
@@ -53,21 +60,36 @@ class Sprite {
     return isJumping;
   }
   public void updateJump(float currTime) {
-    float t = (float) ((currTime-jumpTime)/60.0);
-    //System.out.prfloatln(t);
-    ycor = y_initial - Math.round((float)(v_initial*t-0.5*G*(t*t)));
+    if (mode.equals("cube")) {
+      float t = (float) ((currTime-jumpTime)/60.0);
+      //System.out.prfloatln(t);
+      ycor = y_initial - Math.round((float)(v_initial*t-0.5*G*(t*t)));
+    }
+    else if (mode.equals("ship")) {
+      ycor-=5;
+    }
   }
   public void jump(int jumpTime, float speed) {
-    ycor--;
-    this.jumpTime=jumpTime;
-    v_initial=speed;
-    isJumping = true;
-    y_initial=ycor;
+    if (mode.equals("cube")) {
+      ycor--;
+      this.jumpTime=jumpTime;
+      v_initial=speed;
+      isJumping = true;
+      y_initial=ycor;
+    }
+    else if (mode.equals("ship")) {
+      ycor-=10;
+    }
   }
   public void fall(int jumpTime) {
-    this.jumpTime=jumpTime;
-    v_initial=0;
-    isJumping=true;
-    y_initial=ycor;
+    if (mode.equals("cube")) {
+      this.jumpTime=jumpTime;
+      v_initial=0;
+      isJumping=true;
+      y_initial=ycor;
+    }
+    else if (mode.equals("ship")) {
+      ycor+=3;
+    }
   }
 }
