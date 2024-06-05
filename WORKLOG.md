@@ -46,6 +46,11 @@
 * Worked on mouseWheel() functionality in edit mode.
 * Stored Block and Spike coordinates in Strings.
 
+### 6/4/24
+* Wrote code for Ship mode
+* Organized the code so that it is less clunky by combining classes and making Obstacle abstract
+* Combined all Blocks and Spikes into one TreeSet of Obstacles
+
 ## Steven Lou
 ### 5/22/24
 * Wrote the Spike class methods and constructors.
