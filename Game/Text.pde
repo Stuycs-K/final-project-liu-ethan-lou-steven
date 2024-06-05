@@ -67,7 +67,7 @@ class Text {
         String s = readWalls.readLine();
         walls.println(s);
       }
-      walls.println(b.getX()+" "+b.getY() + " " + b.hasJumpPad());
+      walls.println(b.getX()+" "+b.getY() + " false");
       walls.flush();
       walls.close();
       readWalls.close();
@@ -92,12 +92,46 @@ class Text {
       e.printStackTrace();
     }
   }
-  
+  public void add(JumpBlock b) {
+    try {
+      readWalls = createReader("walls.txt");
+      walls = createWriter("walls.txt");
+      while(readWalls.ready()) {
+        String s = readWalls.readLine();
+        walls.println(s);
+      }
+      walls.println(b.getX()+" "+b.getY() + " true");
+      walls.flush();
+      walls.close();
+      readWalls.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+  public void remove(JumpBlock b) {
+    try {
+      readWalls = createReader("walls.txt");
+      walls = createWriter("walls.txt");
+      String check = b.getX()+" "+b.getY() + " true";
+      while(readWalls.ready()) {
+        String s = readWalls.readLine();
+        if (s.equals(check)) {
+          continue;
+        }
+        walls.println(s);
+      }
+      walls.flush();
+      walls.close();
+      readWalls.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
   public void remove(Block b) {
     try {
       readWalls = createReader("walls.txt");
       walls = createWriter("walls.txt");
-      String check = b.getX()+" "+b.getY() + " " + b.hasJumpPad();
+      String check = b.getX()+" "+b.getY() + " false";
       while(readWalls.ready()) {
         String s = readWalls.readLine();
         if (s.equals(check)) {
@@ -131,7 +165,7 @@ class Text {
       e.printStackTrace();
     }
   }
-  public void readBlocks(TreeSet<Block> walls) {
+  public void readBlocks(TreeSet<Obstacle> obs) {
     try {
       //File file = new File("StereoMadnessWalls.txt");
       //String absolutePath = file.getAbsolutePath();
@@ -139,14 +173,22 @@ class Text {
       while (readWalls.ready()) {
         String s = readWalls.readLine();
         String[] arr = s.split(" ", 0);
-        Block b;
         if (arr.length > 3) {
-          b = new Block(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3]), Boolean.parseBoolean(arr[4]));
+          if (Boolean.parseBoolean(arr[4])) {
+            obs.add(new JumpBlock(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3])));
+          }
+          else {
+            obs.add(new Block(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3])));
+          }
         }
         else {
-          b = new Block(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), 20, 20, Boolean.parseBoolean(arr[2]));
+          if (Boolean.parseBoolean(arr[2])) {
+            obs.add(new JumpBlock(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), 20, 20));
+          }
+          else {
+            obs.add(new Block(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), 20, 20));
+          }
         }
-        walls.add(b);
       }
       readWalls.close();
     }
@@ -154,7 +196,7 @@ class Text {
       e.printStackTrace();
     }
   }
-  public void readSpikes(TreeSet<Spike> spikes) {
+  public void readSpikes(TreeSet<Obstacle> obs) {
     try {
       //File file = new File("StereoMadnessSpikes.txt");
       //String absolutePath = file.getAbsolutePath();
@@ -162,14 +204,12 @@ class Text {
       while (readSpikes.ready()) {
         String s = readSpikes.readLine();
         String[] arr = s.split(" ", 0);
-        Spike b;
         if (arr.length > 2) {
-          b = new Spike(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3]));
+          obs.add(new Spike(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3])));
         }
         else {
-          b = new Spike(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), 20);
+          obs.add(new Spike(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), 20));
         }
-        spikes.add(b);
       }
       readSpikes.close();
     }
