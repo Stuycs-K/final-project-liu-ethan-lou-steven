@@ -75,13 +75,8 @@ void draw() {
       }
     }
     else if (curr instanceof JumpBlock) {
-<<<<<<< HEAD
-      if (curr.isTouching(s) == 2) {
-        s.jump(2 * shift, 150);
-=======
       if (curr.isTouching(s) == 2 && !invincible) {
         s.jump(2 * shift, 120);
->>>>>>> acdaf04aa9d31d5a970a3cff081f9f25e2c89c86
       }
     }
   }
@@ -108,30 +103,38 @@ void draw() {
     s.fall(2*shift);
   }
   s.display(shift, angle);
-  if (!isTouchingBlock) {
-    angle += PI/10;
-    if (angle >= 2 * PI) {
-      angle -= 2 * PI;
+  if (s.getMode().equals("cube")) {
+    if (!isTouchingBlock) {
+      angle += PI/10;
+      if (angle >= 2 * PI) {
+        angle -= 2 * PI;
+      }
+    }
+    if (isTouchingBlock) {
+      if (angle <= PI/2) {
+        angle = PI/2;
+      }
+      else if (angle <= PI) {
+        angle = PI;
+      }
+      else if (angle <= 3 * PI/2) {
+        angle = 3 * PI/2;
+      }
+      else {
+        angle = 0;
+      }
     }
   }
-  if (isTouchingBlock) {
-    if (angle <= PI/2) {
-      angle = PI/2;
-    }
-    else if (angle <= PI) {
-      angle = PI;
-    }
-    else if (angle <= 3 * PI/2) {
-      angle = 3 * PI/2;
-    }
-    else {
-      angle = 0;
-    }
+  else if (s.getMode().equals("wave")) {
+    angle=PI/4;
   }
   //shift+=1;
   shift+=speed;
   if (keyPressed) {
-    if (key==' ' && !s.isJumping()) {  
+    if (key==' ' && !s.isJumping()) {
+      if (s.getMode().equals("wave")) {
+        angle=-PI/4;
+      }
       s.jump(2 * shift, 80);
     }
   }
@@ -142,7 +145,7 @@ void keyPressed() {
   }
   else if (key=='s') {
     if (s.getMode().equals("cube")) {
-      s.setMode("ship");
+      s.setMode("wave");
     }
     else {
       s.setMode("cube");

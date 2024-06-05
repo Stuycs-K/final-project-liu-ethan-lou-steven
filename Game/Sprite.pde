@@ -65,7 +65,7 @@ class Sprite {
       //System.out.prfloatln(t);
       ycor = y_initial - Math.round((float)(v_initial*t-0.5*G*(t*t)));
     }
-    else if (mode.equals("ship")) {
+    else if (mode.equals("wave")) {
       ycor-=5;
       y_initial=ycor;
       jumpTime=(int)currTime;
@@ -79,7 +79,7 @@ class Sprite {
       isJumping = true;
       y_initial=ycor;
     }
-    else if (mode.equals("ship")) {
+    else if (mode.equals("wave")) {
       ycor-=10;
     }
   }
@@ -90,22 +90,30 @@ class Sprite {
       isJumping=true;
       y_initial=ycor;
     }
-    else if (mode.equals("ship")) {
+    else if (mode.equals("wave")) {
       ycor+=5;
     }
   }
   public void display(float shift, float angle) {
-    fill(123);
-    float x1 = s.getX() + 10 + (float) (-10 * Math.cos(angle) - (-10) * Math.sin(angle)) + speed;
-    float y1 = s.getY() - 10 - (float) (10 * Math.sin(angle) - (-10) * Math.cos(angle));
-    float x2 = s.getX() + 10 + (float) (10 * Math.cos(angle) - (-10) * Math.sin(angle)) + speed;
-    float y2 = s.getY() - 10 - (float) (-10 * Math.sin(angle) - (-10) * Math.cos(angle));
-    float x3 = s.getX() + 10 + (float) (-10 * Math.cos(angle) - (10) * Math.sin(angle)) + speed;
-    float y3 = s.getY() - 10 - (float) (10 * Math.sin(angle) - (10) * Math.cos(angle));
-    float x4 = s.getX() + 10 + (float) (10 * Math.cos(angle) - (10) * Math.sin(angle)) + speed;
-    float y4 = s.getY() - 10 - (float) (-10 * Math.sin(angle) - (10) * Math.cos(angle));
-    quad(x1-shift, y1, x2-shift, y2, x4-shift, y4, x3-shift, y3);
-    //rect(s.getX()-shift, s.getY()-20, 20, 20);
-    s.setX(s.getX() + speed);
+    if (mode.equals("cube")) {
+      fill(123);
+      float x1 = s.getX() + 10 + (float) (-10 * Math.cos(angle) - (-10) * Math.sin(angle)) + speed;
+      float y1 = s.getY() - 10 - (float) (10 * Math.sin(angle) - (-10) * Math.cos(angle));
+      float x2 = s.getX() + 10 + (float) (10 * Math.cos(angle) - (-10) * Math.sin(angle)) + speed;
+      float y2 = s.getY() - 10 - (float) (-10 * Math.sin(angle) - (-10) * Math.cos(angle));
+      float x3 = s.getX() + 10 + (float) (-10 * Math.cos(angle) - (10) * Math.sin(angle)) + speed;
+      float y3 = s.getY() - 10 - (float) (10 * Math.sin(angle) - (10) * Math.cos(angle));
+      float x4 = s.getX() + 10 + (float) (10 * Math.cos(angle) - (10) * Math.sin(angle)) + speed;
+      float y4 = s.getY() - 10 - (float) (-10 * Math.sin(angle) - (10) * Math.cos(angle));
+      quad(x1-shift, y1, x2-shift, y2, x4-shift, y4, x3-shift, y3);
+      //rect(s.getX()-shift, s.getY()-20, 20, 20);
+      s.setX(s.getX() + speed);
+    }
+    else if (mode.equals("wave")) {
+      fill(123);
+      rotate(angle);
+      triangle(xcor-shift+w/2, ycor-h, xcor-shift+w, ycor, xcor-shift, ycor);
+      setX(getX()+speed);
+    }
   } 
 }

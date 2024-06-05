@@ -159,8 +159,10 @@ class Orb extends Obstacle {
     super(x, y, r);
   }
   public float isTouching(Sprite s) {
+    return 0;
   }
   public int compareTo(Obstacle o2) {
+    return 0;
   }
   public void display(float shift) {
   }
