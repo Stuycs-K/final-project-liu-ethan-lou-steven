@@ -151,17 +151,39 @@ class Spike extends Obstacle {
     triangle(this.getX()-shift, this.getY(), this.getX() - shift + this.getWidth()/2, this.getY() - this.getHeight(), this.getX() - shift + this.getWidth(), this.getY());
   }
 }
-class Orb extends Obstacle {
+abstract class Orb extends Obstacle {
+  private boolean clicked;
+  private float type;
   public Orb(float x, float y) {
     super(x, y, 20);
+    clicked = false;
   }
   public Orb(float x, float y, float r) {
     super(x, y, r);
+    clicked = false;
+  }
+  public boolean isClicked() {
+    return clicked;
+  }
+  public void setClicked(boolean x) {
+    clicked = x;
   }
   public float isTouching(Sprite s) {
+    if ((s.getX() - this.getX()) * (s.getX() - this.getX()) + (s.getY() - this.getY()) * (s.getY() - this.getY()) > this.getWidth() * this.getWidth()) {
+      return 0;
+    }
+    return 2;
   }
   public int compareTo(Obstacle o2) {
+    if (this.getX()==o2.getX()) {
+      return (int) (this.getY()-o2.getY());
+    }
+    else {
+      return (int) (this.getX()-o2.getX());
+    }
   }
   public void display(float shift) {
+    fill(255);
+    circle(getX(), getY(), getWidth());
   }
 }
