@@ -2,7 +2,7 @@ class Sprite {
   private float xcor, ycor, h, w, v_initial=100, y_initial;
   private int jumpTime;
   private boolean isAlive, isJumping;
-  private static float G = 80;
+  private float G = 80;
   private String mode = "cube";
   public Sprite(float x, float y) {
     xcor = x;
@@ -94,4 +94,18 @@ class Sprite {
       ycor+=5;
     }
   }
+  public void display(int shift, float angle) {
+    fill(123);
+    float x1 = s.getX() + 10 + (float) (-10 * Math.cos(angle) - (-10) * Math.sin(angle)) + speed;
+    float y1 = s.getY() - 10 - (float) (10 * Math.sin(angle) - (-10) * Math.cos(angle));
+    float x2 = s.getX() + 10 + (float) (10 * Math.cos(angle) - (-10) * Math.sin(angle)) + speed;
+    float y2 = s.getY() - 10 - (float) (-10 * Math.sin(angle) - (-10) * Math.cos(angle));
+    float x3 = s.getX() + 10 + (float) (-10 * Math.cos(angle) - (10) * Math.sin(angle)) + speed;
+    float y3 = s.getY() - 10 - (float) (10 * Math.sin(angle) - (10) * Math.cos(angle));
+    float x4 = s.getX() + 10 + (float) (10 * Math.cos(angle) - (10) * Math.sin(angle)) + speed;
+    float y4 = s.getY() - 10 - (float) (-10 * Math.sin(angle) - (10) * Math.cos(angle));
+    quad(x1-shift, y1, x2-shift, y2, x4-shift, y4, x3-shift, y3);
+    //rect(s.getX()-shift, s.getY()-20, 20, 20);
+    s.setX(s.getX() + speed);
+} 
 }
