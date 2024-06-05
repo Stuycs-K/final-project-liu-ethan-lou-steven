@@ -155,45 +155,47 @@ void mouseClicked() {
     int x=((int)((mouseX+shift)/20))*20, y=((int)(mouseY/20)+1)*20;
     //println(mouseX+" "+mouseY+" "+x+" "+y);
     boolean isTouchingBlock=false, isTouchingJump=false, isTouchingSpike=false;
-    //Block b = new Block(20, 20);
-    //for (Block i : wall) {
-    //  if (i.getX()==x && i.getY()==y) {
-    //    isTouchingBlock = true;
-    //    b=i;
-    //    isTouchingJump=i.hasJumpPad();
-    //    break;
-    //  }
-    //}
-    //Spike rem = new Spike(20, 20);
-    //for (Spike i : spike) {
-    //  if (i.getX()==x && i.getY()==y) {
-    //    rem=i;
-    //    isTouchingSpike=true;
-    //    break;
-    //  }
-    //}
-    //if (isTouchingBlock && !b.hasJumpPad()) {
-    //  wall.remove(b);
-    //  edit.remove(b);
-    //  Block temp = new Block(b.getX(), b.getY(), b.getWidth(), b.getHeight(), true);
-    //  wall.add(temp);
-    //  edit.add(temp);
-    //}
-    //else if (isTouchingBlock) {
-    //  wall.remove(b);
-    //  edit.remove(b);
-    //  Spike temp = new Spike(b.getX(), b.getY(), b.getHeight());
-    //  spike.add(temp);
-    //  edit.add(temp);
-    //}
-    //else if (!isTouchingBlock && !isTouchingSpike) {
-    //  wall.add(new Block((float)x, (float)y, 20));
-    //  edit.add(new Block((float)x, (float)y, 20));
-    //}
-    //else {
-    //  spike.remove(rem);
-    //  edit.remove(rem);
-    //}
+    Obstacle b = new Block(20, 20);
+    for (Obstacle i : obs) {
+      if (i instanceof Block && i.getX()==x && i.getY()==y) {
+        isTouchingBlock = true;
+        b=i;
+        break;
+      }
+      else if (i instanceof JumpBlock && i.getX()==x && i.getY()==y) {
+        isTouchingBlock = true;
+        b=i;
+        isTouchingJump=true;
+        break;
+      }
+      else if (i instanceof Spike && i.getX()==x && i.getY()==y) {
+        b=i;
+        isTouchingSpike=true;
+        break;
+      }
+    }
+    if (isTouchingBlock && !isTouchingJump) {
+      obs.remove(b);
+      edit.remove((Block)b);
+      JumpBlock temp = new JumpBlock(b.getX(), b.getY(), b.getWidth(), b.getHeight());
+      obs.add(temp);
+      edit.add(temp);
+    }
+    else if (isTouchingBlock && isTouchingJump) {
+      obs.remove(b);
+      edit.remove((JumpBlock) b);
+      Spike temp = new Spike(b.getX(), b.getY(), b.getHeight());
+      obs.add(temp);
+      edit.add(temp);
+    }
+    else if (!isTouchingBlock && !isTouchingSpike) {
+      obs.add(new Block((float)x, (float)y, 20));
+      edit.add(new Block((float)x, (float)y, 20));
+    }
+    else {
+      obs.remove(b);
+      edit.remove((Spike)b);
+    }
   }
 }
 void mouseWheel(MouseEvent event) {
