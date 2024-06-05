@@ -2,10 +2,10 @@ import java.util.*;
 TreeSet<Block> wall = new TreeSet<Block>();
 TreeSet<Spike> spike = new TreeSet<Spike>();
 //ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
-int lastIndexWall, shift=0, speed=3, editShift=0;
+//int lastIndexWall;
 Sprite s; Button menu;
 String mode = "Play";
-float angle=0;
+float angle=0, speed = 3.5, shift=0, editShift=0;
 boolean invincible = false;
 Text edit = new Text();
 public void display(Sprite s) {
@@ -53,8 +53,8 @@ void setup() {
   //Text.readBlockString(wall);
   //Text.readSpikeString(spike);
   //Text.printFile("StereoMadnessWalls.txt");
-  edit.readBlocks(wall);
-  edit.readSpikes(spike);
+  edit.readBlocks(wall, "StereoMadnessWalls.txt");
+  edit.readSpikes(spike, "StereoMadnessSpikes.txt");
   //for (Block i : wall) {
   //  print(i.getX()+" "+i.getY()+" "+i.hasJumpPad()+"\\n");
   //}

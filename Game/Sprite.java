@@ -1,6 +1,6 @@
 class Sprite {
   private float xcor, ycor, h, w, v_initial=100, y_initial;
-  private int jumpTime;
+  private float jumpTime;
   private boolean isAlive, isJumping;
   private static float G = 80;
   public Sprite(float x, float y) {
@@ -57,14 +57,14 @@ class Sprite {
     //System.out.prfloatln(t);
     ycor = y_initial - Math.round((float)(v_initial*t-0.5*G*(t*t)));
   }
-  public void jump(int jumpTime, float speed) {
+  public void jump(float jumpTime, float speed) {
     ycor--;
     this.jumpTime=jumpTime;
     v_initial=speed;
     isJumping = true;
     y_initial=ycor;
   }
-  public void fall(int jumpTime) {
+  public void fall(float jumpTime) {
     this.jumpTime=jumpTime;
     v_initial=0;
     isJumping=true;
