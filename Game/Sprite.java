@@ -67,6 +67,8 @@ class Sprite {
     }
     else if (mode.equals("ship")) {
       ycor-=5;
+      y_initial=ycor;
+      jumpTime=(int)currTime;
     }
   }
   public void jump(int jumpTime, float speed) {
@@ -89,7 +91,7 @@ class Sprite {
       y_initial=ycor;
     }
     else if (mode.equals("ship")) {
-      ycor+=3;
+      ycor+=5;
     }
   }
 }
