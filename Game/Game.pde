@@ -7,6 +7,7 @@ Sprite s; Button menu;
 String mode = "Play";
 float angle=0;
 boolean invincible = false;
+Text edit = new Text();
 public void display(Sprite s) {
   fill(123);
   float x1 = s.getX() + 10 + (float) (-10 * Math.cos(angle) - (-10) * Math.sin(angle)) + speed;
@@ -47,13 +48,13 @@ public void restart() {
 }
 void setup() {
   size(500, 500);
-  //Text.deleteAll();
+  //edit.deleteAll();
   //lastIndexWall = 0;
-  Text.readBlockString(wall);
-  Text.readSpikeString(spike);
+  //Text.readBlockString(wall);
+  //Text.readSpikeString(spike);
   //Text.printFile("StereoMadnessWalls.txt");
-  //Text.readBlocks(wall);
-  //Text.readSpikes(spike);
+  edit.readBlocks(wall);
+  edit.readSpikes(spike);
   //for (Block i : wall) {
   //  print(i.getX()+" "+i.getY()+" "+i.hasJumpPad()+"\\n");
   //}
@@ -203,25 +204,25 @@ void mouseClicked() {
     }
     if (isTouchingBlock && !b.hasJumpPad()) {
       wall.remove(b);
-      Text.remove(b);
+      edit.remove(b);
       Block temp = new Block(b.getX(), b.getY(), b.getWidth(), b.getHeight(), true);
       wall.add(temp);
-      Text.add(temp);
+      edit.add(temp);
     }
     else if (isTouchingBlock) {
       wall.remove(b);
-      Text.remove(b);
+      edit.remove(b);
       Spike temp = new Spike(b.getX(), b.getY(), b.getHeight());
       spike.add(temp);
-      Text.add(temp);
+      edit.add(temp);
     }
     else if (!isTouchingBlock && !isTouchingSpike) {
       wall.add(new Block((float)x, (float)y, 20));
-      Text.add(new Block((float)x, (float)y, 20));
+      edit.add(new Block((float)x, (float)y, 20));
     }
     else {
       spike.remove(rem);
-      Text.remove(rem);
+      edit.remove(rem);
     }
   }
 }
