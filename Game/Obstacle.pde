@@ -151,3 +151,17 @@ class Spike extends Obstacle {
     triangle(this.getX()-shift, this.getY(), this.getX() - shift + this.getWidth()/2, this.getY() - this.getHeight(), this.getX() - shift + this.getWidth(), this.getY());
   }
 }
+class Orb extends Obstacle {
+  public Orb(float x, float y) {
+    super(x, y, 20);
+  }
+  public Orb(float x, float y, float r) {
+    super(x, y, r);
+  }
+  public float isTouching(Sprite s) {
+  }
+  public int compareTo(Obstacle o2) {
+  }
+  public void display(float shift) {
+  }
+}

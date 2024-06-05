@@ -76,7 +76,7 @@ void draw() {
     }
     else if (curr instanceof JumpBlock) {
       if (curr.isTouching(s) == 2 && !invincible) {
-        s.jump(2 * shift, 150);
+        s.jump(2 * shift, 120);
       }
     }
   }
@@ -127,7 +127,7 @@ void draw() {
   shift+=speed;
   if (keyPressed) {
     if (key==' ' && !s.isJumping()) {  
-      s.jump(2 * shift, 110);
+      s.jump(2 * shift, 80);
     }
   }
 }  

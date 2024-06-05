@@ -2,7 +2,7 @@ class Sprite {
   private float xcor, ycor, h, w, v_initial=100, y_initial;
   private float jumpTime;
   private boolean isAlive, isJumping;
-  private float G = 80;
+  private float G = 60;
   private String mode = "cube";
   public Sprite(float x, float y) {
     xcor = x;
