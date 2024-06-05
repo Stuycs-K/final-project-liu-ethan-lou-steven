@@ -74,7 +74,7 @@ void draw() {
       }
     }
     else if (curr instanceof JumpBlock) {
-      if (curr.isTouching(s) == 2 && !invincible) {
+      if (curr.isTouching(s) == 2) {
         s.jump(2 * shift, 150);
       }
     }
