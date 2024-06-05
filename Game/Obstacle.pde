@@ -12,7 +12,7 @@ abstract class Obstacle implements Comparable<Obstacle>{
     this.h=h;
     this.w=h;
   }
-  public Obstacle(float x, float y, float h, float w) {
+  public Obstacle(float x, float y, float w, float h) {
     xcor=x;
     ycor=y;
     this.h=h;
@@ -31,7 +31,7 @@ abstract class Obstacle implements Comparable<Obstacle>{
     return w;
   }
   abstract float isTouching(Sprite s);
-  abstract void display(int shift);
+  abstract void display(float shift);
 }
 
 class Block extends Obstacle {
@@ -51,7 +51,7 @@ class Block extends Obstacle {
       //System.out.println(s.getY());
       return 0;
     }
-    float left=Math.max(0, s.getX()+s.getWidth()-x), down=Math.max(0, s.getY()-(y-getHeight()));
+    float left=Math.max(0, s.getX()+3*s.getWidth()/2-x), down=Math.max(0, s.getY()-(y-getHeight()));
     //if (s.getX()+s.getWidth()>=x && s.getY()>y-h && s.getX()<x) {
     //  return 1;
     //}
@@ -71,7 +71,7 @@ class Block extends Obstacle {
       return (int) (this.getX()-b2.getX());
     }
   }
-  public void display(int shift) {
+  public void display(float shift) {
     fill(255);
     rect(this.getX()-shift, this.getY()-this.getHeight(), this.getWidth(), this.getHeight());
   }
@@ -113,7 +113,7 @@ class JumpBlock extends Obstacle {
       return (int) (this.getX()-b2.getX());
     }
   }
-  public void display(int shift) {
+  public void display(float shift) {
     fill(255);
     rect(this.getX()-shift, this.getY()-this.getHeight(), this.getWidth(), this.getHeight());
     fill(255, 250, 205);
@@ -122,7 +122,7 @@ class JumpBlock extends Obstacle {
 }
 class Spike extends Obstacle {
   public Spike(float x, float y){
-    super(x, y, (float)Math.sqrt(3)/2, 1);
+    super(x, y, 20, (float) (10 * Math.sqrt(3)));
   }
   public Spike(float x, float y, float w){
     super(x, y, w, (float) (Math.sqrt(3) / 2 * w));
@@ -131,8 +131,8 @@ class Spike extends Obstacle {
     super(x, y, w, h);
   }
   public float isTouching(Sprite s) {
-    float x=this.getX() + getWidth()/3 , y=this.getY();
-    if (s.getX()>x+getWidth()/3 || s.getX()+s.getWidth()<x || s.getY()<y-getHeight()/2 || s.getY()-s.getHeight()>y) {
+    float x=this.getX() + getWidth()/4 , y=this.getY();
+    if (s.getX()>x + getWidth()/2  || s.getX()+s.getWidth()<x || s.getY()<y-getHeight()/2 || s.getY()-s.getHeight()>y) {
       //System.out.println(s.getY());
       return 0;
     }
@@ -146,8 +146,22 @@ class Spike extends Obstacle {
       return (int) (this.getX()-s2.getX());
     }
   }
-  public void display(int shift) {
+  public void display(float shift) {
     fill(255);
     triangle(this.getX()-shift, this.getY(), this.getX() - shift + this.getWidth()/2, this.getY() - this.getHeight(), this.getX() - shift + this.getWidth(), this.getY());
+  }
+}
+class Orb extends Obstacle {
+  public Orb(float x, float y) {
+    super(x, y, 20);
+  }
+  public Orb(float x, float y, float r) {
+    super(x, y, r);
+  }
+  public float isTouching(Sprite s) {
+  }
+  public int compareTo(Obstacle o2) {
+  }
+  public void display(float shift) {
   }
 }

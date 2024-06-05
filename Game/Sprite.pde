@@ -1,8 +1,8 @@
 class Sprite {
   private float xcor, ycor, h, w, v_initial=100, y_initial;
-  private int jumpTime;
+  private float jumpTime;
   private boolean isAlive, isJumping;
-  private float G = 80;
+  private float G = 60;
   private String mode = "cube";
   public Sprite(float x, float y) {
     xcor = x;
@@ -53,7 +53,7 @@ class Sprite {
   public void setJumpTime(int v) {
     jumpTime=v;
   }
-  public int getJumpTime() {
+  public float getJumpTime() {
     return jumpTime;
   }
   public boolean isJumping() {
@@ -71,7 +71,7 @@ class Sprite {
       jumpTime=(int)currTime;
     }
   }
-  public void jump(int jumpTime, float speed) {
+  public void jump(float jumpTime, float speed) {
     if (mode.equals("cube")) {
       ycor--;
       this.jumpTime=jumpTime;
@@ -83,7 +83,7 @@ class Sprite {
       ycor-=10;
     }
   }
-  public void fall(int jumpTime) {
+  public void fall(float jumpTime) {
     if (mode.equals("cube")) {
       this.jumpTime=jumpTime;
       v_initial=0;
@@ -94,7 +94,7 @@ class Sprite {
       ycor+=5;
     }
   }
-  public void display(int shift, float angle) {
+  public void display(float shift, float angle) {
     fill(123);
     float x1 = s.getX() + 10 + (float) (-10 * Math.cos(angle) - (-10) * Math.sin(angle)) + speed;
     float y1 = s.getY() - 10 - (float) (10 * Math.sin(angle) - (-10) * Math.cos(angle));
@@ -107,5 +107,5 @@ class Sprite {
     quad(x1-shift, y1, x2-shift, y2, x4-shift, y4, x3-shift, y3);
     //rect(s.getX()-shift, s.getY()-20, 20, 20);
     s.setX(s.getX() + speed);
-} 
+  } 
 }
