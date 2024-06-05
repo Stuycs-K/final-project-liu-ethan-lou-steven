@@ -21,19 +21,8 @@ public void display(Sprite s) {
   quad(x1-shift, y1, x2-shift, y2, x4-shift, y4, x3-shift, y3);
   //rect(s.getX()-shift, s.getY()-20, 20, 20);
   s.setX(s.getX() + speed);
-}
-public void display(Block b) {
-  fill(255);
-  rect(b.getX()-shift, b.getY()-b.getHeight(), b.getWidth(), b.getHeight());
-  if (b.hasJumpPad()) {
-    fill(255, 250, 205);
-    ellipse(b.getX() + b.getWidth()/2 - shift, b.getY() - b.getHeight(), b.getWidth(), 5);
-  }
-}     
-public void display(Spike s) {
-  fill(255);
-  triangle(s.getX()-shift, s.getY(), s.getX() - shift + s.getWidth()/2, s.getY() - s.getHeight(), s.getX() - shift + s.getWidth(), s.getY());
-}
+}   
+
 public void display(Button b) {
   fill(color(255, 0, 0));
   rect(b.getX(), b.getY()-b.getHeight(), b.getWidth(), b.getHeight());
@@ -72,10 +61,10 @@ void draw() {
   background(12);
   display(menu);
   for (Block i : wall) {
-    display(i);
+    i.display(shift);
   }
   for (Spike i : spike) {
-    display(i);
+    i.display(shift);
   }
   if (mode.equals("Edit Map")) {
     return;
