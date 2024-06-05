@@ -8,38 +8,7 @@ String mode = "Play";
 float angle=0;
 boolean invincible = false;
 Text edit = new Text();
-public void display(Sprite s) {
-  fill(123);
-  float x1 = s.getX() + 10 + (float) (-10 * Math.cos(angle) - (-10) * Math.sin(angle)) + speed;
-  float y1 = s.getY() - 10 - (float) (10 * Math.sin(angle) - (-10) * Math.cos(angle));
-  float x2 = s.getX() + 10 + (float) (10 * Math.cos(angle) - (-10) * Math.sin(angle)) + speed;
-  float y2 = s.getY() - 10 - (float) (-10 * Math.sin(angle) - (-10) * Math.cos(angle));
-  float x3 = s.getX() + 10 + (float) (-10 * Math.cos(angle) - (10) * Math.sin(angle)) + speed;
-  float y3 = s.getY() - 10 - (float) (10 * Math.sin(angle) - (10) * Math.cos(angle));
-  float x4 = s.getX() + 10 + (float) (10 * Math.cos(angle) - (10) * Math.sin(angle)) + speed;
-  float y4 = s.getY() - 10 - (float) (-10 * Math.sin(angle) - (10) * Math.cos(angle));
-  quad(x1-shift, y1, x2-shift, y2, x4-shift, y4, x3-shift, y3);
-  //rect(s.getX()-shift, s.getY()-20, 20, 20);
-  s.setX(s.getX() + speed);
-}
-public void display(Block b) {
-  fill(255);
-  rect(b.getX()-shift, b.getY()-b.getHeight(), b.getWidth(), b.getHeight());
-  if (b.hasJumpPad()) {
-    fill(255, 250, 205);
-    ellipse(b.getX() + b.getWidth()/2 - shift, b.getY() - b.getHeight(), b.getWidth(), 5);
-  }
-}     
-public void display(Spike s) {
-  fill(255);
-  triangle(s.getX()-shift, s.getY(), s.getX() - shift + s.getWidth()/2, s.getY() - s.getHeight(), s.getX() - shift + s.getWidth(), s.getY());
-}
-public void display(Button b) {
-  fill(color(255, 0, 0));
-  rect(b.getX(), b.getY()-b.getHeight(), b.getWidth(), b.getHeight());
-  fill(0);
-  text(b.getLabel(), (2*b.getX()+b.getWidth())/2-3*b.getLabel().length(), (2*b.getY()-b.getHeight())/2+5);
-}
+  
 public void restart() {
   shift=0;
   //inScreen.clear();
@@ -70,12 +39,12 @@ void setup() {
 }
 void draw() {
   background(12);
-  display(menu);
+  menu.display();
   for (Block i : wall) {
-    display(i);
+    i.display(shift);
   }
   for (Spike i : spike) {
-    display(i);
+    i.display(shift);
   }
   if (mode.equals("Edit Map")) {
     return;
@@ -131,7 +100,7 @@ void draw() {
   if (!isTouchingBlock && s.getY()<430 && !s.isJumping()) {
     s.fall(2*shift);
   }
-  display(s);
+  s.display(shift, angle);
   if (!isTouchingBlock) {
     angle += PI/10;
     if (angle >= 2 * PI) {
@@ -163,6 +132,14 @@ void draw() {
 void keyPressed() {
   if (key=='w') {
     invincible = !invincible;
+  }
+  else if (key=='s') {
+    if (s.getMode().equals("cube")) {
+      s.setMode("ship");
+    }
+    else {
+      s.setMode("cube");
+    }
   }
 }
 void mouseClicked() {

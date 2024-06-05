@@ -29,4 +29,10 @@ class Button {
   public void setLabel(String newLabel) {
     label=newLabel;
   }
+  public void display() {
+    fill(color(255, 0, 0));
+    rect(this.getX(), this.getY()-this.getHeight(), this.getWidth(), this.getHeight());
+    fill(0);
+    text(this.getLabel(), (2*this.getX()+this.getWidth())/2-3*this.getLabel().length(), (2*this.getY()-this.getHeight())/2+5);
+  }
 }
