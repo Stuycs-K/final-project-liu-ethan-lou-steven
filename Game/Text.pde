@@ -165,11 +165,12 @@ class Text {
       e.printStackTrace();
     }
   }
-  public void readBlocks(TreeSet<Obstacle> obs) {
+
+  public void readBlocks(TreeSet<Obstacle> obs, String filename) {
     try {
       //File file = new File("StereoMadnessWalls.txt");
       //String absolutePath = file.getAbsolutePath();
-      readWalls = createReader("walls.txt");
+      readWalls = createReader(filename);
       while (readWalls.ready()) {
         String s = readWalls.readLine();
         String[] arr = s.split(" ", 0);
@@ -196,11 +197,12 @@ class Text {
       e.printStackTrace();
     }
   }
-  public void readSpikes(TreeSet<Obstacle> obs) {
+
+  public void readSpikes(TreeSet<Obstacle> obs, String filename) {
     try {
       //File file = new File("StereoMadnessSpikes.txt");
       //String absolutePath = file.getAbsolutePath();
-      readSpikes = createReader("spikes.txt");
+      readSpikes = createReader(filename);
       while (readSpikes.ready()) {
         String s = readSpikes.readLine();
         String[] arr = s.split(" ", 0);

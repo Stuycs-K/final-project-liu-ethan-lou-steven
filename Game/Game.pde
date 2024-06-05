@@ -2,10 +2,11 @@ import java.util.*;
 //TreeSet<Block> wall = new TreeSet<Block>();
 //TreeSet<Spike> spike = new TreeSet<Spike>();
 TreeSet<Obstacle> obs = new TreeSet<Obstacle>();
-int lastIndexWall, shift=0, speed=3, editShift=0;
+//ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
+//int lastIndexWall;
 Sprite s; Button menu;
 String mode = "Play";
-float angle=0;
+float angle=0, speed = 3.5, shift=0, editShift=0;
 boolean invincible = false;
 Text edit = new Text();
   
@@ -22,8 +23,8 @@ void setup() {
   //Text.readBlockString(wall);
   //Text.readSpikeString(spike);
   //Text.printFile("StereoMadnessWalls.txt");
-  edit.readBlocks(obs);
-  edit.readSpikes(obs);
+  edit.readBlocks(obs, "StereoMadnessWalls.txt");
+  edit.readSpikes(obs, "StereoMadnessSpikes.txt");
   //for (Block i : wall) {
   //  print(i.getX()+" "+i.getY()+" "+i.hasJumpPad()+"\\n");
   //}
