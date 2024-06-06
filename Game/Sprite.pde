@@ -111,8 +111,15 @@ class Sprite {
     }
     else if (mode.equals("wave")) {
       fill(123);
-      rotate(angle);
-      triangle(xcor-shift+w/2, ycor-h, xcor-shift+w, ycor, xcor-shift, ycor);
+      float x1=xcor+(float)(Math.cos(angle)*(w/2)-Math.sin(angle)*(-h));
+      float y1=ycor+(float)(Math.cos(angle)*(-h)+Math.sin(angle)*(w/2));
+      float x2=xcor+(float)(Math.cos(angle)*(w)-Math.sin(angle)*(0));
+      float y2=ycor+(float)(Math.cos(angle)*(0)+Math.sin(angle)*(w));
+      float x3=xcor;
+      float y3=ycor;
+      //rotate(angle);
+      triangle(x1-shift, y1, x2-shift, y2, x3-shift, y3);
+      //triangle(xcor-shift+w/2, ycor-h, xcor-shift+w, ycor, xcor-shift, ycor);
       setX(getX()+speed);
     }
   } 

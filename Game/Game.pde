@@ -126,14 +126,14 @@ void draw() {
     }
   }
   else if (s.getMode().equals("wave")) {
-    angle=PI/4;
+    angle=3*PI/4;
   }
   //shift+=1;
   shift+=speed;
   if (keyPressed) {
     if (key==' ' && !s.isJumping()) {
       if (s.getMode().equals("wave")) {
-        angle=-PI/4;
+        angle=PI/4;
       }
       s.jump(2 * shift, 80);
     }
