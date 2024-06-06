@@ -153,7 +153,7 @@ class Spike extends Obstacle {
 }
 abstract class Orb extends Obstacle {
   private boolean clicked;
-  private float type;
+  private String type;
   public Orb(float x, float y) {
     super(x, y, 20);
     clicked = false;
@@ -161,6 +161,12 @@ abstract class Orb extends Obstacle {
   public Orb(float x, float y, float r) {
     super(x, y, r);
     clicked = false;
+  }
+  public String getType() {
+    return type;
+  }
+  public void setType(String label) {
+    type = label;
   }
   public boolean isClicked() {
     return clicked;
@@ -185,5 +191,15 @@ abstract class Orb extends Obstacle {
   public void display(float shift) {
     fill(255);
     circle(getX(), getY(), getWidth());
+  }
+}
+class yellowOrb extends Orb{
+  public yellowOrb(float x, float y) {
+    super(x, y);
+    setType("yellow");
+  }
+  public yellowOrb(float x, float y, float r) {
+    super(x, y, r);
+    setType("yellow");
   }
 }

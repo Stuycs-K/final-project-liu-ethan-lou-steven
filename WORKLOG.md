@@ -70,3 +70,19 @@
 * Added jump pad feature to walls
 * Fixed spike isTouching() bugs
 * Fixed spinning display bugs
+
+### 5/31/24
+* Fixed display issues
+* isTouching() and collisions altered
+* keyPressed changed
+
+### 6/2/24
+* Fixed local file issues
+* Created first ~25 seconds of Stereo Madness for demo
+
+### 6/4/24
+* Files in Text changed to Processing API to work for all devices
+* Added Stereo Madness to Game
+
+### 6/6/24
+* 
