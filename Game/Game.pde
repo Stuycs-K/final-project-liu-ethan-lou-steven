@@ -204,7 +204,6 @@ void mouseClicked() {
         break;
       }
     }
-    System.out.println(index);
     if (index == 0) {
       obs.remove(b);
       edit.remove(b);
