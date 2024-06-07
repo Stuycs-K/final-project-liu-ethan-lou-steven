@@ -78,6 +78,12 @@ void draw() {
       if (curr.isTouching(s) == 2 && !invincible) {
         s.jump(2 * shift, 120);
       }
+      else if (curr.isTouching(s)==1 && !invincible) {
+        println("died");
+        s.setAlive(false);
+        restart();
+        break;
+      }
     }
   }
   //for (Block curr : wall) {
