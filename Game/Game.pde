@@ -6,7 +6,7 @@ TreeSet<Obstacle> obs = new TreeSet<Obstacle>();
 //int lastIndexWall;
 Sprite s; Button menu;
 String mode = "Play";
-float angle=0, speed = 3.5, shift=0, editShift=0;
+float speed = 3.5, shift=0, editShift=0;
 boolean invincible = false;
 Text edit = new Text();
   
@@ -102,38 +102,38 @@ void draw() {
   if (!isTouchingBlock && s.getY()<430 && !s.isJumping()) {
     s.fall(2*shift);
   }
-  s.display(shift, angle);
+  s.display(shift); 
   if (s.getMode().equals("cube")) {
     if (!isTouchingBlock) {
-      angle += PI/10;
-      if (angle >= 2 * PI) {
-        angle -= 2 * PI;
+      s.setAngle(s.getAngle()+PI/10);
+      if (s.getAngle() >= 2 * PI) {
+        s.setAngle(s.getAngle()- 2 * PI);
       }
     }
     if (isTouchingBlock) {
-      if (angle <= PI/2) {
-        angle = PI/2;
+      if (s.getAngle() <= PI/2) {
+        s.setAngle(PI/2);
       }
-      else if (angle <= PI) {
-        angle = PI;
+      else if (s.getAngle() <= PI) {
+        s.setAngle(PI);
       }
-      else if (angle <= 3 * PI/2) {
-        angle = 3 * PI/2;
+      else if (s.getAngle() <= 3 * PI/2) {
+        s.setAngle(3 * PI/2);
       }
       else {
-        angle = 0;
+        s.setAngle(0);
       }
     }
   }
   else if (s.getMode().equals("wave")) {
-    angle=3*PI/4;
+    s.setAngle(3*PI/4);
   }
   //shift+=1;
   shift+=speed;
   if (keyPressed) {
     if (key==' ' && !s.isJumping()) {
       if (s.getMode().equals("wave")) {
-        angle=PI/4;
+        s.setAngle(PI/4);
       }
       s.jump(2 * shift, 80);
     }
@@ -146,6 +146,7 @@ void keyPressed() {
   else if (key=='s') {
     if (s.getMode().equals("cube")) {
       s.setMode("wave");
+      s.setJump(false);
     }
     else {
       s.setMode("cube");

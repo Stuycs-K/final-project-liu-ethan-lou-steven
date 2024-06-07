@@ -1,5 +1,5 @@
 class Sprite {
-  private float xcor, ycor, h, w, v_initial=100, y_initial;
+  private float xcor, ycor, h, w, v_initial=100, y_initial, angle=0;
   private float jumpTime;
   private boolean isAlive, isJumping;
   private float G = 60;
@@ -13,6 +13,9 @@ class Sprite {
     jumpTime=0;
     v_initial=0;
     y_initial=y;
+  }
+  public float getAngle() {
+    return angle;
   }
   public String getMode() {
     return mode;
@@ -31,6 +34,9 @@ class Sprite {
   }
   public void setMode(String s) {
     mode=s;
+  }
+  public void setAngle(float angle) {
+    this.angle=angle;
   }
   public float getWidth() {
     return w;
@@ -94,7 +100,7 @@ class Sprite {
       ycor+=5;
     }
   }
-  public void display(float shift, float angle) {
+  public void display(float shift) {
     if (mode.equals("cube")) {
       fill(123);
       float x1 = s.getX() + 10 + (float) (-10 * Math.cos(angle) - (-10) * Math.sin(angle)) + speed;
