@@ -35,6 +35,7 @@ void setup() {
   }
   s = new Sprite(100, 430);
   menu = new Button(0, 30, 30, 100, "Edit Map");
+  obs.add(new Portal(1000, 420));
 }
 void draw() {
   background(12);
@@ -204,7 +205,6 @@ void mouseClicked() {
         break;
       }
     }
-    System.out.println(index);
     if (index == 0) {
       obs.remove(b);
       edit.remove(b);

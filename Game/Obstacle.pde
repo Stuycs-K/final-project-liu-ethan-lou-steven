@@ -226,3 +226,28 @@ class yellowOrb extends Orb{
     circle(getX()-shift+getWidth()/2, getY()-getWidth()/2, getWidth());
   }
 }
+class Portal extends Obstacle {
+  public Portal(float x, float y) {
+    super(x, y, 10, 50);
+  }
+  public Portal(float x, float y, float w, float h) {
+    super(x, y, w, h);
+  }
+  public void display(float shift) {
+    ellipse(getX()-shift, getY(), getWidth(), getHeight());
+  }
+  public int compareTo(Obstacle o2) {
+    if (this.getX()==o2.getX()) {
+      return (int) (this.getY()-o2.getY());
+    }
+    else {
+      return (int) (this.getX()-o2.getX());
+    }
+  }
+  public float isTouching(Sprite s) {
+    if (s.getX()>getX()+getWidth() || s.getX()+s.getWidth()<getX() || s.getY()<getY()-getHeight() || s.getY()>getY()) {
+      return 0;
+    }
+    return 1;
+  }
+}
