@@ -175,7 +175,7 @@ abstract class Orb extends Obstacle {
     clicked = x;
   }
   public float isTouching(Sprite s) {
-    if ((s.getX() - this.getX()) * (s.getX() - this.getX()) + (s.getY() - this.getY()) * (s.getY() - this.getY()) > this.getWidth() * this.getWidth()) {
+    if ((s.getX() - this.getX() - getWidth()/2) * (s.getX() - this.getX() + getWidth()/2) + (s.getY() - this.getY()+getWidth()/2) * (s.getY() - this.getY()-getWidth()/2) > this.getWidth() * this.getWidth()) {
       return 0;
     }
     return 2;
@@ -190,7 +190,7 @@ abstract class Orb extends Obstacle {
   }
   public void display(float shift) {
     fill(255);
-    circle(getX(), getY(), getWidth());
+    circle(getX()-shift+getWidth()/2, getY()-getWidth()/2, getWidth());
   }
 }
 class yellowOrb extends Orb{
