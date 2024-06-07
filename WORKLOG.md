@@ -46,6 +46,18 @@
 * Worked on mouseWheel() functionality in edit mode.
 * Stored Block and Spike coordinates in Strings.
 
+### 6/4/24
+* Wrote code for wave mode
+* Organized the code so that it is less clunky by combining classes and making Obstacle abstract
+* Combined all Blocks and Spikes into one TreeSet of Obstacles
+
+### 6/5/24
+* Started working on display code for wave mode
+
+### 6/6/24
+* Successfully displayed the wave triangle
+* Wrote isTouching() differently for wave mode in Block and JumpBlock
+
 ## Steven Lou
 ### 5/22/24
 * Wrote the Spike class methods and constructors.
