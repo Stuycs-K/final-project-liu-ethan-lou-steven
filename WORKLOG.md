@@ -85,4 +85,7 @@
 * Added Stereo Madness to Game
 
 ### 6/6/24
-* 
+* Changed Text File reading and writing, combining all obstacles into 1 text file
+* Changed placement switching of obstacles
+* Implemented abstract Orb Class
+* Implemented yellowOrb and its physics and display

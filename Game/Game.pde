@@ -83,7 +83,7 @@ void draw() {
         s.jump(2 * shift, 80);
         tempCurr.setClicked(true);
       }
-      if (!s.getAlive()) {
+      if (tempCurr.getX()-tempCurr.getWidth() > s.getX()) {
         tempCurr.setClicked(false);
       }
     }

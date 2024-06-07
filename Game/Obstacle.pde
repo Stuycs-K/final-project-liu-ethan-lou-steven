@@ -188,10 +188,7 @@ abstract class Orb extends Obstacle {
       return (int) (this.getX()-o2.getX());
     }
   }
-  public void display(float shift) {
-    fill(255);
-    circle(getX()-shift+getWidth()/2, getY()-getWidth()/2, getWidth());
-  }
+  abstract void display(float shift);
 }
 class yellowOrb extends Orb{
   public yellowOrb(float x, float y) {
@@ -201,5 +198,9 @@ class yellowOrb extends Orb{
   public yellowOrb(float x, float y, float r) {
     super(x, y, r);
     setType("yellow");
+  }
+  public void display(float shift) {
+    fill(255, 250, 205);
+    circle(getX()-shift+getWidth()/2, getY()-getWidth()/2, getWidth());
   }
 }
