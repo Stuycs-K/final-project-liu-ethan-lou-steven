@@ -173,19 +173,56 @@ class Spike extends Obstacle {
     triangle(this.getX()-shift, this.getY(), this.getX() - shift + this.getWidth()/2, this.getY() - this.getHeight(), this.getX() - shift + this.getWidth(), this.getY());
   }
 }
-class Orb extends Obstacle {
+abstract class Orb extends Obstacle {
+  private boolean clicked;
+  private String type;
   public Orb(float x, float y) {
     super(x, y, 20);
+    clicked = false;
   }
   public Orb(float x, float y, float r) {
     super(x, y, r);
+    clicked = false;
+  }
+  public String getType() {
+    return type;
+  }
+  public void setType(String label) {
+    type = label;
+  }
+  public boolean isClicked() {
+    return clicked;
+  }
+  public void setClicked(boolean x) {
+    clicked = x;
   }
   public float isTouching(Sprite s) {
-    return 0;
+    if ((s.getX() - this.getX() - getWidth()/2) * (s.getX() - this.getX() + getWidth()/2) + (s.getY() - this.getY()+getWidth()/2) * (s.getY() - this.getY()-getWidth()/2) > this.getWidth() * this.getWidth()) {
+      return 0;
+    }
+    return 2;
   }
   public int compareTo(Obstacle o2) {
-    return 0;
+    if (this.getX()==o2.getX()) {
+      return (int) (this.getY()-o2.getY());
+    }
+    else {
+      return (int) (this.getX()-o2.getX());
+    }
+  }
+  abstract void display(float shift);
+}
+class yellowOrb extends Orb{
+  public yellowOrb(float x, float y) {
+    super(x, y);
+    setType("yellow");
+  }
+  public yellowOrb(float x, float y, float r) {
+    super(x, y, r);
+    setType("yellow");
   }
   public void display(float shift) {
+    fill(255, 250, 205);
+    circle(getX()-shift+getWidth()/2, getY()-getWidth()/2, getWidth());
   }
 }
