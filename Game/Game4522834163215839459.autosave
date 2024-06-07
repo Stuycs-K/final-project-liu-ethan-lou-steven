@@ -3,11 +3,12 @@ import java.util.*;
 //TreeSet<Spike> spike = new TreeSet<Spike>();
 TreeSet<Obstacle> obs = new TreeSet<Obstacle>();
 //ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
+//int lastIndexWall;
 Sprite s; Button menu;
 String mode = "Play";
-float speed = 3.5, shift=0, editShift=0;
+float angle=0, speed = 3.5, shift=0, editShift=0;
 boolean invincible = false;
-Text edit = new Text("obstacles.txt", "obstacles.txt");
+Text edit = new Text();
   
 public void restart() {
   shift=0;
@@ -17,12 +18,13 @@ public void restart() {
 }
 void setup() {
   size(500, 500);
-  edit.deleteAll();
+  //edit.deleteAll();
   //lastIndexWall = 0;
   //Text.readBlockString(wall);
   //Text.readSpikeString(spike);
   //Text.printFile("StereoMadnessWalls.txt");
-  edit.readObstacles(obs);
+  edit.readBlocks(obs, "StereoMadnessWalls.txt");
+  edit.readSpikes(obs, "StereoMadnessSpikes.txt");
   //for (Block i : wall) {
   //  print(i.getX()+" "+i.getY()+" "+i.hasJumpPad()+"\\n");
   //}
@@ -74,23 +76,7 @@ void draw() {
     }
     else if (curr instanceof JumpBlock) {
       if (curr.isTouching(s) == 2 && !invincible) {
-        s.jump(2 * shift, 120);
-      }
-      else if (curr.isTouching(s)==1 && !invincible) {
-        println("died");
-        s.setAlive(false);
-        restart();
-        break;
-      }
-    }
-    else if (curr instanceof Orb) {
-      Orb tempCurr = (Orb) curr;
-      if (keyPressed && tempCurr.isClicked() == false && tempCurr.isTouching(s) == 2) {
         s.jump(2 * shift, 80);
-        tempCurr.setClicked(true);
-      }
-      if (tempCurr.getX()-tempCurr.getWidth() > s.getX()) {
-        tempCurr.setClicked(false);
       }
     }
   }
@@ -116,40 +102,32 @@ void draw() {
   if (!isTouchingBlock && s.getY()<430 && !s.isJumping()) {
     s.fall(2*shift);
   }
-  s.display(shift); 
-  if (s.getMode().equals("cube")) {
-    if (!isTouchingBlock) {
-      s.setAngle(s.getAngle()+PI/10);
-      if (s.getAngle() >= 2 * PI) {
-        s.setAngle(s.getAngle()- 2 * PI);
-      }
-    }
-    if (isTouchingBlock) {
-      if (s.getAngle() <= PI/2) {
-        s.setAngle(PI/2);
-      }
-      else if (s.getAngle() <= PI) {
-        s.setAngle(PI);
-      }
-      else if (s.getAngle() <= 3 * PI/2) {
-        s.setAngle(3 * PI/2);
-      }
-      else {
-        s.setAngle(0);
-      }
+  s.display(shift, angle);
+  if (!isTouchingBlock) {
+    angle += PI/12;
+    if (angle >= 2 * PI) {
+      angle -= 2 * PI;
     }
   }
-  else if (s.getMode().equals("wave")) {
-    s.setAngle(3*PI/4);
+  if (isTouchingBlock) {
+    if (angle <= PI/2) {
+      angle = PI/2;
+    }
+    else if (angle <= PI) {
+      angle = PI;
+    }
+    else if (angle <= 3 * PI/2) {
+      angle = 3 * PI/2;
+    }
+    else {
+      angle = 0;
+    }
   }
   //shift+=1;
   shift+=speed;
   if (keyPressed) {
-    if (key==' ' && !s.isJumping()) {
-      if (s.getMode().equals("wave")) {
-        s.setAngle(PI/4);
-      }
-      s.jump(2 * shift, 80);
+    if (key==' ' && !s.isJumping()) {  
+      s.jump(2 * shift, 90);
     }
   }
 }  
@@ -159,8 +137,7 @@ void keyPressed() {
   }
   else if (key=='s') {
     if (s.getMode().equals("cube")) {
-      s.setMode("wave");
-      s.setJump(false);
+      s.setMode("ship");
     }
     else {
       s.setMode("cube");
@@ -178,94 +155,48 @@ void mouseClicked() {
   else if (mode.equals("Edit Map")) {
     int x=((int)((mouseX+shift)/20))*20, y=((int)(mouseY/20)+1)*20;
     //println(mouseX+" "+mouseY+" "+x+" "+y);
-    //boolean isTouchingBlock=false, isTouchingJump=false, isTouchingSpike=false, isTouchingOrb=false;
-    String[] types = new String[]{"Block", "JumpBlock", "Spike", "yellowOrb", "empty"};
-    int index = types.length-1;
+    boolean isTouchingBlock=false, isTouchingJump=false, isTouchingSpike=false;
     Obstacle b = new Block(20, 20);
     for (Obstacle i : obs) {
       if (i instanceof Block && i.getX()==x && i.getY()==y) {
-        index = 0;
+        isTouchingBlock = true;
         b=i;
         break;
       }
       else if (i instanceof JumpBlock && i.getX()==x && i.getY()==y) {
-        index = 1;
+        isTouchingBlock = true;
         b=i;
+        isTouchingJump=true;
         break;
       }
       else if (i instanceof Spike && i.getX()==x && i.getY()==y) {
-        index = 2;
         b=i;
-        break;
-      }
-      else if (i instanceof yellowOrb && i.getX()==x && i.getY()==y) {
-        index = 3;
-        b=i;
+        isTouchingSpike=true;
         break;
       }
     }
-    System.out.println(index);
-    if (index == 0) {
+    if (isTouchingBlock && !isTouchingJump) {
       obs.remove(b);
-      edit.remove(b);
-      JumpBlock temp = new JumpBlock(x, y, b.getWidth(), b.getHeight());
+      edit.remove((Block)b);
+      JumpBlock temp = new JumpBlock(b.getX(), b.getY(), b.getWidth(), b.getHeight());
       obs.add(temp);
       edit.add(temp);
     }
-    else if (index == 1) {
+    else if (isTouchingBlock && isTouchingJump) {
       obs.remove(b);
-      edit.remove(b);
-      Spike temp = new Spike(x, y, b.getHeight());
+      edit.remove((JumpBlock) b);
+      Spike temp = new Spike(b.getX(), b.getY(), b.getHeight());
       obs.add(temp);
       edit.add(temp);
     }
-    else if (index == 2) {
-      obs.remove(b);
-      edit.remove(b);
-      yellowOrb temp = new yellowOrb(x, y, b.getWidth());
-      obs.add(temp);
-      edit.add(temp);
+    else if (!isTouchingBlock && !isTouchingSpike) {
+      obs.add(new Block((float)x, (float)y, 20));
+      edit.add(new Block((float)x, (float)y, 20));
     }
-    else if (index == 3) {
+    else {
       obs.remove(b);
-      edit.remove(b);
+      edit.remove((Spike)b);
     }
-    else if (index == 4) {
-      obs.remove(b);
-      edit.remove(b);
-      Block temp = new Block(x, y, b.getWidth(), b.getHeight());
-      obs.add(temp);
-      edit.add(temp);
-    }
-    //if (isTouchingBlock && !isTouchingJump) {
-    //  obs.remove(b);
-    //  edit.remove((Block)b);
-    //  JumpBlock temp = new JumpBlock(b.getX(), b.getY(), b.getWidth(), b.getHeight());
-    //  obs.add(temp);
-    //  edit.add(temp);
-    //}
-    //else if (isTouchingBlock && isTouchingJump) {
-    //  obs.remove(b);
-    //  edit.remove((JumpBlock) b);
-    //  Spike temp = new Spike(b.getX(), b.getY(), b.getHeight());
-    //  obs.add(temp);
-    //  edit.add(temp);
-    //}
-    //else if (isTouchingSpike && isTouchingBlock && isTouchingJump) {
-    //  obs.remove(b);
-    //  edit.remove((Spike) b);
-    //  yellowOrb temp = new yellowOrb(b.getX(), b.getY(), b.getWidth());
-    //  obs.add(temp);
-    //  edit.add(temp);
-    //}
-    //else if (!isTouchingBlock && !isTouchingSpike && !isTouchingOrb) {
-    //  obs.add(new Block((float)x, (float)y, 20));
-    //  edit.add(new Block((float)x, (float)y, 20));
-    //}
-    //else {
-    //  obs.remove(b);
-    //  edit.remove((Orb)b);
-    //}
   }
 }
 void mouseWheel(MouseEvent event) {
