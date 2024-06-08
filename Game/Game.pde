@@ -18,7 +18,7 @@ public void restart() {
 }
 void setup() {
   size(500, 500);
-  edit.deleteAll();
+  //edit.deleteAll();
   //lastIndexWall = 0;
   //Text.readBlockString(wall);
   //Text.readSpikeString(spike);
@@ -51,24 +51,26 @@ void draw() {
     for (Button i : menu) {
       i.display();
     }
+    int x=((int)((mouseX+shift)/20))*20, y=((int)(mouseY/20)+1)*20;
+    fill(255, 255, 255, 0);
     if (editBlock.equals("Block")) {
-      Block temp = new Block(mouseX-shift, mouseY);
+      Block temp = new Block(x,y);
       temp.display(shift);
     }
     else if (editBlock.equals("JumpBlock")) {
-      JumpBlock temp = new JumpBlock(mouseX-shift, mouseY);
+      JumpBlock temp = new JumpBlock(x,y);
       temp.display(shift);
     }
     else if (editBlock.equals("Spike")) {
-      Spike temp = new Spike(mouseX-shift, mouseY);
+      Spike temp = new Spike(x,y);
       temp.display(shift);
     }
     else if (editBlock.equals("Orb")) {
-      yellowOrb temp = new yellowOrb(mouseX-shift, mouseY);
+      yellowOrb temp = new yellowOrb(x,y);
       temp.display(shift);
     }
     else if (editBlock.equals("Portal")) {
-      Portal temp = new Portal(mouseX-shift, mouseY, "wave");
+      Portal temp = new Portal(x,y, "wave");
       temp.display(shift);
     }
   }
