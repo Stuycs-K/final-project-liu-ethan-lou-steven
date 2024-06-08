@@ -227,14 +227,21 @@ class yellowOrb extends Orb{
   }
 }
 class Portal extends Obstacle {
-  public Portal(float x, float y) {
+  String mode;
+  public Portal(float x, float y, String mode) {
     super(x, y, 10, 50);
+    this.mode=mode;
   }
-  public Portal(float x, float y, float w, float h) {
+  public Portal(float x, float y, float w, float h, String mode) {
     super(x, y, w, h);
+    this.mode=mode;
+  }
+  public String getMode() {
+    return mode;
   }
   public void display(float shift) {
-    ellipse(getX()-shift, getY(), getWidth(), getHeight());
+    fill(0, 255, 0);
+    ellipse(getX()-shift, getY()-getHeight()/2, getWidth(), getHeight());
   }
   public int compareTo(Obstacle o2) {
     if (this.getX()==o2.getX()) {

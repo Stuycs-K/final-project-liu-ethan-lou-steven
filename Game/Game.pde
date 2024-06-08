@@ -35,7 +35,7 @@ void setup() {
   }
   s = new Sprite(100, 430);
   menu = new Button(0, 30, 30, 100, "Edit Map");
-  obs.add(new Portal(1000, 420));
+  obs.add(new Portal(600, 300, "wave"));
 }
 void draw() {
   background(12);
@@ -92,6 +92,13 @@ void draw() {
       }
       if (tempCurr.getX()-tempCurr.getWidth() > s.getX()) {
         tempCurr.setClicked(false);
+      }
+    }
+    else if (curr instanceof Portal) {
+      Portal p = (Portal)curr;
+      if (curr.isTouching(s)==1) {
+        s.setMode(p.getMode());
+        s.setJump(false);
       }
     }
   }
@@ -158,15 +165,15 @@ void keyPressed() {
   if (key=='w') {
     invincible = !invincible;
   }
-  else if (key=='s') {
-    if (s.getMode().equals("cube")) {
-      s.setMode("wave");
-      s.setJump(false);
-    }
-    else {
-      s.setMode("cube");
-    }
-  }
+  //else if (key=='s') {
+  //  if (s.getMode().equals("cube")) {
+  //    s.setMode("wave");
+  //    s.setJump(false);
+  //  }
+  //  else {
+  //    s.setMode("cube");
+  //  }
+  //}
 }
 void mouseClicked() {
   if (menu.isTouching(mouseX, mouseY)) {
