@@ -47,7 +47,7 @@ void setup() {
 }
 
 void draw() {
-  background(12);
+  background(color(100, 100, 100));
   if (mode.equals("Play")) {
     menu.get(0).display(false);
   }
