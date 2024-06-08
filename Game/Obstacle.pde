@@ -168,8 +168,7 @@ class Spike extends Obstacle {
     }
   }
   public void display(float shift, PImage img) {
-    fill(255);
-    triangle(this.getX()-shift, this.getY(), this.getX() - shift + this.getWidth()/2, this.getY() - this.getHeight(), this.getX() - shift + this.getWidth(), this.getY());
+    image(img, getX()-shift, getY()-getHeight(), getWidth(), getHeight());
   }
 }
 abstract class Orb extends Obstacle {
@@ -221,8 +220,7 @@ class yellowOrb extends Orb{
     setType("yellow");
   }
   public void display(float shift, PImage img) {
-    fill(255, 250, 205);
-    circle(getX()-shift+getWidth()/2, getY()-getWidth()/2, getWidth());
+    image(img, getX()-shift, getY()-getHeight(), getWidth(), getHeight());
   }
 }
 class Portal extends Obstacle {
@@ -239,8 +237,7 @@ class Portal extends Obstacle {
     return mode;
   }
   public void display(float shift, PImage img) {
-    fill(0, 255, 0);
-    ellipse(getX()-shift, getY()-getHeight()/2, getWidth(), getHeight());
+    image(img, getX()-shift, getY()-getHeight(), getWidth(), getHeight());
   }
   public int compareTo(Obstacle o2) {
     if (this.getX()==o2.getX()) {
