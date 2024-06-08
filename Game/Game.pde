@@ -7,6 +7,7 @@ Sprite s; ArrayList<Button> menu = new ArrayList<Button>();
 String mode = "Play", editBlock = "";
 float speed = 3.5, shift=speed, editShift=0;
 boolean invincible = false;
+Obstacle inEdit;
 Text edit = new Text("obstacles.txt", "obstacles.txt");
 PImage BlockImg, SpriteImg, SpikeImg, WavePortalImg, YellowOrbImg;  
 public void restart() {
@@ -192,6 +193,28 @@ void keyPressed() {
   if (key=='w') {
     invincible = !invincible;
   }
+  else if (key == CODED && inEdit != null && mode.equals("Edit Map")) {
+    if (keyCode == UP) {
+      obs.remove(inEdit);
+      inEdit.setY(inEdit.getY() - 1);
+      obs.add(inEdit);
+    }
+    if (keyCode == RIGHT) {
+      obs.remove(inEdit);
+      inEdit.setX(inEdit.getX() + 1);
+      obs.add(inEdit);
+    }
+    if (keyCode == DOWN) {
+      obs.remove(inEdit);
+      inEdit.setY(inEdit.getY() + 1);
+      obs.add(inEdit);
+    }
+    if (keyCode == LEFT) {
+      obs.remove(inEdit);
+      inEdit.setX(inEdit.getX() - 1);
+      obs.add(inEdit);
+    }
+   }
   //else if (key=='s') {
   //  if (s.getMode().equals("cube")) {
   //    s.setMode("wave");
@@ -217,11 +240,11 @@ void mouseClicked() {
         return;
       }
     }
-    int x=((int)((mouseX+shift)/20))*20, y=((int)(mouseY/20)+1)*20;
     boolean found=false;
     Obstacle rem = new Block(20, 20);
+    int x=((int)((mouseX+shift)/20))*20, y=((int)(mouseY/20)+1)*20;
     for (Obstacle i : obs) {
-      if (i.getClass().getSimpleName().equals(editBlock) && i.getX()==x && i.getY()==y) {
+      if (i.getClass().getSimpleName().equals(editBlock) && (i.isTouchingMouse(mouseX+shift, mouseY))) {
         rem=i;
         found=true;
         break;
@@ -232,20 +255,21 @@ void mouseClicked() {
     }
     else {
       if (editBlock.equals("Block")) {
-        obs.add(new Block(x, y));
+        inEdit = new Block(x, y);
       }
       else if (editBlock.equals("JumpBlock")) {
-        obs.add(new JumpBlock(x, y));
+        inEdit = new JumpBlock(x, y);
       }
       else if (editBlock.equals("Spike")) {
-        obs.add(new Spike(x, y));
+        inEdit = new Spike(x, y);
       }
       else if (editBlock.equals("Orb")) {
-        obs.add(new yellowOrb(x, y));
+        inEdit = new yellowOrb(x, y);
       }
       else if (editBlock.equals("Portal")) {
-        obs.add(new Portal(x, y, 30, 100, "wave"));
+        inEdit = new Portal(x, y, 30, 100, "wave");
       }
+      obs.add(inEdit);
     }
   }
 }
