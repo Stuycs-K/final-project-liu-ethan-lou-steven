@@ -31,7 +31,7 @@ abstract class Obstacle implements Comparable<Obstacle>{
     return w;
   }
   abstract float isTouching(Sprite s);
-  abstract void display(float shift);
+  abstract void display(float shift, PImage img);
 }
 
 class Block extends Obstacle {
@@ -82,9 +82,8 @@ class Block extends Obstacle {
       return (int) (this.getX()-b2.getX());
     }
   }
-  public void display(float shift) {
-    fill(255);
-    rect(this.getX()-shift, this.getY()-this.getHeight(), this.getWidth(), this.getHeight());
+  public void display(float shift, PImage img) {
+    image(img, getX()-shift, getY()-getHeight(), getWidth(), getHeight());
   }
 }
 class JumpBlock extends Obstacle {
@@ -135,7 +134,7 @@ class JumpBlock extends Obstacle {
       return (int) (this.getX()-b2.getX());
     }
   }
-  public void display(float shift) {
+  public void display(float shift, PImage img) {
     fill(255);
     rect(this.getX()-shift, this.getY()-this.getHeight(), this.getWidth(), this.getHeight());
     fill(255, 250, 205);
@@ -168,7 +167,7 @@ class Spike extends Obstacle {
       return (int) (this.getX()-s2.getX());
     }
   }
-  public void display(float shift) {
+  public void display(float shift, PImage img) {
     fill(255);
     triangle(this.getX()-shift, this.getY(), this.getX() - shift + this.getWidth()/2, this.getY() - this.getHeight(), this.getX() - shift + this.getWidth(), this.getY());
   }
@@ -210,7 +209,7 @@ abstract class Orb extends Obstacle {
       return (int) (this.getX()-o2.getX());
     }
   }
-  abstract void display(float shift);
+  abstract void display(float shift, PImage img);
 }
 class yellowOrb extends Orb{
   public yellowOrb(float x, float y) {
@@ -221,7 +220,7 @@ class yellowOrb extends Orb{
     super(x, y, r);
     setType("yellow");
   }
-  public void display(float shift) {
+  public void display(float shift, PImage img) {
     fill(255, 250, 205);
     circle(getX()-shift+getWidth()/2, getY()-getWidth()/2, getWidth());
   }
@@ -239,7 +238,7 @@ class Portal extends Obstacle {
   public String getMode() {
     return mode;
   }
-  public void display(float shift) {
+  public void display(float shift, PImage img) {
     fill(0, 255, 0);
     ellipse(getX()-shift, getY()-getHeight()/2, getWidth(), getHeight());
   }

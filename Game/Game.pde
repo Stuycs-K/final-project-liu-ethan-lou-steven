@@ -8,7 +8,7 @@ String mode = "Play", editBlock = "";
 float speed = 3.5, shift=speed, editShift=0;
 boolean invincible = false;
 Text edit = new Text("obstacles.txt", "obstacles.txt");
-  
+PImage BlockImg, SpriteImg;  
 public void restart() {
   shift=0;
   //inScreen.clear();
@@ -39,6 +39,7 @@ void setup() {
   for (int i=0; i<names.length; i++) {
     menu.add(new Button(105+i*65, 15, 15, 60, names[i]));
   }
+  BlockImg=loadImage("RegularBlock01.png"); SpriteImg=loadImage("Cube002.png");
 }
 void draw() {
   background(12);
@@ -51,7 +52,7 @@ void draw() {
     }
   }
   for (Obstacle i : obs) {
-    i.display(shift);
+    i.display(shift, BlockImg);
   }
   if (mode.equals("Edit Map")) {
     return;
@@ -134,7 +135,7 @@ void draw() {
   if (!isTouchingBlock && s.getY()<430 && !s.isJumping()) {
     s.fall(2*shift);
   }
-  s.display(shift); 
+  s.display(shift, SpriteImg); 
   if (s.getMode().equals("cube")) {
     if (!isTouchingBlock) {
       s.setAngle(s.getAngle()+PI/10);
