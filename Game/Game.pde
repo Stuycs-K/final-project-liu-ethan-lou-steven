@@ -198,11 +198,39 @@ void mouseClicked() {
     for (Button i : menu) {
       if (i.isTouching(mouseX, mouseY)) {
         editBlock=i.getLabel();
-        break;
+        return;
       }
     }
     int x=((int)((mouseX+shift)/20))*20, y=((int)(mouseY/20)+1)*20;
-    
+    boolean found=false;
+    Obstacle rem = new Block(20, 20);
+    for (Obstacle i : obs) {
+      if (i.getClass().getSimpleName().equals(editBlock) && i.getX()==x && i.getY()==y) {
+        rem=i;
+        found=true;
+        break;
+      }
+    }
+    if (found) {
+      obs.remove(rem);
+    }
+    else {
+      if (editBlock.equals("Block")) {
+        obs.add(new Block(x, y));
+      }
+      else if (editBlock.equals("JumpBlock")) {
+        obs.add(new JumpBlock(x, y));
+      }
+      else if (editBlock.equals("Spike")) {
+        obs.add(new Spike(x, y));
+      }
+      else if (editBlock.equals("Orb")) {
+        obs.add(new yellowOrb(x, y));
+      }
+      else if (editBlock.equals("Portal")) {
+        obs.add(new Portal(x, y, "wave"));
+      }
+    }
     //println(mouseX+" "+mouseY+" "+x+" "+y);
     //boolean isTouchingBlock=false, isTouchingJump=false, isTouchingSpike=false, isTouchingOrb=false;
     //String[] types = new String[]{"Block", "JumpBlock", "Spike", "yellowOrb", "empty"};
