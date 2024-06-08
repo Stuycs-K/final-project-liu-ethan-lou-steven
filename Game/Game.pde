@@ -224,11 +224,11 @@ void mouseClicked() {
         return;
       }
     }
-    int x=((int)((mouseX+shift)/20))*20, y=((int)(mouseY/20)+1)*20;
     boolean found=false;
     Obstacle rem = new Block(20, 20);
+    int x=((int)((mouseX+shift)/20))*20, y=((int)(mouseY/20)+1)*20;
     for (Obstacle i : obs) {
-      if (i.getClass().getSimpleName().equals(editBlock) && i.getX()==x && i.getY()==y) {
+      if (i.getClass().getSimpleName().equals(editBlock) && (i.isTouchingMouse(mouseX+shift, mouseY))) {
         rem=i;
         found=true;
         break;

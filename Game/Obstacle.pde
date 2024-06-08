@@ -37,6 +37,7 @@ abstract class Obstacle implements Comparable<Obstacle>{
     return w;
   }
   abstract float isTouching(Sprite s);
+  abstract boolean isTouchingMouse(float x, float y);
   abstract void display(float shift);
 }
 
@@ -91,6 +92,9 @@ class Block extends Obstacle {
   public void display(float shift) {
     fill(255);
     rect(this.getX()-shift, this.getY()-this.getHeight(), this.getWidth(), this.getHeight());
+  }
+  public boolean isTouchingMouse(float x, float y) {
+    return (x >= getX() && x <= getX() + getWidth() && y <= getY() && y >= getY()-getHeight());
   }
 }
 class JumpBlock extends Obstacle {
@@ -147,6 +151,9 @@ class JumpBlock extends Obstacle {
     fill(255, 250, 205);
     ellipse(this.getX() + this.getWidth()/2 - shift, this.getY() - this.getHeight(), this.getWidth(), 5);
   }
+  public boolean isTouchingMouse(float x, float y) {
+    return (x >= getX() && x <= getX() + getWidth() && y <= getY() && y >= getY()-getHeight());
+  }
 }
 class Spike extends Obstacle {
   public Spike(float x, float y){
@@ -178,6 +185,9 @@ class Spike extends Obstacle {
     fill(255);
     triangle(this.getX()-shift, this.getY(), this.getX() - shift + this.getWidth()/2, this.getY() - this.getHeight(), this.getX() - shift + this.getWidth(), this.getY());
   }
+  public boolean isTouchingMouse(float x, float y) {
+    return (y <= getY() && (getY()-y) <= 2 * getHeight()/getWidth() * (x-getX()) && (getY()-y) <= -2 * getHeight()/getWidth() * (getX() + getWidth() - x));
+  }
 }
 abstract class Orb extends Obstacle {
   private boolean clicked;
@@ -203,7 +213,7 @@ abstract class Orb extends Obstacle {
     clicked = x;
   }
   public float isTouching(Sprite s) {
-    if ((s.getX() - this.getX() - getWidth()/2) * (s.getX() - this.getX() + getWidth()/2) + (s.getY() - this.getY()+getWidth()/2) * (s.getY() - this.getY()-getWidth()/2) > this.getWidth() * this.getWidth()) {
+    if ((s.getX() - this.getX() - getWidth()/2) * (s.getX() - this.getX() + getWidth()/2) + (s.getY() - this.getY()+getWidth()/2) * (s.getY() - this.getY()-getWidth()/2) > (this.getWidth()/2) * (this.getWidth()/2)) {
       return 0;
     }
     return 2;
@@ -215,6 +225,9 @@ abstract class Orb extends Obstacle {
     else {
       return (int) (this.getX()-o2.getX());
     }
+  }
+  public boolean isTouchingMouse(float x, float y) {
+    return (x - getX() - getWidth()/2) * (x - getX() - getWidth()/2) + (y - getY() + getWidth()/2) * (y - getY() + getWidth()/2) <= (this.getWidth()/2) * (this.getWidth()/2);
   }
   abstract void display(float shift);
 }
@@ -262,5 +275,8 @@ class Portal extends Obstacle {
       return 0;
     }
     return 1;
+  }
+  public boolean isTouchingMouse(float x, float y) {
+    return ((x-getX()) * (x-getX()) / (getWidth()/2 * getWidth()/2)) + ((y-getY()) * (y-getY()) / (getHeight()/2 * getHeight()/2)) <= 1;
   }
 }
