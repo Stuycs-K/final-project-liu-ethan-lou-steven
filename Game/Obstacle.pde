@@ -24,6 +24,12 @@ abstract class Obstacle implements Comparable<Obstacle>{
   public float getY() {
     return ycor;
   }
+  public void setX(float x) {
+    xcor = x;
+  }
+  public void setY(float y) {
+    ycor = y;
+  }
   public float getHeight() {
     return h;
   }
