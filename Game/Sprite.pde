@@ -114,9 +114,8 @@ class Sprite {
       //quad(x1-shift, y1, x2-shift, y2, x4-shift, y4, x3-shift, y3);
       //translate(-getX(), getY());
       //translate(xcor, ycor);
-      translate(xcor-shift+getWidth()/2, ycor-getHeight()/2);
+      translate(xcor-shift+getWidth()/2+3.5, ycor-getHeight()/2);
       rotate(angle);
-      //translate(xcor-shift, ycor);
       image(loadImage("Cube002.png"), -getWidth()/2, -getHeight()/2, getWidth(), getHeight());
       
       //rect(s.getX()-shift, s.getY()-20, 20, 20);

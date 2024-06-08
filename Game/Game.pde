@@ -5,7 +5,7 @@ TreeSet<Obstacle> obs = new TreeSet<Obstacle>();
 //ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
 Sprite s; ArrayList<Button> menu = new ArrayList<Button>();
 String mode = "Play", editBlock = "";
-float speed = 3.5, shift=0, editShift=0;
+float speed = 3.5, shift=speed, editShift=0;
 boolean invincible = false;
 Text edit = new Text("obstacles.txt", "obstacles.txt");
   
