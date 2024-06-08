@@ -37,8 +37,8 @@ abstract class Obstacle implements Comparable<Obstacle>{
     return w;
   }
   abstract float isTouching(Sprite s);
+  abstract void display(float shift, PImage img);
   abstract boolean isTouchingMouse(float x, float y);
-  abstract void display(float shift);
 }
 
 class Block extends Obstacle {
@@ -89,9 +89,8 @@ class Block extends Obstacle {
       return (int) (this.getX()-b2.getX());
     }
   }
-  public void display(float shift) {
-    fill(255);
-    rect(this.getX()-shift, this.getY()-this.getHeight(), this.getWidth(), this.getHeight());
+  public void display(float shift, PImage img) {
+    image(img, getX()-shift, getY()-getHeight(), getWidth(), getHeight());
   }
   public boolean isTouchingMouse(float x, float y) {
     return (x >= getX() && x <= getX() + getWidth() && y <= getY() && y >= getY()-getHeight());
@@ -145,7 +144,7 @@ class JumpBlock extends Obstacle {
       return (int) (this.getX()-b2.getX());
     }
   }
-  public void display(float shift) {
+  public void display(float shift, PImage img) {
     fill(255);
     rect(this.getX()-shift, this.getY()-this.getHeight(), this.getWidth(), this.getHeight());
     fill(255, 250, 205);
@@ -181,9 +180,8 @@ class Spike extends Obstacle {
       return (int) (this.getX()-s2.getX());
     }
   }
-  public void display(float shift) {
-    fill(255);
-    triangle(this.getX()-shift, this.getY(), this.getX() - shift + this.getWidth()/2, this.getY() - this.getHeight(), this.getX() - shift + this.getWidth(), this.getY());
+  public void display(float shift, PImage img) {
+    image(img, getX()-shift, getY()-getHeight(), getWidth(), getHeight());
   }
   public boolean isTouchingMouse(float x, float y) {
     return (y <= getY() && (getY()-y) <= 2 * getHeight()/getWidth() * (x-getX()) && (getY()-y) <= -2 * getHeight()/getWidth() * (getX() + getWidth() - x));
@@ -226,10 +224,10 @@ abstract class Orb extends Obstacle {
       return (int) (this.getX()-o2.getX());
     }
   }
+  abstract void display(float shift, PImage img);
   public boolean isTouchingMouse(float x, float y) {
     return (x - getX() - getWidth()/2) * (x - getX() - getWidth()/2) + (y - getY() + getWidth()/2) * (y - getY() + getWidth()/2) <= (this.getWidth()/2) * (this.getWidth()/2);
   }
-  abstract void display(float shift);
 }
 class yellowOrb extends Orb{
   public yellowOrb(float x, float y) {
@@ -240,9 +238,8 @@ class yellowOrb extends Orb{
     super(x, y, r);
     setType("yellow");
   }
-  public void display(float shift) {
-    fill(255, 250, 205);
-    circle(getX()-shift+getWidth()/2, getY()-getWidth()/2, getWidth());
+  public void display(float shift, PImage img) {
+    image(img, getX()-shift, getY()-getHeight(), getWidth(), getHeight());
   }
 }
 class Portal extends Obstacle {
@@ -258,9 +255,8 @@ class Portal extends Obstacle {
   public String getMode() {
     return mode;
   }
-  public void display(float shift) {
-    fill(0, 255, 0);
-    ellipse(getX()-shift, getY()-getHeight()/2, getWidth(), getHeight());
+  public void display(float shift, PImage img) {
+    image(img, getX()-shift, getY()-getHeight(), getWidth(), getHeight());
   }
   public int compareTo(Obstacle o2) {
     if (this.getX()==o2.getX()) {
