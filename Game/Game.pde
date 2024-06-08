@@ -4,7 +4,7 @@ import java.util.*;
 TreeSet<Obstacle> obs = new TreeSet<Obstacle>();
 //ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
 Sprite s; ArrayList<Button> menu = new ArrayList<Button>();
-String mode = "Play", editBlock = "Block";
+String mode = "Play", editBlock = "";
 float speed = 3.5, shift=0, editShift=0;
 boolean invincible = false;
 Text edit = new Text("obstacles.txt", "obstacles.txt");
@@ -39,16 +39,15 @@ void setup() {
   for (int i=0; i<names.length; i++) {
     menu.add(new Button(105+i*65, 15, 15, 60, names[i]));
   }
-  obs.add(new Portal(600, 300, "wave"));
 }
 void draw() {
   background(12);
   if (mode.equals("Play")) {
-    menu.get(0).display();
+    menu.get(0).display(false);
   }
   else {
     for (Button i : menu) {
-      i.display();
+      i.display(i.getLabel().equals(editBlock));
     }
   }
   for (Obstacle i : obs) {
