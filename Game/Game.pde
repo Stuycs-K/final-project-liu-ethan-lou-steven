@@ -231,65 +231,6 @@ void mouseClicked() {
         obs.add(new Portal(x, y, "wave"));
       }
     }
-    //println(mouseX+" "+mouseY+" "+x+" "+y);
-    //boolean isTouchingBlock=false, isTouchingJump=false, isTouchingSpike=false, isTouchingOrb=false;
-    //String[] types = new String[]{"Block", "JumpBlock", "Spike", "yellowOrb", "empty"};
-    //int index = types.length-1;
-    //Obstacle b = new Block(20, 20);
-    //for (Obstacle i : obs) {
-    //  if (i instanceof Block && i.getX()==x && i.getY()==y) {
-    //    index = 0;
-    //    b=i;
-    //    break;
-    //  }
-    //  else if (i instanceof JumpBlock && i.getX()==x && i.getY()==y) {
-    //    index = 1;
-    //    b=i;
-    //    break;
-    //  }
-    //  else if (i instanceof Spike && i.getX()==x && i.getY()==y) {
-    //    index = 2;
-    //    b=i;
-    //    break;
-    //  }
-    //  else if (i instanceof yellowOrb && i.getX()==x && i.getY()==y) {
-    //    index = 3;
-    //    b=i;
-    //    break;
-    //  }
-    //}
-    //if (index == 0) {
-    //  obs.remove(b);
-    //  edit.remove(b);
-    //  JumpBlock temp = new JumpBlock(x, y, b.getWidth(), b.getHeight());
-    //  obs.add(temp);
-    //  edit.add(temp);
-    //}
-    //else if (index == 1) {
-    //  obs.remove(b);
-    //  edit.remove(b);
-    //  Spike temp = new Spike(x, y, b.getHeight());
-    //  obs.add(temp);
-    //  edit.add(temp);
-    //}
-    //else if (index == 2) {
-    //  obs.remove(b);
-    //  edit.remove(b);
-    //  yellowOrb temp = new yellowOrb(x, y, b.getWidth());
-    //  obs.add(temp);
-    //  edit.add(temp);
-    //}
-    //else if (index == 3) {
-    //  obs.remove(b);
-    //  edit.remove(b);
-    //}
-    //else if (index == 4) {
-    //  obs.remove(b);
-    //  edit.remove(b);
-    //  Block temp = new Block(x, y, b.getWidth(), b.getHeight());
-    //  obs.add(temp);
-    //  edit.add(temp);
-    //}
   }
 }
 void mouseWheel(MouseEvent event) {

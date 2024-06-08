@@ -127,20 +127,7 @@ class Text {
     try {
       readObstacles = createReader(input);
       obstacles = createWriter(output);
-      String check = "";
-      if (o instanceof Block) {
-        check = "block " + o.getX()+" "+o.getY() + " " + o.getWidth() + " " + o.getHeight() + " false";
-      }
-      else if (o instanceof Spike) {
-        check = "spike " + o.getX()+" "+o.getY() + " " + o.getWidth() + " " + o.getHeight();
-      }
-      else if (o instanceof JumpBlock) {
-        check = "jumpblock " + o.getX()+" "+o.getY() + " " + o.getWidth() + " " + o.getHeight() + " true";
-      }
-      else if (o instanceof Orb) {
-        Orb temp = (Orb) o;
-        check = temp.getType() + "orb " + o.getX()+" "+o.getY() + o.getWidth();
-      }
+      String check = checkType(o);
       while(readObstacles.ready()) {
         String s = readObstacles.readLine();
         if (s.equals(check)) {
@@ -154,6 +141,45 @@ class Text {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+  
+  public void shift(Obstacle o, float x, float y) {
+    try {
+      readObstacles = createReader(input);
+      obstacles = createWriter(output);
+      String check = checkType(o);
+      while(readObstacles.ready()) {
+        String s = readObstacles.readLine();
+        if (s.equals(check)) {
+          
+          continue;
+        }
+        obstacles.println(s);
+      }
+      obstacles.flush();
+      obstacles.close();
+      readObstacles.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+  
+  public String checkType(Obstacle o) {
+    String check = "";
+    if (o instanceof Block) {
+      check = "block " + o.getX()+" "+o.getY() + " " + o.getWidth() + " " + o.getHeight() + " false";
+    }
+    else if (o instanceof Spike) {
+      check = "spike " + o.getX()+" "+o.getY() + " " + o.getWidth() + " " + o.getHeight();
+    }
+    else if (o instanceof JumpBlock) {
+      check = "jumpblock " + o.getX()+" "+o.getY() + " " + o.getWidth() + " " + o.getHeight() + " true";
+    }
+    else if (o instanceof Orb) {
+      Orb temp = (Orb) o;
+      check = temp.getType() + "orb " + o.getX()+" "+o.getY() + o.getWidth();
+    }
+    return check;
   }
   //public void remove(Block b) {
   //  try {
