@@ -4,12 +4,12 @@ import java.util.*;
 TreeSet<Obstacle> obs = new TreeSet<Obstacle>();
 //ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
 Sprite s; ArrayList<Button> menu = new ArrayList<Button>();
-String mode = "Play", editBlock = "Block";
-float speed = 3.5, shift=0, editShift=0;
+String mode = "Play", editBlock = "";
+float speed = 3.5, shift=speed, editShift=0;
 boolean invincible = false;
 Obstacle inEdit;
 Text edit = new Text("obstacles.txt", "obstacles.txt");
-  
+PImage BlockImg, SpriteImg, SpikeImg, WavePortalImg, YellowOrbImg;  
 public void restart() {
   shift=0;
   //inScreen.clear();
@@ -40,16 +40,21 @@ void setup() {
   for (int i=0; i<names.length; i++) {
     menu.add(new Button(105+i*65, 15, 15, 60, names[i]));
   }
-  obs.add(new Portal(600, 300, "wave"));
+  BlockImg=loadImage("RegularBlock01.png"); 
+  SpriteImg=loadImage("Cube002.png");
+  SpikeImg = loadImage("RegularSpike01.png");
+  WavePortalImg = loadImage("WavePortalLabelled.png");
+  YellowOrbImg = loadImage("YellowJumpRing.png");
 }
+
 void draw() {
-  background(12);
+  background(color(100, 100, 100));
   if (mode.equals("Play")) {
-    menu.get(0).display();
+    menu.get(0).display(false);
   }
   else {
     for (Button i : menu) {
-      i.display();
+      i.display(i.getLabel().equals(editBlock));
     }
     int x=((int)((mouseX+shift)/20))*20, y=((int)(mouseY/20)+1)*20;
     fill(255, 255, 255, 0);
@@ -75,7 +80,18 @@ void draw() {
     }
   }
   for (Obstacle i : obs) {
-    i.display(shift);
+    if (i instanceof Block) {
+      i.display(shift, BlockImg);
+    }
+    else if (i instanceof Spike) {
+      i.display(shift, SpikeImg);
+    }
+    else if (i instanceof Portal) {
+      i.display(shift, WavePortalImg);
+    }
+    else if (i instanceof yellowOrb) {
+      i.display(shift, YellowOrbImg);
+    }
   }
   if (mode.equals("Edit Map")) {
     return;
@@ -158,7 +174,7 @@ void draw() {
   if (!isTouchingBlock && s.getY()<430 && !s.isJumping()) {
     s.fall(2*shift);
   }
-  s.display(shift); 
+  s.display(shift, SpriteImg); 
   if (s.getMode().equals("cube")) {
     if (!isTouchingBlock) {
       s.setAngle(s.getAngle()+PI/10);
@@ -273,7 +289,7 @@ void mouseClicked() {
         inEdit = new yellowOrb(x, y);
       }
       else if (editBlock.equals("Portal")) {
-        inEdit = new Portal(x, y, "wave");
+        inEdit = new Portal(x, y, 30, 100, "wave");
       }
       obs.add(inEdit);
     }
