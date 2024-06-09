@@ -57,7 +57,7 @@ class Block extends Obstacle {
   public Block(float xcor, float ycor, float w, float h) {
     super(xcor, ycor, w, h);
   }
-  //Takes in a Sprite and determines if it lies on or within the block. 0 - not touching. 1 - touching the left or right side. 2 - touching the top or bottom.
+  //Takes in a Sprite and determines if it lies on or within the block. 0 - not touching. 1 - touching the left or right side. 2 - touching the top. 3- touching the bottom.
   public float isTouching(Sprite s) {
     float x=this.getX(), y=this.getY();
     float minX = min(x + getWidth(), x), maxX = max(x+getWidth(), x), minY = min(y-getHeight(), y), maxY = max(y-getHeight(), y);
@@ -74,6 +74,9 @@ class Block extends Obstacle {
     //} 
     if (left<down || s.getMode().equals("wave")) {
       return 1;
+    }
+    if (s.getY()>getY()) {
+      return 3;
     }
     return 2;
   }

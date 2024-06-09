@@ -131,6 +131,12 @@ void draw() {
         restart();
         break;
       }
+      else if (curr.isTouching(s)==3 && !invincible && s.isJumping()) {
+        println("died");
+        s.setAlive(false);
+        restart();
+        break;
+      }
       //System.out.println(s.isJumping());
     }
     else if (curr instanceof Spike) {
