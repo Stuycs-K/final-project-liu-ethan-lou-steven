@@ -46,7 +46,7 @@ void setup() {
   BlockImg2=loadImage("RegularBlock02.jpg");
   SpriteImg=loadImage("Cube002.png");
   SpikeImg = loadImage("RegularSpike01.png");
-  SpikeImg2 = loadImage("RegularSpike02.jpg");
+  SpikeImg2 = loadImage("RegularSpike02.png");
   WavePortalImg = loadImage("WavePortalLabelled.png");
   YellowOrbImg = loadImage("YellowJumpRing.png");
   YellowPadImg = loadImage("YellowJumpPad.png");
