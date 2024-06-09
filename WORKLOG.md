@@ -58,6 +58,14 @@
 * Successfully displayed the wave triangle
 * Wrote isTouching() differently for wave mode in Block and JumpBlock
 
+### 6/7/24
+* Made portals work
+* Worked on wave sprite interactions with blocks
+
+### 6/8/24
+* Updated graphics by adding images for everything (blocks, spikes, portals, sprites, orbs, etc)
+* Fixed loading images being slow
+
 ## Steven Lou
 ### 5/22/24
 * Wrote the Spike class methods and constructors.
