@@ -36,7 +36,7 @@ void setup() {
   }
   s = new Sprite(100, 430);
   menu.add(new Button(0, 30, 30, 100, "Edit Map"));
-  String[] names = new String[]{"Block", "JumpPad", "Spike", "YwllowOrb", "Portal"};
+  String[] names = new String[]{"Block", "JumpPad", "Spike", "YellowOrb", "Portal"};
   for (int i=0; i<names.length; i++) {
     menu.add(new Button(105+i*65, 20, 20, 60, names[i]));
   }
@@ -100,17 +100,16 @@ void draw() {
     else if (i instanceof YellowOrb) {
       i.display(shift, YellowOrbImg);
     }
-<<<<<<< HEAD
-    if (i == inEdit) {
-      tint(255, 255);
-=======
     else if (i instanceof JumpPad) {
       JumpPad p = (JumpPad) i;
       if (p.getType().equals("yellow")) {
         i.display(shift, YellowPadImg);
       }
->>>>>>> 1e86ca00601a3c83912396fcb941cb34145df91a
     }
+    if (i == inEdit) {
+      tint(255, 255);
+    }
+    
   }
   if (mode.equals("Edit Map")) {
     return;
@@ -259,6 +258,7 @@ void keyPressed() {
   else if (inEdit != null && mode.equals("Edit Map")) {
     if (key == 'd') {
       obs.remove(inEdit);
+      edit.remove(inEdit);
       inEdit = null;
     }
   }
@@ -338,6 +338,7 @@ void mouseClicked(MouseEvent event) {
       }
       if (inEdit != null) {
         obs.add(inEdit);
+        edit.add(inEdit);
       }
     }
   }
