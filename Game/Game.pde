@@ -216,7 +216,7 @@ void keyPressed() {
   if (key=='w') {
     invincible = !invincible;
   }
-  else if (key == CODED && mode.equals("Edit Map")) {
+  else if (key == CODED && inEdit != null && mode.equals("Edit Map")) {
     if (keyCode == UP) {
       inEdit.setY(inEdit.getY() - 1);
     }
@@ -229,10 +229,13 @@ void keyPressed() {
     if (keyCode == LEFT) {
       inEdit.setX(inEdit.getX() - 1);
     }
-   }
-   else if (inEdit != null && mode.equals("Edit Map")) {
-     //Some stuff
-   }
+  }
+  else if (inEdit != null && mode.equals("Edit Map")) {
+    if (key == 'd') {
+      obs.remove(inEdit);
+      inEdit = null;
+    }
+  }
   //else if (key=='s') {
   //  if (s.getMode().equals("cube")) {
   //    s.setMode("wave");
@@ -244,7 +247,7 @@ void keyPressed() {
   //}
 }
 void mouseDragged(MouseEvent event) {
-  if (mode.equals("Edit Map") && inEdit.isTouchingMouse(mouseX+shift, mouseY)) {
+  if (mode.equals("Edit Map") && inEdit != null) {
     if (pmouseX < mouseX) {
       inEdit.setWidth(inEdit.getWidth()+event.getCount());
     }
@@ -252,14 +255,14 @@ void mouseDragged(MouseEvent event) {
       inEdit.setWidth(inEdit.getWidth()-event.getCount());
     }
     if (pmouseY < mouseY) {
-      inEdit.setHeight(inEdit.getHeight()+event.getCount());
+      inEdit.setHeight(inEdit.getHeight()-event.getCount());
     }
     if (pmouseY > mouseY) {
-      inEdit.setHeight(inEdit.getHeight()-event.getCount());
+      inEdit.setHeight(inEdit.getHeight()+event.getCount());
     }
   }
 }
-void mouseClicked() {
+void mouseClicked(MouseEvent event) {
   if (menu.get(0).isTouching(mouseX, mouseY)) {
     String temp=mode;
     mode=menu.get(0).getLabel();
@@ -271,23 +274,27 @@ void mouseClicked() {
     for (Button i : menu) {
       if (i.isTouching(mouseX, mouseY)) {
         editBlock=i.getLabel();
+        if (inEdit != null && !inEdit.getClass().getSimpleName().equals(editBlock)) {
+          inEdit = new Block(20, 20);
+          inEdit = null;
+        }
         return;
       }
     }
     boolean found=false;
-    Obstacle rem = new Block(20, 20);
+    //boolean delete=false;
+    //Obstacle rem = new Block(20, 20);
     int x=((int)((mouseX+shift)/20))*20, y=((int)(mouseY/20)+1)*20;
     for (Obstacle i : obs) {
       if (i.getClass().getSimpleName().equals(editBlock) && (i.isTouchingMouse(mouseX+shift, mouseY))) {
-        rem=i;
-        found=true;
-        break;
+        inEdit = i;
+        found = true;
       }
     }
-    if (found) {
-      obs.remove(rem);
-    }
-    else {
+    //if (found) {
+    //  obs.remove(rem);
+    //}
+    if (!found) {
       if (editBlock.equals("Block")) {
         inEdit = new Block(x, y);
       }
