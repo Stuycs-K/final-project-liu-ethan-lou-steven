@@ -162,8 +162,8 @@ class Text {
         else if (arr[0].equals("yelloworb")) {
           obs.add(new YellowOrb(Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3])));
         }
-        else if (arr[0].equals("portal")) {
-          
+        else if (arr[1].equals("portal")) {
+          obs.add(new Portal(Float.parseFloat(arr[2]), Float.parseFloat(arr[3]), Float.parseFloat(arr[4]), Float.parseFloat(arr[5]), arr[0]));
         }
         //if (arr.length > 3) {
         //  if (Boolean.parseBoolean(arr[4])) {

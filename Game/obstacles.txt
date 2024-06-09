@@ -1,16 +1,13 @@
-<<<<<<< HEAD
-waveportal 400.0 300.0 30.0 100.0
-waveportal 460.0 300.0 30.0 100.0
-yelloworb 300.0 180.0 20.0
-yelloworb 300.0 200.0 20.0
-spike 360.0 160.0 20.0 17.320509
-spike 340.0 240.0 20.0 17.320509
-jumppad 240.0 80.0 20.0 5.0 yellow
-jumppad 200.0 200.0 20.0 5.0 yellow
-block 260.0 140.0 20.0 20.0
-block 240.0 200.0 20.0 20.0
-waveportal 600.0 200.0 30.0 100.0
-waveportal 540.0 300.0 30.0 100.0
-waveportal 520.0 360.0 30.0 100.0
-=======
->>>>>>> 702b192bbc92d00a17cc4c071919ea210afa2e74
+block 320.0 140.0 20.0 20.0
+spike 400.0 140.0 20.0 17.320509
+jumppad 360.0 80.0 20.0 5.0 yellow
+yelloworb 420.0 280.0 20.0
+wave portal 540.0 240.0 30.0 100.0
+block 620.0 240.0 20.0 20.0
+wave portal 640.0 300.0 30.0 100.0
+wave portal 680.0 280.0 30.0 100.0
+spike 480.0 140.0 20.0 17.320509
+yelloworb 440.0 240.0 20.0
+yelloworb 480.0 280.0 20.0
+jumppad 560.0 120.0 20.0 5.0 yellow
+jumppad 600.0 120.0 20.0 5.0 yellow
