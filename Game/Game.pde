@@ -245,6 +245,7 @@ void keyPressed() {
     buffer = false;
   }
   else if (key == CODED && inEdit != null && mode.equals("Edit Map")) {
+    edit.remove(inEdit);
     if (keyCode == UP) {
       inEdit.setY(inEdit.getY() - 2);
     }
@@ -257,10 +258,12 @@ void keyPressed() {
     if (keyCode == LEFT) {
       inEdit.setX(inEdit.getX() - 2);
     }
+    edit.add(inEdit);
   }
   else if (inEdit != null && mode.equals("Edit Map")) {
     if (key == 'd') {
       obs.remove(inEdit);
+      edit.remove(inEdit);
       inEdit = null;
     }
   }
@@ -281,6 +284,7 @@ void keyReleased() {
 }
 void mouseDragged(MouseEvent event) {
   if (mode.equals("Edit Map") && inEdit != null) {
+    edit.remove(inEdit);
     if (pmouseX < mouseX) {
       inEdit.setWidth(inEdit.getWidth()+event.getCount());
     }
@@ -293,6 +297,7 @@ void mouseDragged(MouseEvent event) {
     if (pmouseY > mouseY) {
       inEdit.setHeight(inEdit.getHeight()+event.getCount());
     }
+    edit.add(inEdit);
   }
 }
 void mouseClicked(MouseEvent event) {
@@ -345,6 +350,7 @@ void mouseClicked(MouseEvent event) {
       }
       if (inEdit != null) {
         obs.add(inEdit);
+        edit.add(inEdit);
       }
     }
   }

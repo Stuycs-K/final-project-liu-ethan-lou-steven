@@ -135,34 +135,34 @@ class Text {
   public String checkType(Obstacle o) {
     String check = "";
     if (o instanceof Block) {
-      check = "block " + o.getX()+" "+o.getY() + " " + o.getWidth() + " " + o.getHeight() + " false";
+      check = "block " + o.getX()+" "+o.getY() + " " + o.getWidth() + " " + o.getHeight();
     }
     else if (o instanceof Spike) {
       check = "spike " + o.getX()+" "+o.getY() + " " + o.getWidth() + " " + o.getHeight();
     }
     else if (o instanceof JumpPad) {
-      check = "jumppad " + o.getX()+" "+o.getY() + " " + o.getWidth() + " " + o.getHeight() + " true";
+      check = "jumppad " + o.getX()+" "+o.getY() + " " + o.getWidth() + " " + o.getHeight();
     }
     else if (o instanceof Orb) {
       Orb temp = (Orb) o;
-      check = temp.getType() + "orb " + o.getX()+" "+o.getY() + o.getWidth();
+      check = temp.getType() + "orb " + o.getX()+" "+o.getY() + " " + o.getWidth();
     }
     else if (o instanceof Portal) {
       Portal temp = (Portal) o;
-      check = temp.getMode() + "portal " + o.getX()+" "+ o.getY() + o.getWidth() + o.getHeight();
+      check = temp.getMode() + "portal " + o.getX()+" "+ o.getY() + " " + o.getWidth() + " " + o.getHeight();
     }
     return check;
   }
   
   public void printType(Obstacle o) {
     if (o instanceof Block) {
-      obstacles.println("block " + o.getX() +" "+ o.getY() + " " + o.getWidth() + " " + o.getHeight() + " false");
+      obstacles.println("block " + o.getX() +" "+ o.getY() + " " + o.getWidth() + " " + o.getHeight());
     }
     else if (o instanceof Spike) {
       obstacles.println("spike " + o.getX() +" "+ o.getY() + " " + o.getWidth() + " " + o.getHeight());
     }
     else if (o instanceof JumpPad) {
-      obstacles.println("jumppad " + o.getX() +" "+ o.getY() + " " + o.getWidth() + " " + o.getHeight() +" true");
+      obstacles.println("jumppad " + o.getX() +" "+ o.getY() + " " + o.getWidth() + " " + o.getHeight());
     }
     else if (o instanceof Orb) {
       Orb temp = (Orb) o;
