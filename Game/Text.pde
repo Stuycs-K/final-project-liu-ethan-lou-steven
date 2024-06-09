@@ -130,7 +130,8 @@ class Text {
       obstacles.println("spike " + o.getX() +" "+ o.getY() + " " + o.getWidth() + " " + o.getHeight());
     }
     else if (o instanceof JumpPad) {
-      obstacles.println("jumppad " + o.getX() +" "+ o.getY() + " " + o.getWidth() + " " + o.getHeight());
+      JumpPad j = (JumpPad)o;
+      obstacles.println("jumppad " + j.getX() +" "+ j.getY() + " " + j.getWidth() + " " + j.getHeight()+" "+j.getType());
     }
     else if (o instanceof Orb) {
       Orb temp = (Orb) o;
@@ -138,7 +139,7 @@ class Text {
     }
     else if (o instanceof Portal) {
       Portal temp = (Portal) o;
-      obstacles.println(temp.getMode() + "portal " + o.getX()+" "+ o.getY() + " " + o.getWidth() + " " + o.getHeight());
+      obstacles.println(temp.getMode() + " portal " + o.getX()+" "+ o.getY() + " " + o.getWidth() + " " + o.getHeight());
     }
   }
   public void readObstacles(TreeSet<Obstacle> obs) {
@@ -160,6 +161,9 @@ class Text {
         }
         else if (arr[0].equals("yelloworb")) {
           obs.add(new YellowOrb(Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3])));
+        }
+        else if (arr[0].equals("portal")) {
+          
         }
         //if (arr.length > 3) {
         //  if (Boolean.parseBoolean(arr[4])) {
