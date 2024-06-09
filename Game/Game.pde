@@ -81,6 +81,9 @@ void draw() {
     tint(255, 255);
   }
   for (Obstacle i : obs) {
+    if (i == inEdit) {
+      tint(255, 250, 205, 255);
+    }
     if (i instanceof Block) {
       i.display(shift, BlockImg);
     }
@@ -92,6 +95,9 @@ void draw() {
     }
     else if (i instanceof YellowOrb) {
       i.display(shift, YellowOrbImg);
+    }
+    if (i == inEdit) {
+      tint(255, 255);
     }
   }
   if (mode.equals("Edit Map")) {
@@ -218,16 +224,16 @@ void keyPressed() {
   }
   else if (key == CODED && inEdit != null && mode.equals("Edit Map")) {
     if (keyCode == UP) {
-      inEdit.setY(inEdit.getY() - 1);
+      inEdit.setY(inEdit.getY() - 2);
     }
     if (keyCode == RIGHT) {
-      inEdit.setX(inEdit.getX() + 1);
+      inEdit.setX(inEdit.getX() + 2);
     }
     if (keyCode == DOWN) {
-      inEdit.setY(inEdit.getY() + 1);
+      inEdit.setY(inEdit.getY() + 2);
     }
     if (keyCode == LEFT) {
-      inEdit.setX(inEdit.getX() - 1);
+      inEdit.setX(inEdit.getX() - 2);
     }
   }
   else if (inEdit != null && mode.equals("Edit Map")) {
