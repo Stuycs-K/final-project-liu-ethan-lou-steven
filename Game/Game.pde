@@ -9,8 +9,9 @@ float speed = 3.5, shift=speed, editShift=0;
 boolean invincible = false, buffer = false;
 Obstacle inEdit;
 Text edit = new Text("obstacles.txt", "obstacles.txt");
-PImage BlockImg, BlockImg2, SpriteImg, SpikeImg, WavePortalImg, YellowOrbImg, YellowPadImg, Background, WaveImg, ButtonImg;  
+PImage BlockImg, BlockImg2, SpikeImg2, SpriteImg, SpikeImg, WavePortalImg, YellowOrbImg, YellowPadImg, Background, WaveImg, ButtonImg;  
 PImage[] blocks;
+PImage[] spikes;
 public void restart() {
   shift=0;
   //inScreen.clear();
@@ -45,6 +46,7 @@ void setup() {
   BlockImg2=loadImage("RegularBlock02.jpg");
   SpriteImg=loadImage("Cube002.png");
   SpikeImg = loadImage("RegularSpike01.png");
+  SpikeImg2 = loadImage("RegularSpike02.jpg");
   WavePortalImg = loadImage("WavePortalLabelled.png");
   YellowOrbImg = loadImage("YellowJumpRing.png");
   YellowPadImg = loadImage("YellowJumpPad.png");
@@ -52,6 +54,7 @@ void setup() {
   WaveImg = loadImage("Wave001.png");
   ButtonImg = loadImage("Button.png");
   blocks = new PImage[]{BlockImg, BlockImg2};
+  spikes = new PImage[]{SpikeImg, SpikeImg2};
 }
 
 void draw() {
@@ -80,7 +83,12 @@ void draw() {
     }
     else if (editBlock.equals("Spike")) {
       Spike temp = new Spike(x,y);
-      temp.display(shift, SpikeImg);
+      int index = 0;
+      if (inEdit != null) {
+        Spike temp2 = (Spike) inEdit;
+        index = temp2.getDisplay();
+      } 
+      temp.display(shift, spikes[index]);
     }
     else if (editBlock.equals("YellowOrb")) {
       YellowOrb temp = new YellowOrb(x,y);
@@ -101,7 +109,8 @@ void draw() {
       i.display(shift, blocks[temp.getDisplay()]);
     }
     else if (i instanceof Spike) {
-      i.display(shift, SpikeImg);
+      Spike temp = (Spike) i;
+      i.display(shift, spikes[temp.getDisplay()]);
     }
     else if (i instanceof Portal) {
       i.display(shift, WavePortalImg);
@@ -292,6 +301,17 @@ void keyPressed() {
       inEdit = temp;
       edit.add(inEdit);
     }
+    if (key == 'c' && inEdit instanceof Spike) {
+      edit.remove(inEdit);
+      Spike temp = (Spike) inEdit;
+      int index = temp.getDisplay() + 1;
+      if (index >= spikes.length) {
+        index -= spikes.length;
+      }
+      temp.setDisplay(index);
+      inEdit = temp;
+      edit.add(inEdit);
+    }
   }
   //else if (key=='s') {
   //  if (s.getMode().equals("cube")) {
@@ -373,7 +393,14 @@ void mouseClicked(MouseEvent event) {
         inEdit = new JumpPad(x, y, 20, 5, "yellow");
       }
       else if (editBlock.equals("Spike")) {
-        inEdit = new Spike(x, y);
+        int index = 0;
+        if (inEdit != null) {
+          Spike temp2 = (Spike) inEdit;
+          index = temp2.getDisplay();
+        }
+        Spike temp = new Spike(x, y);
+        temp.setDisplay(index);
+        inEdit = temp;
       }
       else if (editBlock.equals("YellowOrb")) {
         inEdit = new YellowOrb(x, y);

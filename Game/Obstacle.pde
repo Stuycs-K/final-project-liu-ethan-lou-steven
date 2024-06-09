@@ -178,6 +178,7 @@ class JumpPad extends Obstacle {
   }
 }
 class Spike extends Obstacle {
+  int display = 0;
   public Spike(float x, float y){
     super(x, y, 20, (float) (10 * Math.sqrt(3)));
   }
@@ -186,6 +187,12 @@ class Spike extends Obstacle {
   }
   public Spike(float x, float y, float w, float h){
     super(x, y, w, h);
+  }
+  public int getDisplay() {
+    return display;
+  }
+  public void setDisplay(int x) {
+    display = x;
   }
   public float isTouching(Sprite s) {
     float x=this.getX() + getWidth()/4 , y=this.getY();
