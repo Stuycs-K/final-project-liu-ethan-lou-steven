@@ -146,6 +146,10 @@ class Text {
       Orb temp = (Orb) o;
       check = temp.getType() + "orb " + o.getX()+" "+o.getY() + o.getWidth();
     }
+    else if (o instanceof Portal) {
+      Portal temp = (Portal) o;
+      check = temp.getMode() + "portal " + o.getX()+" "+ o.getY() + o.getWidth() + o.getHeight();
+    }
     return check;
   }
   
@@ -162,6 +166,10 @@ class Text {
     else if (o instanceof Orb) {
       Orb temp = (Orb) o;
       obstacles.println(temp.getType() + "orb " + o.getX()+" "+ o.getY() + o.getWidth());
+    }
+    else if (o instanceof Portal) {
+      Portal temp = (Portal) o;
+      obstacles.println(temp.getMode() + "portal " + o.getX()+" "+ o.getY() + o.getWidth() + o.getHeight());
     }
   }
   //public void remove(Block b) {
@@ -221,7 +229,7 @@ class Text {
           obs.add(new Spike(Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3]), Float.parseFloat(arr[4])));
         }
         else if (arr[0].equals("yelloworb")) {
-          obs.add(new yellowOrb(Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3])));
+          obs.add(new YellowOrb(Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3])));
         }
         //if (arr.length > 3) {
         //  if (Boolean.parseBoolean(arr[4])) {
