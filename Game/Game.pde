@@ -18,12 +18,12 @@ public void restart() {
 }
 void setup() {
   size(500, 500);
-  edit.deleteAll();
+  //edit.deleteAll();
   //lastIndexWall = 0;
   //Text.readBlockString(wall);
   //Text.readSpikeString(spike);
   //Text.printFile("StereoMadnessWalls.txt");
-  //edit.readObstacles(obs);
+  edit.readObstacles(obs);
   //for (Block i : wall) {
   //  print(i.getX()+" "+i.getY()+" "+i.hasJumpPad()+"\\n");
   //}
@@ -67,7 +67,7 @@ void draw() {
       temp.display(shift, BlockImg);
     }
     else if (editBlock.equals("JumpPad")) {
-      JumpPad temp = new JumpPad(x,y, "yellow");
+      JumpPad temp = new JumpPad(x,y, 20, 5, "yellow");
       temp.display(shift, YellowPadImg);
     }
     else if (editBlock.equals("Spike")) {
@@ -79,7 +79,7 @@ void draw() {
       temp.display(shift, YellowOrbImg);
     }
     else if (editBlock.equals("Portal")) {
-      Portal temp = new Portal(x,y, "wave");
+      Portal temp = new Portal(x,y, 30, 100, "wave");
       temp.display(shift, WavePortalImg);
     }
     tint(255, 255);
@@ -109,6 +109,7 @@ void draw() {
     if (i == inEdit) {
       tint(255, 255);
     }
+    
   }
   if (mode.equals("Edit Map")) {
     return;

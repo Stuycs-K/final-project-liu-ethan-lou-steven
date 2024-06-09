@@ -80,38 +80,6 @@ class Text {
     }
   }
   
-  //public void add(Spike b) {
-  //  try {
-  //    readSpikes = createReader("spikes.txt");
-  //    spikes = createWriter("spikes.txt");
-  //    while(readSpikes.ready()) {
-  //      String s = readSpikes.readLine();
-  //      spikes.println(s);
-  //    }
-  //    spikes.println(b.getX()+" "+b.getY());
-  //    spikes.flush();
-  //    spikes.close();
-  //    readSpikes.close();
-  //  } catch (IOException e) {
-  //    e.printStackTrace();
-  //  }
-  //}
-  //public void add(JumpBlock b) {
-  //  try {
-  //    readWalls = createReader("walls.txt");
-  //    walls = createWriter("walls.txt");
-  //    while(readWalls.ready()) {
-  //      String s = readWalls.readLine();
-  //      walls.println(s);
-  //    }
-  //    walls.println(b.getX()+" "+b.getY() + " true");
-  //    walls.flush();
-  //    walls.close();
-  //    readWalls.close();
-  //  } catch (IOException e) {
-  //    e.printStackTrace();
-  //  }
-  //}
   public void remove(Obstacle o) {
     try {
       readObstacles = createReader(output);
@@ -162,7 +130,8 @@ class Text {
       obstacles.println("spike " + o.getX() +" "+ o.getY() + " " + o.getWidth() + " " + o.getHeight());
     }
     else if (o instanceof JumpPad) {
-      obstacles.println("jumppad " + o.getX() +" "+ o.getY() + " " + o.getWidth() + " " + o.getHeight());
+      JumpPad j = (JumpPad)o;
+      obstacles.println("jumppad " + j.getX() +" "+ j.getY() + " " + j.getWidth() + " " + j.getHeight()+" "+j.getType());
     }
     else if (o instanceof Orb) {
       Orb temp = (Orb) o;
@@ -170,48 +139,9 @@ class Text {
     }
     else if (o instanceof Portal) {
       Portal temp = (Portal) o;
-      obstacles.println(temp.getMode() + "portal " + o.getX()+" "+ o.getY() + " " + o.getWidth() + " " + o.getHeight());
+      obstacles.println(temp.getMode() + " portal " + o.getX()+" "+ o.getY() + " " + o.getWidth() + " " + o.getHeight());
     }
   }
-  //public void remove(Block b) {
-  //  try {
-  //    readWalls = createReader("walls.txt");
-  //    walls = createWriter("walls.txt");
-  //    String check = b.getX()+" "+b.getY() + " false";
-  //    while(readWalls.ready()) {
-  //      String s = readWalls.readLine();
-  //      if (s.equals(check)) {
-  //        continue;
-  //      }
-  //      walls.println(s);
-  //    }
-  //    walls.flush();
-  //    walls.close();
-  //    readWalls.close();
-  //  } catch (IOException e) {
-  //    e.printStackTrace();
-  //  }
-  //}
-  //public void remove(Spike b) {
-  //  try {
-  //    readSpikes = createReader("spikes.txt");
-  //    spikes = createWriter("spikes.txt");
-  //    String check = b.getX()+" "+b.getY();
-  //    while(readSpikes.ready()) {
-  //      String s = readSpikes.readLine();
-  //      if (s.equals(check)){
-  //        continue;
-  //      }
-  //      spikes.println(s);
-  //    }
-  //    spikes.flush();
-  //    spikes.close();
-  //    readSpikes.close();
-  //  } catch (IOException e) {
-  //    e.printStackTrace();
-  //  }
-  //}
-
   public void readObstacles(TreeSet<Obstacle> obs) {
     try {
       //File file = new File("StereoMadnessWalls.txt");
@@ -231,6 +161,9 @@ class Text {
         }
         else if (arr[0].equals("yelloworb")) {
           obs.add(new YellowOrb(Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3])));
+        }
+        else if (arr[1].equals("portal")) {
+          obs.add(new Portal(Float.parseFloat(arr[2]), Float.parseFloat(arr[3]), Float.parseFloat(arr[4]), Float.parseFloat(arr[5]), arr[0]));
         }
         //if (arr.length > 3) {
         //  if (Boolean.parseBoolean(arr[4])) {
@@ -255,26 +188,4 @@ class Text {
       e.printStackTrace();
     }
   }
-
-  //public void readSpikes(TreeSet<Obstacle> obs, String filename) {
-  //  try {
-  //    //File file = new File("StereoMadnessSpikes.txt");
-  //    //String absolutePath = file.getAbsolutePath();
-  //    readSpikes = createReader(filename);
-  //    while (readSpikes.ready()) {
-  //      String s = readSpikes.readLine();
-  //      String[] arr = s.split(" ", 0);
-  //      if (arr.length > 2) {
-  //        obs.add(new Spike(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3])));
-  //      }
-  //      else {
-  //        obs.add(new Spike(Float.parseFloat(arr[0]), Float.parseFloat(arr[1]), 20));
-  //      }
-  //    }
-  //    readSpikes.close();
-  //  }
-  //  catch (IOException e) {
-  //    e.printStackTrace();
-  //  }
-  //}
 }
