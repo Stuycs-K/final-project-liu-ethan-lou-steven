@@ -9,7 +9,7 @@ float speed = 3.5, shift=speed, editShift=0;
 boolean invincible = false;
 Obstacle inEdit;
 Text edit = new Text("obstacles.txt", "obstacles.txt");
-PImage BlockImg, SpriteImg, SpikeImg, WavePortalImg, YellowOrbImg, YellowPadImg, Background, WaveImg;  
+PImage BlockImg, SpriteImg, SpikeImg, WavePortalImg, YellowOrbImg, YellowPadImg, Background, WaveImg, ButtonImg;  
 public void restart() {
   shift=0;
   //inScreen.clear();
@@ -38,7 +38,7 @@ void setup() {
   menu.add(new Button(0, 30, 30, 100, "Edit Map"));
   String[] names = new String[]{"Block", "JumpPad", "Spike", "Orb", "Portal"};
   for (int i=0; i<names.length; i++) {
-    menu.add(new Button(105+i*65, 15, 15, 60, names[i]));
+    menu.add(new Button(105+i*65, 20, 20, 60, names[i]));
   }
   BlockImg=loadImage("RegularBlock01.png"); 
   SpriteImg=loadImage("Cube002.png");
@@ -48,16 +48,17 @@ void setup() {
   YellowPadImg = loadImage("YellowJumpPad.png");
   Background = loadImage("Background-GeometricBlue.png");
   WaveImg = loadImage("Wave001.png");
+  ButtonImg = loadImage("Button.png");
 }
 
 void draw() {
   image(Background, 0, 0, width, height);
   if (mode.equals("Play")) {
-    menu.get(0).display(false);
+    menu.get(0).display(false, ButtonImg);
   }
   else {
     for (Button i : menu) {
-      i.display(i.getLabel().equals(editBlock));
+      i.display(i.getLabel().equals(editBlock), ButtonImg);
     }
   }
   for (Obstacle i : obs) {
