@@ -68,7 +68,7 @@ void draw() {
     }
     else if (editBlock.equals("JumpPad")) {
       JumpPad temp = new JumpPad(x,y, "yellow");
-      temp.display(shift, YellowPadImg);
+      temp.display(shift, BlockImg);
     }
     else if (editBlock.equals("Spike")) {
       Spike temp = new Spike(x,y);
