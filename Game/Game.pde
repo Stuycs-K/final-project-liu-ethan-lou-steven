@@ -6,7 +6,7 @@ TreeSet<Obstacle> obs = new TreeSet<Obstacle>();
 Sprite s; ArrayList<Button> menu = new ArrayList<Button>();
 String mode = "Play", editBlock = "Block";
 float speed = 3.5, shift=speed, editShift=0;
-boolean invincible = false;
+boolean invincible = false, buffer = false;
 Obstacle inEdit;
 Text edit = new Text("obstacles.txt", "obstacles.txt");
 PImage BlockImg, SpriteImg, SpikeImg, WavePortalImg, YellowOrbImg, YellowPadImg, Background, WaveImg, ButtonImg;  
@@ -36,7 +36,7 @@ void setup() {
   }
   s = new Sprite(100, 430);
   menu.add(new Button(0, 30, 30, 100, "Edit Map"));
-  String[] names = new String[]{"Block", "JumpPad", "Spike", "YwllowOrb", "Portal"};
+  String[] names = new String[]{"Block", "JumpPad", "Spike", "YellowOrb", "Portal"};
   for (int i=0; i<names.length; i++) {
     menu.add(new Button(105+i*65, 20, 20, 60, names[i]));
   }
@@ -156,7 +156,7 @@ void draw() {
     }
     else if (curr instanceof Orb) {
       Orb tempCurr = (Orb) curr;
-      if (keyPressed && tempCurr.isClicked() == false && tempCurr.isTouching(s) == 2) {
+      if (keyPressed && key == ' ' && buffer && tempCurr.isClicked() == false && tempCurr.isTouching(s) == 2) {
         s.jump(2 * shift, 80);
         tempCurr.setClicked(true);
       }
@@ -240,6 +240,9 @@ void keyPressed() {
   if (key=='w') {
     invincible = !invincible;
   }
+  else if (key == ' ' && !s.isJumping()) {
+    buffer = false;
+  }
   else if (key == CODED && inEdit != null && mode.equals("Edit Map")) {
     if (keyCode == UP) {
       inEdit.setY(inEdit.getY() - 2);
@@ -269,6 +272,11 @@ void keyPressed() {
   //    s.setMode("cube");
   //  }
   //}
+}
+void keyReleased() {
+  if (key = ' ' && s.isJumping()) {
+    buffer = true;
+  }
 }
 void mouseDragged(MouseEvent event) {
   if (mode.equals("Edit Map") && inEdit != null) {
