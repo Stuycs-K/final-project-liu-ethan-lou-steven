@@ -1,2 +1,9 @@
-block 280.0 200.0 20.0 20.0 false
-block 360.0 280.0 20.0 20.0 false
+waveportal 480.0 320.030.0100.0
+jumppad 380.0 340.0 20.0 5.0 true
+waveportal 520.0 260.030.0100.0
+spike 320.0 300.0 20.0 17.320509
+block 300.0 220.0 20.0 20.0 false
+block 280.0 300.0 20.0 20.0 false
+block 360.0 340.0 20.0 20.0 false
+block 380.0 360.0 20.0 20.0 false
+waveportal 620.0 300.030.0100.0

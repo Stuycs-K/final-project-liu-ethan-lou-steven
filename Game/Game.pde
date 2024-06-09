@@ -67,8 +67,8 @@ void draw() {
       temp.display(shift, BlockImg);
     }
     else if (editBlock.equals("JumpPad")) {
-      JumpPad temp = new JumpPad(x,y, "yellow");
-      temp.display(shift, BlockImg);
+      JumpPad temp = new JumpPad(x,y, 20, 5, "yellow");
+      temp.display(shift, YellowPadImg);
     }
     else if (editBlock.equals("Spike")) {
       Spike temp = new Spike(x,y);
@@ -79,7 +79,7 @@ void draw() {
       temp.display(shift, YellowOrbImg);
     }
     else if (editBlock.equals("Portal")) {
-      Portal temp = new Portal(x,y, "wave");
+      Portal temp = new Portal(x,y, 30, 100, "wave");
       temp.display(shift, WavePortalImg);
     }
     tint(255, 255);
