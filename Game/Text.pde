@@ -60,11 +60,12 @@ class Text {
     File obstacles = new File(output);
     obstacles.delete();
     this.obstacles = createWriter(output);
+    System.out.println(obstacles.exists());
   }
   
   public void add(Obstacle o) {
     try {
-      readObstacles = createReader(input);
+      readObstacles = createReader(output);
       obstacles = createWriter(output);
       while(readObstacles.ready()) {
         String s = readObstacles.readLine();
@@ -113,7 +114,7 @@ class Text {
   //}
   public void remove(Obstacle o) {
     try {
-      readObstacles = createReader(input);
+      readObstacles = createReader(output);
       obstacles = createWriter(output);
       String check = checkType(o);
       while(readObstacles.ready()) {

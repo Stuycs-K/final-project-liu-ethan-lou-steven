@@ -60,7 +60,7 @@ class Block extends Obstacle {
   //Takes in a Sprite and determines if it lies on or within the block. 0 - not touching. 1 - touching the left or right side. 2 - touching the top or bottom.
   public float isTouching(Sprite s) {
     float x=this.getX(), y=this.getY();
-    if (s.getX()>x+getWidth() || s.getX()+s.getWidth()<x || s.getY()<y-getHeight() || s.getY()-s.getHeight()>y) {
+    if (s.getX()>x+getWidth() || s.getX()+s.getWidth()<x || s.getY()<y-getHeight() || s.getY()-s.getHeight()>=y) {
       //System.out.println(s.getY());
       return 0;
     }
@@ -112,7 +112,7 @@ class JumpPad extends Obstacle {
   public float isTouching(Sprite s) {
     if (s.getMode().equals("cube")) {
       float x=this.getX(), y=this.getY();
-      if (s.getX()>x+getWidth() || s.getX()+s.getWidth()<x || s.getY()<y-getHeight() || s.getY()-s.getHeight()>y) {
+      if (s.getX()>x+getWidth() || s.getX()+s.getWidth()<x || s.getY()<y-getHeight() || s.getY()-s.getHeight()>=y) {
         //System.out.println(s.getY());
         return 0;
       }
@@ -165,7 +165,7 @@ class Spike extends Obstacle {
   }
   public float isTouching(Sprite s) {
     float x=this.getX() + getWidth()/4 , y=this.getY();
-    if (s.getX()>x + getWidth()/2  || s.getX()+s.getWidth()<x || s.getY()<y-getHeight()/2 || s.getY()-s.getHeight()>y) {
+    if (s.getX()>x + getWidth()/2  || s.getX()+s.getWidth()<x || s.getY()<y-getHeight()/2 || s.getY()-s.getHeight()>=y) {
       //System.out.println(s.getY());
       return 0;
     }

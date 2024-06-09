@@ -18,12 +18,12 @@ public void restart() {
 }
 void setup() {
   size(500, 500);
-  //edit.deleteAll();
+  edit.deleteAll();
   //lastIndexWall = 0;
   //Text.readBlockString(wall);
   //Text.readSpikeString(spike);
   //Text.printFile("StereoMadnessWalls.txt");
-  edit.readObstacles(obs);
+  //edit.readObstacles(obs);
   //for (Block i : wall) {
   //  print(i.getX()+" "+i.getY()+" "+i.hasJumpPad()+"\\n");
   //}
@@ -159,6 +159,7 @@ void draw() {
       if (keyPressed && key == ' ' && buffer && tempCurr.isClicked() == false && tempCurr.isTouching(s) == 2) {
         s.jump(2 * shift, 80);
         tempCurr.setClicked(true);
+        buffer = false;
       }
       if (tempCurr.getX()-tempCurr.getWidth() > s.getX()) {
         tempCurr.setClicked(false);
@@ -208,13 +209,13 @@ void draw() {
       }
     }
     if (isTouchingBlock) {
-      if (s.getAngle() <= PI/2) {
+      if (s.getAngle() <= PI/2 && s.getAngle() > 0) {
         s.setAngle(PI/2);
       }
-      else if (s.getAngle() <= PI) {
+      else if (s.getAngle() <= PI && s.getAngle() > PI/2) {
         s.setAngle(PI);
       }
-      else if (s.getAngle() <= 3 * PI/2) {
+      else if (s.getAngle() <= 3 * PI/2 && s.getAngle() > PI) {
         s.setAngle(3 * PI/2);
       }
       else {
@@ -274,7 +275,7 @@ void keyPressed() {
   //}
 }
 void keyReleased() {
-  if (key = ' ' && s.isJumping()) {
+  if (key == ' ' && s.isJumping()) {
     buffer = true;
   }
 }
