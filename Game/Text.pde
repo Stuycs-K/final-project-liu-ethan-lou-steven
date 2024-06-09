@@ -166,11 +166,11 @@ class Text {
     }
     else if (o instanceof Orb) {
       Orb temp = (Orb) o;
-      obstacles.println(temp.getType() + "orb " + o.getX()+" "+ o.getY() + o.getWidth());
+      obstacles.println(temp.getType() + "orb " + o.getX()+" "+ o.getY() + " " + o.getWidth());
     }
     else if (o instanceof Portal) {
       Portal temp = (Portal) o;
-      obstacles.println(temp.getMode() + "portal " + o.getX()+" "+ o.getY() + o.getWidth() + o.getHeight());
+      obstacles.println(temp.getMode() + "portal " + o.getX()+" "+ o.getY() + " " + o.getWidth() + " " + o.getHeight());
     }
   }
   //public void remove(Block b) {
