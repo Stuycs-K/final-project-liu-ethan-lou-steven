@@ -216,26 +216,18 @@ void keyPressed() {
   if (key=='w') {
     invincible = !invincible;
   }
-  else if (key == CODED && inEdit != null && mode.equals("Edit Map")) {
+  else if (key == CODED && mode.equals("Edit Map")) {
     if (keyCode == UP) {
-      obs.remove(inEdit);
       inEdit.setY(inEdit.getY() - 1);
-      obs.add(inEdit);
     }
     if (keyCode == RIGHT) {
-      obs.remove(inEdit);
       inEdit.setX(inEdit.getX() + 1);
-      obs.add(inEdit);
     }
     if (keyCode == DOWN) {
-      obs.remove(inEdit);
       inEdit.setY(inEdit.getY() + 1);
-      obs.add(inEdit);
     }
     if (keyCode == LEFT) {
-      obs.remove(inEdit);
       inEdit.setX(inEdit.getX() - 1);
-      obs.add(inEdit);
     }
    }
    else if (inEdit != null && mode.equals("Edit Map")) {
@@ -250,6 +242,22 @@ void keyPressed() {
   //    s.setMode("cube");
   //  }
   //}
+}
+void mouseDragged(MouseEvent event) {
+  if (mode.equals("Edit Map") && inEdit.isTouchingMouse(mouseX+shift, mouseY)) {
+    if (pmouseX < mouseX) {
+      inEdit.setWidth(inEdit.getWidth()+event.getCount());
+    }
+    if (pmouseX > mouseX) {
+      inEdit.setWidth(inEdit.getWidth()-event.getCount());
+    }
+    if (pmouseY < mouseY) {
+      inEdit.setHeight(inEdit.getHeight()+event.getCount());
+    }
+    if (pmouseY > mouseY) {
+      inEdit.setHeight(inEdit.getHeight()-event.getCount());
+    }
+  }
 }
 void mouseClicked() {
   if (menu.get(0).isTouching(mouseX, mouseY)) {
