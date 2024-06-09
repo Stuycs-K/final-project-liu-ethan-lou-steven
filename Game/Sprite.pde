@@ -1,7 +1,7 @@
 class Sprite {
   private float xcor, ycor, h, w, v_initial=100, y_initial, angle=0;
   private float jumpTime;
-  private boolean isAlive, isJumping;
+  private boolean isAlive, isJumping, waveUp;
   private float G = 60;
   private String mode = "cube";
   public Sprite(float x, float y) {
@@ -9,6 +9,7 @@ class Sprite {
     ycor = y;
     isAlive = true;
     isJumping = false;
+    waveUp = false;
     h=20; w=20;
     jumpTime=0;
     v_initial=0;
@@ -65,6 +66,9 @@ class Sprite {
   public boolean isJumping() {
     return isJumping;
   }
+  public boolean isWaveUp() {
+    return waveUp;
+  }
   public void updateJump(float currTime) {
     if (mode.equals("cube")) {
       float t = (float) ((currTime-jumpTime)/60.0);
@@ -87,6 +91,7 @@ class Sprite {
     }
     else if (mode.equals("wave")) {
       ycor-=10;
+      waveUp = true;
     }
   }
   public void fall(float jumpTime) {
@@ -98,6 +103,7 @@ class Sprite {
     }
     else if (mode.equals("wave")) {
       ycor+=5;
+      waveUp = false;
     }
   }
   public void display(float shift, PImage img) {

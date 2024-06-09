@@ -18,7 +18,7 @@ public void restart() {
 }
 void setup() {
   size(500, 500);
-  edit.deleteAll();
+  //edit.deleteAll();
   //lastIndexWall = 0;
   //Text.readBlockString(wall);
   //Text.readSpikeString(spike);
@@ -121,7 +121,7 @@ void draw() {
     if (curr instanceof Block) {
       if (curr.isTouching(s) == 2) {
         s.setJump(false);
-        s.setY(curr.getY() - curr.getHeight());
+        s.setY(min(curr.getY() - curr.getHeight(), curr.getY()));
         isTouchingBlock=true;
       }
       else if (curr.isTouching(s)==1 && !invincible) {
@@ -143,7 +143,12 @@ void draw() {
     else if (curr instanceof JumpPad) {
       JumpPad p = (JumpPad) curr;
       if (p.getType().equals("yellow")) {
-        if (curr.isTouching(s) == 2 && !invincible) {
+        if (curr.isTouching(s) == 2 && s.getMode().equals("wave") && !invincible) {
+          if (s.isWaveUp() == false) {
+            s.jump(2 * shift, speed);
+          }
+        }
+        else if (curr.isTouching(s) == 2 && !invincible) {
           s.jump(2 * shift, 120);
         }
         //else if (curr.isTouching(s)==1 && !invincible) {

@@ -60,17 +60,18 @@ class Block extends Obstacle {
   //Takes in a Sprite and determines if it lies on or within the block. 0 - not touching. 1 - touching the left or right side. 2 - touching the top or bottom.
   public float isTouching(Sprite s) {
     float x=this.getX(), y=this.getY();
-    if (s.getX()>x+getWidth() || s.getX()+s.getWidth()<x || s.getY()<y-getHeight() || s.getY()-s.getHeight()>=y) {
+    float minX = min(x + getWidth(), x), maxX = max(x+getWidth(), x), minY = min(y-getHeight(), y), maxY = max(y-getHeight(), y);
+    if (s.getX()>maxX || s.getX()+s.getWidth()<minX || s.getY()<minY || s.getY()-s.getHeight()>=maxY) {
       //System.out.println(s.getY());
       return 0;
     }
-    float left=Math.max(0, s.getX()+3*s.getWidth()/2-x), down=Math.max(0, s.getY()-(y-getHeight()));
+    float left=Math.max(0, s.getX()+3*s.getWidth()/2-minX), down=Math.max(0, s.getY()-minY);
     //if (s.getX()+s.getWidth()>=x && s.getY()>y-h && s.getX()<x) {
     //  return 1;
     //}
     //if (s.getY()>=y-h && s.getY()<y || s.getY()-s.getHeight()<=y && s.getY()>y) {
     //  return 2;
-    //}
+    //} 
     if (left<down || s.getMode().equals("wave")) {
       return 1;
     }
@@ -88,7 +89,8 @@ class Block extends Obstacle {
     image(img, getX()-shift, getY()-getHeight(), getWidth(), getHeight());
   }
   public boolean isTouchingMouse(float x, float y) {
-    return (x >= getX() && x <= getX() + getWidth() && y <= getY() && y >= getY()-getHeight());
+    float minX = min(getX() + getWidth(), getX()), maxX = max(getX()+getWidth(), getX()), minY = min(getY()-getHeight(), getY()), maxY = max(getY()-getHeight(), getY());
+    return (x >= minX && x <= maxX && y <= maxY && y >= minY);
   }
 }
 class JumpPad extends Obstacle {
@@ -112,18 +114,19 @@ class JumpPad extends Obstacle {
   public float isTouching(Sprite s) {
     if (s.getMode().equals("cube")) {
       float x=this.getX(), y=this.getY();
-      if (s.getX()>x+getWidth() || s.getX()+s.getWidth()<x || s.getY()<y-getHeight() || s.getY()-s.getHeight()>=y) {
+      float minX = min(x + getWidth(), x), maxX = max(x+getWidth(), x), minY = min(y-getHeight(), y), maxY = max(y-getHeight(), y);
+      if (s.getX()>maxX || s.getX()+s.getWidth()<minX || s.getY()<minY || s.getY()-s.getHeight()>=maxY) {
         //System.out.println(s.getY());
         return 0;
       }
-      float left=Math.max(0, s.getX()+3*s.getWidth()/2-x), down=Math.max(0, s.getY()-(y-getHeight()));
+      float left=Math.max(0, s.getX()+3*s.getWidth()/2-minX), down=Math.max(0, s.getY()-minY);
       //if (s.getX()+s.getWidth()>=x && s.getY()>y-h && s.getX()<x) {
       //  return 1;
       //}
       //if (s.getY()>=y-h && s.getY()<y || s.getY()-s.getHeight()<=y && s.getY()>y) {
       //  return 2;
-      //}
-      if (left<down) {
+      //} 
+      if (left<down || s.getMode().equals("wave")) {
         return 1;
       }
       return 2;
@@ -131,8 +134,10 @@ class JumpPad extends Obstacle {
     else if (s.getMode().equals("wave")) {
       float tipX= s.getX()+(float)(Math.cos(s.getAngle())*(s.getWidth())-Math.sin(s.getAngle())*(0));
       float tipY= s.getY()+(float)(Math.cos(s.getAngle())*(0)+Math.sin(s.getAngle())*(s.getWidth()));
-      if (tipX>=getX() && tipX<=getX()+getWidth() && tipY>=getY()-getHeight() && tipY<=getY()) {
-        return 1;
+      float x=this.getX(), y=this.getY();
+      float minX = min(x + getWidth(), x), maxX = max(x+getWidth(), x), minY = min(y-getHeight(), y), maxY = max(y-getHeight(), y);
+      if (tipX>=minX && tipX<=maxX && tipY>=minY && tipY<=maxY) {
+        return 2;
       }
       return 0;
     }
@@ -150,7 +155,8 @@ class JumpPad extends Obstacle {
     image(img, getX()-shift, getY()-getHeight(), getWidth(), getHeight());
   }
   public boolean isTouchingMouse(float x, float y) {
-    return (x >= getX() && x <= getX() + getWidth() && y <= getY() && y >= getY()-getHeight());
+    float minX = min(getX() + getWidth(), getX()), maxX = max(getX()+getWidth(), getX()), minY = min(getY()-getHeight(), getY()), maxY = max(getY()-getHeight(), getY());
+    return (x >= minX && x <= maxX && y <= maxY && y >= minY);
   }
 }
 class Spike extends Obstacle {
