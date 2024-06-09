@@ -9,7 +9,11 @@ float speed = 3.5, shift=speed, editShift=0;
 boolean invincible = false, buffer = false;
 Obstacle inEdit;
 Text edit = new Text("obstacles.txt", "obstacles.txt");
-PImage BlockImg, SpriteImg, SpikeImg, WavePortalImg, YellowOrbImg, YellowPadImg, Background, WaveImg, ButtonImg;  
+String level = "1";
+ArrayList<String> levels = new ArrayList<String>();
+PImage BlockImg, SpriteImg, SpikeImg, WavePortalImg, YellowOrbImg, YellowPadImg, Background, WaveImg, ButtonImg, HomeImg;  
+PFont font;
+
 public void restart() {
   shift=0;
   //inScreen.clear();
@@ -17,7 +21,7 @@ public void restart() {
   setup();
 }
 void setup() {
-  size(500, 500);
+  size(600, 600);
   //edit.deleteAll();
   //lastIndexWall = 0;
   //Text.readBlockString(wall);
@@ -36,9 +40,14 @@ void setup() {
   }
   s = new Sprite(100, 430);
   menu.add(new Button(0, 30, 30, 100, "Edit Map"));
+  menu.add(new Button(0, height, 30, 30, "Home"));
   String[] names = new String[]{"Block", "JumpPad", "Spike", "YellowOrb", "Portal"};
   for (int i=0; i<names.length; i++) {
-    menu.add(new Button(105+i*65, 20, 20, 60, names[i]));
+    menu.add(new Button(105+i*85, 20, 25, 80, names[i]));
+  }
+  String[] levelNames = new String[]{"Stereo Madness"};
+  for (String s : levelNames) {
+    levels.add(s);
   }
   BlockImg=loadImage("RegularBlock01.png"); 
   SpriteImg=loadImage("Cube002.png");
@@ -49,16 +58,34 @@ void setup() {
   Background = loadImage("Background-GeometricBlue.png");
   WaveImg = loadImage("Wave001.png");
   ButtonImg = loadImage("Button.png");
+  HomeImg = loadImage("Home.png");
+  font = createFont("PUSAB___.otf", 13);
 }
 
 void draw() {
   image(Background, 0, 0, width, height);
+  menu.get(1).display(false, HomeImg, font);
+  if (level.equals("Home")) {
+     for (int i=0; i<levels.size(); i++) {
+       fill(123);
+       float padding = 100;
+       image(ButtonImg, padding, (i+1)*(10*(i+1)), width-2*padding, 75);
+       fill(#3450F7);
+       int size=30;
+       textSize(size);
+       text(levels.get(i), width/2-size/2*levels.get(i).length()/2, (i+1)*(10*(i+1)+25+size/2));
+     }
+     return;
+  }
   if (mode.equals("Play")) {
-    menu.get(0).display(false, ButtonImg);
+    menu.get(0).display(false, ButtonImg, font);
   }
   else {
     for (Button i : menu) {
-      i.display(i.getLabel().equals(editBlock), ButtonImg);
+      if (i.getLabel().equals("Home")) {
+        continue;
+      }
+      i.display(i.getLabel().equals(editBlock), ButtonImg, font);
     }
     int x=((int)((mouseX+shift)/20))*20, y=((int)(mouseY/20)+1)*20;
     tint(255, 128);
@@ -316,7 +343,10 @@ void mouseDragged(MouseEvent event) {
   }
 }
 void mouseClicked(MouseEvent event) {
-  if (menu.get(0).isTouching(mouseX, mouseY)) {
+  if (menu.get(1).isTouching(mouseX, mouseY)) {
+    level = "Home";
+  }
+  else if (menu.get(0).isTouching(mouseX, mouseY)) {
     String temp=mode;
     mode=menu.get(0).getLabel();
     Button b = menu.get(0);

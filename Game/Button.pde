@@ -29,18 +29,23 @@ class Button {
   public void setLabel(String newLabel) {
     label=newLabel;
   }
-  public void display(boolean pick, PImage img) {
+  public void display(boolean pick, PImage img, PFont font) {
+    textFont(font);
     if (pick) {
       float shrink=1;
       image(img, getX()+shrink, getY()-getHeight()+shrink, getWidth()-2*shrink, getHeight()-2*shrink);
       float x=getX()+shrink, y=getY()-shrink, w=getWidth()-2*shrink, h=getHeight()-2*shrink;
-      fill(255);
-      text(getLabel(), (2*x+w-10)/2-3*getLabel().length(), (2*y-h)/2+5);
+      fill(0);
+      if (!label.equals("Home")) {
+        text(getLabel(), (2*x+w-10)/2-3*getLabel().length()-5, (2*y-h)/2+5);
+      }
     }
     else {
       image(img, getX(), getY()-getHeight(), getWidth(), getHeight());
-      fill(0);
-      text(getLabel(), (2*getX()+getWidth())/2-3*getLabel().length(), (2*getY()-getHeight())/2+5);
+      fill(255);
+      if (!label.equals("Home")) {
+        text(getLabel(), (2*getX()+getWidth())/2-3*getLabel().length()-10, (2*getY()-getHeight())/2+5);
+      }
     }
     
   }
