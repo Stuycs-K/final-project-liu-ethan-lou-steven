@@ -4,12 +4,12 @@ import java.util.*;
 TreeSet<Obstacle> obs = new TreeSet<Obstacle>();
 //ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
 Sprite s; ArrayList<Button> menu = new ArrayList<Button>();
-String mode = "Play", editBlock = "";
+String mode = "Play", editBlock = "Block";
 float speed = 3.5, shift=speed, editShift=0;
 boolean invincible = false;
 Obstacle inEdit;
 Text edit = new Text("obstacles.txt", "obstacles.txt");
-PImage BlockImg, SpriteImg, SpikeImg, WavePortalImg, YellowOrbImg;  
+PImage BlockImg, SpriteImg, SpikeImg, WavePortalImg, YellowOrbImg, YellowPadImg, Background, WaveImg, ButtonImg;  
 public void restart() {
   shift=0;
   //inScreen.clear();
@@ -36,25 +36,29 @@ void setup() {
   }
   s = new Sprite(100, 430);
   menu.add(new Button(0, 30, 30, 100, "Edit Map"));
-  String[] names = new String[]{"Block", "JumpBlock", "Spike", "YellowOrb", "Portal"};
+  String[] names = new String[]{"Block", "JumpPad", "Spike", "YwllowOrb", "Portal"};
   for (int i=0; i<names.length; i++) {
-    menu.add(new Button(105+i*65, 15, 15, 60, names[i]));
+    menu.add(new Button(105+i*65, 20, 20, 60, names[i]));
   }
   BlockImg=loadImage("RegularBlock01.png"); 
   SpriteImg=loadImage("Cube002.png");
   SpikeImg = loadImage("RegularSpike01.png");
   WavePortalImg = loadImage("WavePortalLabelled.png");
   YellowOrbImg = loadImage("YellowJumpRing.png");
+  YellowPadImg = loadImage("YellowJumpPad.png");
+  Background = loadImage("Background-GeometricBlue.png");
+  WaveImg = loadImage("Wave001.png");
+  ButtonImg = loadImage("Button.png");
 }
 
 void draw() {
-  background(color(100, 100, 100));
+  image(Background, 0, 0, width, height);
   if (mode.equals("Play")) {
-    menu.get(0).display(false);
+    menu.get(0).display(false, ButtonImg);
   }
   else {
     for (Button i : menu) {
-      i.display(i.getLabel().equals(editBlock));
+      i.display(i.getLabel().equals(editBlock), ButtonImg);
     }
     int x=((int)((mouseX+shift)/20))*20, y=((int)(mouseY/20)+1)*20;
     tint(255, 128);
@@ -62,8 +66,8 @@ void draw() {
       Block temp = new Block(x,y);
       temp.display(shift, BlockImg);
     }
-    else if (editBlock.equals("JumpBlock")) {
-      JumpBlock temp = new JumpBlock(x,y);
+    else if (editBlock.equals("JumpPad")) {
+      JumpPad temp = new JumpPad(x,y, "yellow");
       temp.display(shift, BlockImg);
     }
     else if (editBlock.equals("Spike")) {
@@ -96,8 +100,16 @@ void draw() {
     else if (i instanceof YellowOrb) {
       i.display(shift, YellowOrbImg);
     }
+<<<<<<< HEAD
     if (i == inEdit) {
       tint(255, 255);
+=======
+    else if (i instanceof JumpPad) {
+      JumpPad p = (JumpPad) i;
+      if (p.getType().equals("yellow")) {
+        i.display(shift, YellowPadImg);
+      }
+>>>>>>> 1e86ca00601a3c83912396fcb941cb34145df91a
     }
   }
   if (mode.equals("Edit Map")) {
@@ -130,15 +142,18 @@ void draw() {
         break;
       }
     }
-    else if (curr instanceof JumpBlock) {
-      if (curr.isTouching(s) == 2 && !invincible) {
-        s.jump(2 * shift, 120);
-      }
-      else if (curr.isTouching(s)==1 && !invincible) {
-        println("died");
-        s.setAlive(false);
-        restart();
-        break;
+    else if (curr instanceof JumpPad) {
+      JumpPad p = (JumpPad) curr;
+      if (p.getType().equals("yellow")) {
+        if (curr.isTouching(s) == 2 && !invincible) {
+          s.jump(2 * shift, 120);
+        }
+        //else if (curr.isTouching(s)==1 && !invincible) {
+        //  println("died");
+        //  s.setAlive(false);
+        //  restart();
+        //  break;
+        //}
       }
     }
     else if (curr instanceof Orb) {
@@ -181,7 +196,12 @@ void draw() {
   if (!isTouchingBlock && s.getY()<430 && !s.isJumping()) {
     s.fall(2*shift);
   }
-  s.display(shift, SpriteImg); 
+  if (s.getMode().equals("cube")) {
+    s.display(shift, SpriteImg); 
+  }
+  else if (s.getMode().equals("wave")) {
+    s.display(shift, WaveImg);
+  }
   if (s.getMode().equals("cube")) {
     if (!isTouchingBlock) {
       s.setAngle(s.getAngle()+PI/10);
@@ -304,8 +324,8 @@ void mouseClicked(MouseEvent event) {
       if (editBlock.equals("Block")) {
         inEdit = new Block(x, y);
       }
-      else if (editBlock.equals("JumpBlock")) {
-        inEdit = new JumpBlock(x, y);
+      else if (editBlock.equals("JumpPad")) {
+        inEdit = new JumpPad(x, y, 20, 5, "yellow");
       }
       else if (editBlock.equals("Spike")) {
         inEdit = new Spike(x, y);
