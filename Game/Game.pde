@@ -18,7 +18,7 @@ public void restart() {
 }
 void setup() {
   size(500, 500);
-  //edit.deleteAll();
+  edit.deleteAll();
   //lastIndexWall = 0;
   //Text.readBlockString(wall);
   //Text.readSpikeString(spike);
@@ -244,6 +244,7 @@ void keyPressed() {
     buffer = false;
   }
   else if (key == CODED && inEdit != null && mode.equals("Edit Map")) {
+    edit.remove(inEdit);
     if (keyCode == UP) {
       inEdit.setY(inEdit.getY() - 2);
     }
@@ -256,10 +257,12 @@ void keyPressed() {
     if (keyCode == LEFT) {
       inEdit.setX(inEdit.getX() - 2);
     }
+    edit.add(inEdit);
   }
   else if (inEdit != null && mode.equals("Edit Map")) {
     if (key == 'd') {
       obs.remove(inEdit);
+      edit.remove(inEdit);
       inEdit = null;
     }
   }
@@ -274,12 +277,13 @@ void keyPressed() {
   //}
 }
 void keyReleased() {
-  if (key = ' ' && s.isJumping()) {
+  if (key == ' ' && s.isJumping()) {
     buffer = true;
   }
 }
 void mouseDragged(MouseEvent event) {
   if (mode.equals("Edit Map") && inEdit != null) {
+    edit.remove(inEdit);
     if (pmouseX < mouseX) {
       inEdit.setWidth(inEdit.getWidth()+event.getCount());
     }
@@ -292,6 +296,7 @@ void mouseDragged(MouseEvent event) {
     if (pmouseY > mouseY) {
       inEdit.setHeight(inEdit.getHeight()+event.getCount());
     }
+    edit.add(inEdit);
   }
 }
 void mouseClicked(MouseEvent event) {
@@ -344,6 +349,7 @@ void mouseClicked(MouseEvent event) {
       }
       if (inEdit != null) {
         obs.add(inEdit);
+        edit.add(inEdit);
       }
     }
   }
