@@ -48,6 +48,7 @@ abstract class Obstacle implements Comparable<Obstacle>{
 }
 
 class Block extends Obstacle {
+  int display = 0;
   public Block(float xcor, float ycor) {
     super(xcor, ycor);
   }
@@ -56,6 +57,12 @@ class Block extends Obstacle {
   }
   public Block(float xcor, float ycor, float w, float h) {
     super(xcor, ycor, w, h);
+  }
+  public int getDisplay() {
+    return display;
+  }
+  public void setDisplay(int x) {
+    display = x;
   }
   //Takes in a Sprite and determines if it lies on or within the block. 0 - not touching. 1 - touching the left or right side. 2 - touching the top or bottom.
   public float isTouching(Sprite s) {
@@ -152,7 +159,18 @@ class JumpPad extends Obstacle {
     }
   }
   public void display(float shift, PImage img) {
+    image(img, getX()-shift, getY()-getHeight(), 0, 0);
+    pushMatrix();
+    float x = 1, y = 1;
+    if (getHeight() < 0) {
+      y = -1;
+    }
+    if (getWidth() < 0) {
+      x = -1;
+    }
+    scale(x, y);
     image(img, getX()-shift, getY()-getHeight(), getWidth(), getHeight());
+    popMatrix();
   }
   public boolean isTouchingMouse(float x, float y) {
     float minX = min(getX() + getWidth(), getX()), maxX = max(getX()+getWidth(), getX()), minY = min(getY()-getHeight(), getY()), maxY = max(getY()-getHeight(), getY());
