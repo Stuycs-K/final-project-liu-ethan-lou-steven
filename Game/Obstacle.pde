@@ -53,33 +53,22 @@ class Block extends Obstacle {
   }
   //Takes in a Sprite and determines if it lies on or within the block. 0 - not touching. 1 - touching the left or right side. 2 - touching the top or bottom.
   public float isTouching(Sprite s) {
-    if (s.getMode().equals("cube")) {
-      float x=this.getX(), y=this.getY();
-      if (s.getX()>x+getWidth() || s.getX()+s.getWidth()<x || s.getY()<y-getHeight() || s.getY()-s.getHeight()>y) {
-        //System.out.println(s.getY());
-        return 0;
-      }
-      float left=Math.max(0, s.getX()+3*s.getWidth()/2-x), down=Math.max(0, s.getY()-(y-getHeight()));
-      //if (s.getX()+s.getWidth()>=x && s.getY()>y-h && s.getX()<x) {
-      //  return 1;
-      //}
-      //if (s.getY()>=y-h && s.getY()<y || s.getY()-s.getHeight()<=y && s.getY()>y) {
-      //  return 2;
-      //}
-      if (left<down) {
-        return 1;
-      }
-      return 2;
-    }
-    else if (s.getMode().equals("wave")) {
-      float tipX= s.getX()+(float)(Math.cos(s.getAngle())*(s.getWidth())-Math.sin(s.getAngle())*(0));
-      float tipY= s.getY()+(float)(Math.cos(s.getAngle())*(0)+Math.sin(s.getAngle())*(s.getWidth()));
-      if (tipX>=getX() && tipX<=getX()+getWidth() && tipY>=getY()-getHeight() && tipY<=getY()) {
-        return 1;
-      }
+    float x=this.getX(), y=this.getY();
+    if (s.getX()>x+getWidth() || s.getX()+s.getWidth()<x || s.getY()<y-getHeight() || s.getY()-s.getHeight()>y) {
+      //System.out.println(s.getY());
       return 0;
     }
-    return 0;
+    float left=Math.max(0, s.getX()+3*s.getWidth()/2-x), down=Math.max(0, s.getY()-(y-getHeight()));
+    //if (s.getX()+s.getWidth()>=x && s.getY()>y-h && s.getX()<x) {
+    //  return 1;
+    //}
+    //if (s.getY()>=y-h && s.getY()<y || s.getY()-s.getHeight()<=y && s.getY()>y) {
+    //  return 2;
+    //}
+    if (left<down || s.getMode().equals("wave")) {
+      return 1;
+    }
+    return 2;
   }
   public int compareTo(Obstacle b2) {
     if (this.getX()==b2.getX()) {
@@ -96,15 +85,22 @@ class Block extends Obstacle {
     return (x >= getX() && x <= getX() + getWidth() && y <= getY() && y >= getY()-getHeight());
   }
 }
-class JumpBlock extends Obstacle {
-  public JumpBlock(float xcor, float ycor) {
+class JumpPad extends Obstacle {
+  private String type;
+  public JumpPad(float xcor, float ycor, String type) {
     super(xcor, ycor);
+    this.type=type;
   }
-  public JumpBlock(float xcor, float ycor, float w) {
+  public JumpPad(float xcor, float ycor, float w, String type) {
     super(xcor, ycor, w);
+    this.type=type;
   }
-  public JumpBlock(float xcor, float ycor, float w, float h) {
+  public JumpPad(float xcor, float ycor, float w, float h, String type) {
     super(xcor, ycor, w, h);
+    this.type=type;
+  }
+  public String getType() {
+    return type;
   }
   //Takes in a Sprite and determines if it lies on or within the block. 0 - not touching. 1 - touching the left or right side. 2 - touching the top or bottom.
   public float isTouching(Sprite s) {
@@ -145,10 +141,7 @@ class JumpBlock extends Obstacle {
     }
   }
   public void display(float shift, PImage img) {
-    fill(255);
-    rect(this.getX()-shift, this.getY()-this.getHeight(), this.getWidth(), this.getHeight());
-    fill(255, 250, 205);
-    ellipse(this.getX() + this.getWidth()/2 - shift, this.getY() - this.getHeight(), this.getWidth(), 5);
+    image(img, getX()-shift, getY()-getHeight(), getWidth(), getHeight());
   }
   public boolean isTouchingMouse(float x, float y) {
     return (x >= getX() && x <= getX() + getWidth() && y <= getY() && y >= getY()-getHeight());
