@@ -6,7 +6,7 @@ TreeSet<Obstacle> obs = new TreeSet<Obstacle>();
 Sprite s; ArrayList<Button> menu = new ArrayList<Button>();
 String mode = "Play", editBlock = "Block";
 float speed = 3.5, shift=speed, editShift=0;
-boolean invincible = false;
+boolean invincible = false, buffer = false;
 Obstacle inEdit;
 Text edit = new Text("obstacles.txt", "obstacles.txt");
 PImage BlockImg, SpriteImg, SpikeImg, WavePortalImg, YellowOrbImg, YellowPadImg, Background, WaveImg, ButtonImg;  
@@ -23,7 +23,7 @@ void setup() {
   //Text.readBlockString(wall);
   //Text.readSpikeString(spike);
   //Text.printFile("StereoMadnessWalls.txt");
-  edit.readObstacles(obs);
+  //edit.readObstacles(obs);
   //for (Block i : wall) {
   //  print(i.getX()+" "+i.getY()+" "+i.hasJumpPad()+"\\n");
   //}
@@ -122,7 +122,7 @@ void draw() {
     if (curr instanceof Block) {
       if (curr.isTouching(s) == 2) {
         s.setJump(false);
-        s.setY(curr.getY() - curr.getHeight());
+        s.setY(min(curr.getY() - curr.getHeight(), curr.getY()));
         isTouchingBlock=true;
       }
       else if (curr.isTouching(s)==1 && !invincible) {
@@ -144,7 +144,12 @@ void draw() {
     else if (curr instanceof JumpPad) {
       JumpPad p = (JumpPad) curr;
       if (p.getType().equals("yellow")) {
-        if (curr.isTouching(s) == 2 && !invincible) {
+        if (curr.isTouching(s) == 2 && s.getMode().equals("wave") && !invincible) {
+          if (s.isWaveUp() == false) {
+            s.jump(2 * shift, speed);
+          }
+        }
+        else if (curr.isTouching(s) == 2 && !invincible) {
           s.jump(2 * shift, 120);
         }
         //else if (curr.isTouching(s)==1 && !invincible) {
@@ -157,9 +162,10 @@ void draw() {
     }
     else if (curr instanceof Orb) {
       Orb tempCurr = (Orb) curr;
-      if (keyPressed && tempCurr.isClicked() == false && tempCurr.isTouching(s) == 2) {
+      if (keyPressed && key == ' ' && buffer && tempCurr.isClicked() == false && tempCurr.isTouching(s) == 2) {
         s.jump(2 * shift, 80);
         tempCurr.setClicked(true);
+        buffer = false;
       }
       if (tempCurr.getX()-tempCurr.getWidth() > s.getX()) {
         tempCurr.setClicked(false);
@@ -209,13 +215,13 @@ void draw() {
       }
     }
     if (isTouchingBlock) {
-      if (s.getAngle() <= PI/2) {
+      if (s.getAngle() <= PI/2 && s.getAngle() > 0) {
         s.setAngle(PI/2);
       }
-      else if (s.getAngle() <= PI) {
+      else if (s.getAngle() <= PI && s.getAngle() > PI/2) {
         s.setAngle(PI);
       }
-      else if (s.getAngle() <= 3 * PI/2) {
+      else if (s.getAngle() <= 3 * PI/2 && s.getAngle() > PI) {
         s.setAngle(3 * PI/2);
       }
       else {
@@ -241,7 +247,11 @@ void keyPressed() {
   if (key=='w') {
     invincible = !invincible;
   }
+  else if (key == ' ' && !s.isJumping()) {
+    buffer = false;
+  }
   else if (key == CODED && inEdit != null && mode.equals("Edit Map")) {
+    edit.remove(inEdit);
     if (keyCode == UP) {
       inEdit.setY(inEdit.getY() - 2);
     }
@@ -254,6 +264,7 @@ void keyPressed() {
     if (keyCode == LEFT) {
       inEdit.setX(inEdit.getX() - 2);
     }
+    edit.add(inEdit);
   }
   else if (inEdit != null && mode.equals("Edit Map")) {
     if (key == 'd') {
@@ -272,8 +283,14 @@ void keyPressed() {
   //  }
   //}
 }
+void keyReleased() {
+  if (key == ' ' && s.isJumping()) {
+    buffer = true;
+  }
+}
 void mouseDragged(MouseEvent event) {
   if (mode.equals("Edit Map") && inEdit != null) {
+    edit.remove(inEdit);
     if (pmouseX < mouseX) {
       inEdit.setWidth(inEdit.getWidth()+event.getCount());
     }
@@ -286,6 +303,7 @@ void mouseDragged(MouseEvent event) {
     if (pmouseY > mouseY) {
       inEdit.setHeight(inEdit.getHeight()+event.getCount());
     }
+    edit.add(inEdit);
   }
 }
 void mouseClicked(MouseEvent event) {
