@@ -273,15 +273,15 @@ void keyPressed() {
       inEdit = null;
     }
   }
-  //else if (key=='s') {
-  //  if (s.getMode().equals("cube")) {
-  //    s.setMode("wave");
-  //    s.setJump(false);
-  //  }
-  //  else {
-  //    s.setMode("cube");
-  //  }
-  //}
+  else if (key=='s') {
+    if (s.getMode().equals("cube")) {
+      s.setMode("wave");
+      s.setJump(false);
+    }
+    else {
+      s.setMode("cube");
+    }
+  }
 }
 void keyReleased() {
   if (key == ' ' && s.isJumping()) {
@@ -290,7 +290,9 @@ void keyReleased() {
 }
 void mouseDragged(MouseEvent event) {
   if (mode.equals("Edit Map") && inEdit != null) {
+    //println("here");
     edit.remove(inEdit);
+    obs.remove(inEdit);
     if (pmouseX < mouseX) {
       inEdit.setWidth(inEdit.getWidth()+event.getCount());
     }
@@ -304,13 +306,16 @@ void mouseDragged(MouseEvent event) {
       inEdit.setHeight(inEdit.getHeight()+event.getCount());
     }
     edit.add(inEdit);
+    obs.add(inEdit);
   }
 }
 void mouseClicked(MouseEvent event) {
   if (menu.get(0).isTouching(mouseX, mouseY)) {
     String temp=mode;
     mode=menu.get(0).getLabel();
-    menu.get(0).setLabel(temp);
+    Button b = menu.get(0);
+    b.setLabel(temp);
+    menu.set(0, b);
     shift-=editShift;
     editShift=0;
   }

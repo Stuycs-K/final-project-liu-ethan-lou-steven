@@ -113,11 +113,11 @@ class Text {
     }
     else if (o instanceof Orb) {
       Orb temp = (Orb) o;
-      check = temp.getType() + "orb " + o.getX()+" "+o.getY() + " " + o.getWidth();
+      check = temp.getType() + " orb " + o.getX()+" "+o.getY() + " " + o.getWidth();
     }
     else if (o instanceof Portal) {
       Portal temp = (Portal) o;
-      check = temp.getMode() + "portal " + o.getX()+" "+ o.getY() + " " + o.getWidth() + " " + o.getHeight();
+      check = temp.getMode() + " portal " + o.getX()+" "+ o.getY() + " " + o.getWidth() + " " + o.getHeight();
     }
     return check;
   }
@@ -135,7 +135,7 @@ class Text {
     }
     else if (o instanceof Orb) {
       Orb temp = (Orb) o;
-      obstacles.println(temp.getType() + "orb " + o.getX()+" "+ o.getY() + " " + o.getWidth());
+      obstacles.println(temp.getType() + " orb " + o.getX()+" "+ o.getY() + " " + o.getWidth());
     }
     else if (o instanceof Portal) {
       Portal temp = (Portal) o;
