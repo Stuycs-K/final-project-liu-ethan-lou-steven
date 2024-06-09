@@ -20,12 +20,12 @@ public void restart() {
 }
 void setup() {
   size(500, 500);
-  //edit.deleteAll();
+  edit.deleteAll();
   //lastIndexWall = 0;
   //Text.readBlockString(wall);
   //Text.readSpikeString(spike);
   //Text.printFile("StereoMadnessWalls.txt");
-  edit.readObstacles(obs);
+  //edit.readObstacles(obs);
   //for (Block i : wall) {
   //  print(i.getX()+" "+i.getY()+" "+i.hasJumpPad()+"\\n");
   //}
