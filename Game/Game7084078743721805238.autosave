@@ -1,15 +1,16 @@
 import java.util.*;
+
 //TreeSet<Block> wall = new TreeSet<Block>();
 //TreeSet<Spike> spike = new TreeSet<Spike>();
 TreeSet<Obstacle> obs = new TreeSet<Obstacle>();
 //ArrayDeque<Block> inScreen = new ArrayDeque<Block>();
 Sprite s; ArrayList<Button> menu = new ArrayList<Button>();
 String mode = "Play", editBlock = "Block";
-float speed = 3.5, shift=speed, editShift=0;
+float speed = 3.5, shift=0, editShift=0;
 boolean invincible = false;
 Obstacle inEdit;
 Text edit = new Text("obstacles.txt", "obstacles.txt");
-PImage BlockImg, SpriteImg, SpikeImg, WavePortalImg, YellowOrbImg, YellowPadImg, Background, WaveImg, ButtonImg;  
+  
 public void restart() {
   shift=0;
   //inScreen.clear();
@@ -18,7 +19,7 @@ public void restart() {
 }
 void setup() {
   size(500, 500);
-  //edit.deleteAll();
+  edit.deleteAll();
   //lastIndexWall = 0;
   //Text.readBlockString(wall);
   //Text.readSpikeString(spike);
@@ -36,73 +37,24 @@ void setup() {
   }
   s = new Sprite(100, 430);
   menu.add(new Button(0, 30, 30, 100, "Edit Map"));
-  String[] names = new String[]{"Block", "JumpPad", "Spike", "YwllowOrb", "Portal"};
+  String[] names = new String[]{"Block", "JumpBlock", "Spike", "Orb", "Portal"};
   for (int i=0; i<names.length; i++) {
-    menu.add(new Button(105+i*65, 20, 20, 60, names[i]));
+    menu.add(new Button(105+i*65, 15, 15, 60, names[i]));
   }
-  BlockImg=loadImage("RegularBlock01.png"); 
-  SpriteImg=loadImage("Cube002.png");
-  SpikeImg = loadImage("RegularSpike01.png");
-  WavePortalImg = loadImage("WavePortalLabelled.png");
-  YellowOrbImg = loadImage("YellowJumpRing.png");
-  YellowPadImg = loadImage("YellowJumpPad.png");
-  Background = loadImage("Background-GeometricBlue.png");
-  WaveImg = loadImage("Wave001.png");
-  ButtonImg = loadImage("Button.png");
+  obs.add(new Portal(600, 300, "wave"));
 }
-
 void draw() {
-  image(Background, 0, 0, width, height);
+  background(12);
   if (mode.equals("Play")) {
-    menu.get(0).display(false, ButtonImg);
+    menu.get(0).display();
   }
   else {
     for (Button i : menu) {
-      i.display(i.getLabel().equals(editBlock), ButtonImg);
+      i.display();
     }
-    int x=((int)((mouseX+shift)/20))*20, y=((int)(mouseY/20)+1)*20;
-    tint(255, 128);
-    if (editBlock.equals("Block")) {
-      Block temp = new Block(x,y);
-      temp.display(shift, BlockImg);
-    }
-    else if (editBlock.equals("JumpPad")) {
-      JumpPad temp = new JumpPad(x,y, "yellow");
-      temp.display(shift, BlockImg);
-    }
-    else if (editBlock.equals("Spike")) {
-      Spike temp = new Spike(x,y);
-      temp.display(shift, SpikeImg);
-    }
-    else if (editBlock.equals("YellowOrb")) {
-      YellowOrb temp = new YellowOrb(x,y);
-      temp.display(shift, YellowOrbImg);
-    }
-    else if (editBlock.equals("Portal")) {
-      Portal temp = new Portal(x,y, "wave");
-      temp.display(shift, WavePortalImg);
-    }
-    tint(255, 255);
   }
   for (Obstacle i : obs) {
-    if (i instanceof Block) {
-      i.display(shift, BlockImg);
-    }
-    else if (i instanceof Spike) {
-      i.display(shift, SpikeImg);
-    }
-    else if (i instanceof Portal) {
-      i.display(shift, WavePortalImg);
-    }
-    else if (i instanceof YellowOrb) {
-      i.display(shift, YellowOrbImg);
-    }
-    else if (i instanceof JumpPad) {
-      JumpPad p = (JumpPad) i;
-      if (p.getType().equals("yellow")) {
-        i.display(shift, YellowPadImg);
-      }
-    }
+    i.display(shift);
   }
   if (mode.equals("Edit Map")) {
     return;
@@ -134,18 +86,15 @@ void draw() {
         break;
       }
     }
-    else if (curr instanceof JumpPad) {
-      JumpPad p = (JumpPad) curr;
-      if (p.getType().equals("yellow")) {
-        if (curr.isTouching(s) == 2 && !invincible) {
-          s.jump(2 * shift, 120);
-        }
-        //else if (curr.isTouching(s)==1 && !invincible) {
-        //  println("died");
-        //  s.setAlive(false);
-        //  restart();
-        //  break;
-        //}
+    else if (curr instanceof JumpBlock) {
+      if (curr.isTouching(s) == 2 && !invincible) {
+        s.jump(2 * shift, 120);
+      }
+      else if (curr.isTouching(s)==1 && !invincible) {
+        println("died");
+        s.setAlive(false);
+        restart();
+        break;
       }
     }
     else if (curr instanceof Orb) {
@@ -188,12 +137,7 @@ void draw() {
   if (!isTouchingBlock && s.getY()<430 && !s.isJumping()) {
     s.fall(2*shift);
   }
-  if (s.getMode().equals("cube")) {
-    s.display(shift, SpriteImg); 
-  }
-  else if (s.getMode().equals("wave")) {
-    s.display(shift, WaveImg);
-  }
+  s.display(shift); 
   if (s.getMode().equals("cube")) {
     if (!isTouchingBlock) {
       s.setAngle(s.getAngle()+PI/10);
@@ -236,24 +180,26 @@ void keyPressed() {
   }
   else if (key == CODED && inEdit != null && mode.equals("Edit Map")) {
     if (keyCode == UP) {
+      obs.remove(inEdit);
       inEdit.setY(inEdit.getY() - 1);
+      obs.add(inEdit);
     }
     if (keyCode == RIGHT) {
+      obs.remove(inEdit);
       inEdit.setX(inEdit.getX() + 1);
+      obs.add(inEdit);
     }
     if (keyCode == DOWN) {
+      obs.remove(inEdit);
       inEdit.setY(inEdit.getY() + 1);
+      obs.add(inEdit);
     }
     if (keyCode == LEFT) {
-      inEdit.setX(inEdit.getX() - 1);
-    }
-  }
-  else if (inEdit != null && mode.equals("Edit Map")) {
-    if (key == 'd') {
       obs.remove(inEdit);
-      inEdit = null;
+      inEdit.setX(inEdit.getX() - 1);
+      obs.add(inEdit);
     }
-  }
+   }
   //else if (key=='s') {
   //  if (s.getMode().equals("cube")) {
   //    s.setMode("wave");
@@ -264,23 +210,7 @@ void keyPressed() {
   //  }
   //}
 }
-void mouseDragged(MouseEvent event) {
-  if (mode.equals("Edit Map") && inEdit != null) {
-    if (pmouseX < mouseX) {
-      inEdit.setWidth(inEdit.getWidth()+event.getCount());
-    }
-    if (pmouseX > mouseX) {
-      inEdit.setWidth(inEdit.getWidth()-event.getCount());
-    }
-    if (pmouseY < mouseY) {
-      inEdit.setHeight(inEdit.getHeight()-event.getCount());
-    }
-    if (pmouseY > mouseY) {
-      inEdit.setHeight(inEdit.getHeight()+event.getCount());
-    }
-  }
-}
-void mouseClicked(MouseEvent event) {
+void mouseClicked() {
   if (menu.get(0).isTouching(mouseX, mouseY)) {
     String temp=mode;
     mode=menu.get(0).getLabel();
@@ -292,45 +222,39 @@ void mouseClicked(MouseEvent event) {
     for (Button i : menu) {
       if (i.isTouching(mouseX, mouseY)) {
         editBlock=i.getLabel();
-        if (inEdit != null && !inEdit.getClass().getSimpleName().equals(editBlock)) {
-          inEdit = new Block(20, 20);
-          inEdit = null;
-        }
         return;
       }
     }
     boolean found=false;
-    //boolean delete=false;
-    //Obstacle rem = new Block(20, 20);
+    Obstacle rem = new Block(20, 20);
     int x=((int)((mouseX+shift)/20))*20, y=((int)(mouseY/20)+1)*20;
     for (Obstacle i : obs) {
       if (i.getClass().getSimpleName().equals(editBlock) && (i.isTouchingMouse(mouseX+shift, mouseY))) {
-        inEdit = i;
-        found = true;
+        rem=i;
+        found=true;
+        break;
       }
     }
-    //if (found) {
-    //  obs.remove(rem);
-    //}
-    if (!found) {
+    if (found) {
+      obs.remove(rem);
+    }
+    else {
       if (editBlock.equals("Block")) {
         inEdit = new Block(x, y);
       }
-      else if (editBlock.equals("JumpPad")) {
-        inEdit = new JumpPad(x, y, 20, 5, "yellow");
+      else if (editBlock.equals("JumpBlock")) {
+        inEdit = new JumpBlock(x, y);
       }
       else if (editBlock.equals("Spike")) {
         inEdit = new Spike(x, y);
       }
-      else if (editBlock.equals("YellowOrb")) {
-        inEdit = new YellowOrb(x, y);
+      else if (editBlock.equals("Orb")) {
+        inEdit = new yellowOrb(x, y);
       }
       else if (editBlock.equals("Portal")) {
-        inEdit = new Portal(x, y, 30, 100, "wave");
+        inEdit = new Portal(x, y, "wave");
       }
-      if (inEdit != null) {
-        obs.add(inEdit);
-      }
+      obs.add(inEdit);
     }
   }
 }

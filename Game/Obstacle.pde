@@ -36,6 +36,12 @@ abstract class Obstacle implements Comparable<Obstacle>{
   public float getWidth() {
     return w;
   }
+  public void setHeight(float h) {
+    this.h = h;
+  }
+  public void setWidth(float w) {
+    this.w = w;
+  }
   abstract float isTouching(Sprite s);
   abstract void display(float shift, PImage img);
   abstract boolean isTouchingMouse(float x, float y);
@@ -177,7 +183,7 @@ class Spike extends Obstacle {
     image(img, getX()-shift, getY()-getHeight(), getWidth(), getHeight());
   }
   public boolean isTouchingMouse(float x, float y) {
-    return (y <= getY() && (getY()-y) <= 2 * getHeight()/getWidth() * (x-getX()) && (getY()-y) <= -2 * getHeight()/getWidth() * (getX() + getWidth() - x));
+    return (y <= getY() && (getY()-y) <= 2 * getHeight()/getWidth() * (x-getX()) && (getY()-y) <= -2 * getHeight()/getWidth() * (x - getX() - getWidth()));
   }
 }
 abstract class Orb extends Obstacle {
@@ -204,7 +210,7 @@ abstract class Orb extends Obstacle {
     clicked = x;
   }
   public float isTouching(Sprite s) {
-    if ((s.getX() - this.getX() - getWidth()/2) * (s.getX() - this.getX() + getWidth()/2) + (s.getY() - this.getY()+getWidth()/2) * (s.getY() - this.getY()-getWidth()/2) > (this.getWidth()/2) * (this.getWidth()/2)) {
+    if (s.getX() > getX() + getWidth() || s.getX()+s.getWidth()<getX() || s.getY()<getY()-getHeight() || s.getY()-s.getHeight()>getY()) {
       return 0;
     }
     return 2;
@@ -219,15 +225,15 @@ abstract class Orb extends Obstacle {
   }
   abstract void display(float shift, PImage img);
   public boolean isTouchingMouse(float x, float y) {
-    return (x - getX() - getWidth()/2) * (x - getX() - getWidth()/2) + (y - getY() + getWidth()/2) * (y - getY() + getWidth()/2) <= (this.getWidth()/2) * (this.getWidth()/2);
+    return (x - getX() - getWidth()/2) * (x - getX()-getWidth()/2) + (y - getY()+getWidth()/2) * (y - getY()+getWidth()/2) <= (this.getWidth()/2) * (this.getWidth()/2) ;
   }
 }
-class yellowOrb extends Orb{
-  public yellowOrb(float x, float y) {
+class YellowOrb extends Orb{
+  public YellowOrb(float x, float y) {
     super(x, y);
     setType("yellow");
   }
-  public yellowOrb(float x, float y, float r) {
+  public YellowOrb(float x, float y, float r) {
     super(x, y, r);
     setType("yellow");
   }
@@ -266,6 +272,6 @@ class Portal extends Obstacle {
     return 1;
   }
   public boolean isTouchingMouse(float x, float y) {
-    return ((x-getX()) * (x-getX()) / (getWidth()/2 * getWidth()/2)) + ((y-getY()) * (y-getY()) / (getHeight()/2 * getHeight()/2)) <= 1;
+    return ((x-getX()) * (x-getX()) / (getWidth()/2 * getWidth()/2)) + ((y-getY()+getHeight()/2) * (y-getY()+getHeight()/2) / (getHeight()/2 * getHeight()/2)) <= 1;
   }
 }
