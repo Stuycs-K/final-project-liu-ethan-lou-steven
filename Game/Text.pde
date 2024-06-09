@@ -139,8 +139,8 @@ class Text {
     else if (o instanceof Spike) {
       check = "spike " + o.getX()+" "+o.getY() + " " + o.getWidth() + " " + o.getHeight();
     }
-    else if (o instanceof JumpBlock) {
-      check = "jumpblock " + o.getX()+" "+o.getY() + " " + o.getWidth() + " " + o.getHeight() + " true";
+    else if (o instanceof JumpPad) {
+      check = "jumppad " + o.getX()+" "+o.getY() + " " + o.getWidth() + " " + o.getHeight() + " true";
     }
     else if (o instanceof Orb) {
       Orb temp = (Orb) o;
@@ -160,8 +160,8 @@ class Text {
     else if (o instanceof Spike) {
       obstacles.println("spike " + o.getX() +" "+ o.getY() + " " + o.getWidth() + " " + o.getHeight());
     }
-    else if (o instanceof JumpBlock) {
-      obstacles.println("jumpblock " + o.getX() +" "+ o.getY() + " " + o.getWidth() + " " + o.getHeight() +" true");
+    else if (o instanceof JumpPad) {
+      obstacles.println("jumppad " + o.getX() +" "+ o.getY() + " " + o.getWidth() + " " + o.getHeight() +" true");
     }
     else if (o instanceof Orb) {
       Orb temp = (Orb) o;
@@ -222,8 +222,8 @@ class Text {
         if (arr[0].equals("block")) {
           obs.add(new Block(Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3]), Float.parseFloat(arr[4])));
         }
-        else if (arr[0].equals("jumpblock")) {
-          obs.add(new JumpBlock(Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3]), Float.parseFloat(arr[4])));
+        else if (arr[0].equals("jumppad")) {
+          obs.add(new JumpPad(Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3]), Float.parseFloat(arr[4]), arr[5]));
         }
         else if (arr[0].equals("spike")) {
           obs.add(new Spike(Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3]), Float.parseFloat(arr[4])));
