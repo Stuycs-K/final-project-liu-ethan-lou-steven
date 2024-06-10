@@ -66,6 +66,14 @@
 * Updated graphics by adding images for everything (blocks, spikes, portals, sprites, orbs, etc)
 * Fixed loading images being slow
 
+### 6/9/24
+* Added fonts for the text
+* Added wave mode trail
+* Added home button and level select screen
+* Fix sprite jumping into a block from the bottom
+* Fixed portal saves
+* Updated the prototype to include all the changes
+
 ## Steven Lou
 ### 5/22/24
 * Wrote the Spike class methods and constructors.

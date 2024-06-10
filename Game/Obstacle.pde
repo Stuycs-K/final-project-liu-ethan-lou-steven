@@ -307,6 +307,6 @@ class Portal extends Obstacle {
     return 1;
   }
   public boolean isTouchingMouse(float x, float y) {
-    return ((x-getX()) * (x-getX()) / (getWidth()/2 * getWidth()/2)) + ((y-getY()+getHeight()/2) * (y-getY()+getHeight()/2) / (getHeight()/2 * getHeight()/2)) <= 1;
+    return (x - getX() - getWidth()/2) * (x - getX()-getWidth()/2) + (y - getY()+getWidth()/2) * (y - getY()+getWidth()/2) <= (this.getWidth()/2) * (this.getWidth()/2) ;
   }
 }
