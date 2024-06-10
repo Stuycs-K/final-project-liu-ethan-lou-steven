@@ -112,7 +112,8 @@ class Text {
       check = "spike " + o.getX()+" "+o.getY() + " " + o.getWidth() + " " + o.getHeight() + " " + temp.getDisplay();
     }
     else if (o instanceof JumpPad) {
-      check = "jumppad " + o.getX()+" "+o.getY() + " " + o.getWidth() + " " + o.getHeight();
+      JumpPad temp = (JumpPad) o;
+      check = "jumppad " + temp.getX()+" "+temp.getY() + " " + temp.getWidth() + " " + temp.getHeight() + " " + temp.getType();
     }
     else if (o instanceof Orb) {
       Orb temp = (Orb) o;
@@ -168,8 +169,8 @@ class Text {
           temp.setDisplay((int) Float.parseFloat(arr[5]));
           obs.add(temp);
         }
-        else if (arr[0].equals("yelloworb")) {
-          obs.add(new YellowOrb(Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3])));
+        else if (arr[1].equals("orb") && arr[0].equals("yellow")) {
+          obs.add(new YellowOrb(Float.parseFloat(arr[2]), Float.parseFloat(arr[3]), Float.parseFloat(arr[4])));
         }
         else if (arr[1].equals("portal")) {
           obs.add(new Portal(Float.parseFloat(arr[2]), Float.parseFloat(arr[3]), Float.parseFloat(arr[4]), Float.parseFloat(arr[5]), arr[0]));
