@@ -70,6 +70,7 @@ class Text {
       while(readObstacles.ready()) {
         String s = readObstacles.readLine();
         obstacles.println(s);
+        obstacles.flush();
       }
       printType(o);
       obstacles.flush();
@@ -91,8 +92,8 @@ class Text {
           continue;
         }
         obstacles.println(s);
+        obstacles.flush();
       }
-      obstacles.flush();
       obstacles.close();
       readObstacles.close();
     } catch (IOException e) {
