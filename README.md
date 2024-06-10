@@ -28,6 +28,7 @@ Click the button on the top left to toggle between play mode and edit mode.
 * Press the three bars at the bottom left to go into the home screen where you can select which level you want to play
 
 ## Presentation
+https://drive.google.com/file/d/1lW6o90ncJPXD_zSxgMARVqluDw8eC3uk/view?usp=sharing
 
 ## Updated Prototype
 https://docs.google.com/document/d/1j_-BwRy0CpeCh20EvbkXJRyj_qqJ-jBo64XUUDQEPzA/edit?usp=sharing
@@ -35,3 +36,4 @@ https://docs.google.com/document/d/1j_-BwRy0CpeCh20EvbkXJRyj_qqJ-jBo64XUUDQEPzA/
 ## Major Bugs
 * If you are selecting a different type of obstacle than the one you are trying to delete, it won't delete it in the file. For example, if you have selected Block in edit mode and you click on a spike and press 'D', the spike will disappear but when you die and respawn, it will reappear.
 * Due to file issues, you can not have more than ~250 obstacles in one map or else the program will crash.
+* Shrink/enlarge doesn't work on some computers.

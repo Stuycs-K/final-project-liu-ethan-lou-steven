@@ -73,6 +73,7 @@
 * Fix sprite jumping into a block from the bottom
 * Fixed portal saves
 * Updated the prototype to include all the changes
+* Made the Bloodbath map
 
 ## Steven Lou
 ### 5/22/24
