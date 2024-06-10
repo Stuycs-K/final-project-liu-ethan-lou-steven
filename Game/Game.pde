@@ -46,7 +46,7 @@ void setup() {
   for (int i=0; i<names.length; i++) {
     menu.add(new Button(105+i*85, 20, 25, 80, names[i]));
   }
-  String[] levelNames = new String[]{"StereoMadness", "Bloodbath"};
+  String[] levelNames = new String[]{"Polargeist", "FunMap", "Empty Level"};
   for (int i=0; i<levelNames.length; i++) {
     float padding = 100;
     levels.add(new Button(padding, (i+1)*(10*(i+1))+150*(i+1), 150, width-2*padding, levelNames[i]));
@@ -383,7 +383,7 @@ void mouseClicked(MouseEvent event) {
   if (level.equals("Home")) {
     for (Button i : levels) {
       if (i.isTouching(mouseX, mouseY)) {
-        edit = new Text("obstacles.txt", "obstacles.txt");
+        edit = new Text(i.getLabel()+".txt", i.getLabel()+".txt");
         level = i.getLabel();
         break;
       }
