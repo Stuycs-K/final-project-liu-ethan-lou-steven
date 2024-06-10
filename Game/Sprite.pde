@@ -4,6 +4,7 @@ class Sprite {
   private boolean isAlive, isJumping, waveUp;
   private float G = 60;
   private String mode = "cube";
+  private ArrayList<Block> waveTrail;
   public Sprite(float x, float y) {
     xcor = x;
     ycor = y;
@@ -14,6 +15,7 @@ class Sprite {
     jumpTime=0;
     v_initial=0;
     y_initial=y;
+    waveTrail = new ArrayList<Block>();
   }
   public float getAngle() {
     return angle;
@@ -107,11 +109,24 @@ class Sprite {
     }
   }
   public void display(float shift, PImage img) {
+    if (mode.equals("wave")) {
+      for (Block i : waveTrail) {
+        fill(255);
+        stroke(255);
+        translate(i.getX()-shift-i.getWidth()/2+3.5, i.getY()-getHeight()/2);
+        rotate(PI/4);
+        rect(-i.getWidth()/2, -i.getHeight()/2, i.getWidth(), i.getHeight());
+        rotate(-PI/4);
+        translate(-(i.getX()-shift-i.getWidth()/2+3.5), -(i.getY()-getHeight()/2));
+      }
+    }
     translate(xcor-shift+getWidth()/2+3.5, ycor-getHeight()/2);
     rotate(angle);
     image(img, -getWidth()/2, -getHeight()/2, getWidth(), getHeight());
-    
     //rect(s.getX()-shift, s.getY()-20, 20, 20);
     s.setX(s.getX() + speed);
+    if (mode.equals("wave")) {
+      waveTrail.add(new Block(getX(), getY(), 10, 10));
+    }
   } 
 }

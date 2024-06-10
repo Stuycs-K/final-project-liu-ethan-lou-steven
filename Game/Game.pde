@@ -9,7 +9,10 @@ float speed = 3.5, shift=speed, editShift=0;
 boolean invincible = false, buffer = false;
 Obstacle inEdit;
 Text edit = new Text("obstacles.txt", "obstacles.txt");
-PImage BlockImg, BlockImg2, SpikeImg2, SpriteImg, SpikeImg, WavePortalImg, YellowOrbImg, YellowPadImg, Background, WaveImg, ButtonImg;  
+String level = "Home";
+ArrayList<Button> levels = new ArrayList<Button>();
+PFont font;
+PImage BlockImg, BlockImg2, SpikeImg2, SpriteImg, SpikeImg, WavePortalImg, YellowOrbImg, YellowPadImg, Background, WaveImg, ButtonImg, HomeImg;  
 PImage[] blocks;
 PImage[] spikes;
 public void restart() {
@@ -19,8 +22,8 @@ public void restart() {
   setup();
 }
 void setup() {
-  size(500, 500);
-  edit.deleteAll();
+  size(600, 600);
+  //edit.deleteAll();
   //lastIndexWall = 0;
   //Text.readBlockString(wall);
   //Text.readSpikeString(spike);
@@ -38,9 +41,15 @@ void setup() {
   }
   s = new Sprite(100, 430);
   menu.add(new Button(0, 30, 30, 100, "Edit Map"));
+  menu.add(new Button(0, height, 30, 30, "Home"));
   String[] names = new String[]{"Block", "JumpPad", "Spike", "YellowOrb", "Portal"};
   for (int i=0; i<names.length; i++) {
-    menu.add(new Button(105+i*65, 20, 20, 60, names[i]));
+    menu.add(new Button(105+i*85, 20, 25, 80, names[i]));
+  }
+  String[] levelNames = new String[]{"StereoMadness", "Bloodbath"};
+  for (int i=0; i<levelNames.length; i++) {
+    float padding = 100;
+    levels.add(new Button(padding, (i+1)*(10*(i+1))+150*(i+1), 150, width-2*padding, levelNames[i]));
   }
   BlockImg=loadImage("RegularBlock01.png"); 
   BlockImg2=loadImage("RegularBlock02.jpg");
@@ -53,18 +62,30 @@ void setup() {
   Background = loadImage("Background-GeometricBlue.png");
   WaveImg = loadImage("Wave001.png");
   ButtonImg = loadImage("Button.png");
+  HomeImg = loadImage("Home.png");
+  font = createFont("PUSAB___.otf", 13);
   blocks = new PImage[]{BlockImg, BlockImg2};
   spikes = new PImage[]{SpikeImg, SpikeImg2};
 }
 
 void draw() {
   image(Background, 0, 0, width, height);
+  menu.get(1).display(false, HomeImg, font, 10);
+  if (level.equals("Home")) {
+     for (Button i : levels) {
+       i.display(false, ButtonImg, font, 40);
+     }
+     return;
+  }
   if (mode.equals("Play")) {
-    menu.get(0).display(false, ButtonImg);
+    menu.get(0).display(false, ButtonImg, font, 13);
   }
   else {
     for (Button i : menu) {
-      i.display(i.getLabel().equals(editBlock), ButtonImg);
+      if (i.getLabel().equals("Home")) {
+        continue;
+      }
+      i.display(i.getLabel().equals(editBlock), ButtonImg, font, 13);
     }
     int x=((int)((mouseX+shift)/20))*20, y=((int)(mouseY/20)+1)*20;
     tint(255, 128);
@@ -144,6 +165,12 @@ void draw() {
         isTouchingBlock=true;
       }
       else if (curr.isTouching(s)==1 && !invincible) {
+        println("died");
+        s.setAlive(false);
+        restart();
+        break;
+      }
+      else if (curr.isTouching(s)==3 && !invincible && s.isJumping()) {
         println("died");
         s.setAlive(false);
         restart();
@@ -313,15 +340,15 @@ void keyPressed() {
       edit.add(inEdit);
     }
   }
-  //else if (key=='s') {
-  //  if (s.getMode().equals("cube")) {
-  //    s.setMode("wave");
-  //    s.setJump(false);
-  //  }
-  //  else {
-  //    s.setMode("cube");
-  //  }
-  //}
+  else if (key=='s') {
+    if (s.getMode().equals("cube")) {
+      s.setMode("wave");
+      s.setJump(false);
+    }
+    else {
+      s.setMode("cube");
+    }
+  }
 }
 void keyReleased() {
   if (key == ' ' && s.isJumping()) {
@@ -330,7 +357,9 @@ void keyReleased() {
 }
 void mouseDragged(MouseEvent event) {
   if (mode.equals("Edit Map") && inEdit != null) {
+    //println("here");
     edit.remove(inEdit);
+    obs.remove(inEdit);
     if (pmouseX < mouseX) {
       inEdit.setWidth(inEdit.getWidth()+event.getCount());
     }
@@ -344,13 +373,28 @@ void mouseDragged(MouseEvent event) {
       inEdit.setHeight(inEdit.getHeight()+event.getCount());
     }
     edit.add(inEdit);
+    obs.add(inEdit);
   }
 }
 void mouseClicked(MouseEvent event) {
-  if (menu.get(0).isTouching(mouseX, mouseY)) {
+  if (menu.get(1).isTouching(mouseX, mouseY)) {
+    level = "Home";
+  }
+  if (level.equals("Home")) {
+    for (Button i : levels) {
+      if (i.isTouching(mouseX, mouseY)) {
+        edit = new Text("obstacles.txt", "obstacles.txt");
+        level = i.getLabel();
+        break;
+      }
+    }
+  }
+  else if (menu.get(0).isTouching(mouseX, mouseY)) {
     String temp=mode;
     mode=menu.get(0).getLabel();
-    menu.get(0).setLabel(temp);
+    Button b = menu.get(0);
+    b.setLabel(temp);
+    menu.set(0, b);
     shift-=editShift;
     editShift=0;
   }
