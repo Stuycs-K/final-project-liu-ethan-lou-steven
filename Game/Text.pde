@@ -157,7 +157,7 @@ class Text {
         String[] arr = s.split(" ", 0);
         if (arr[0].equals("block")) {
           Block temp = new Block(Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3]), Float.parseFloat(arr[4]));
-          temp.setDisplay((int) Float.parseFloat(arr[1]));
+          temp.setDisplay((int) Float.parseFloat(arr[5]));
           obs.add(temp);
         }
         else if (arr[0].equals("jumppad")) {
@@ -165,7 +165,7 @@ class Text {
         }
         else if (arr[0].equals("spike")) {
           Spike temp = new Spike(Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3]), Float.parseFloat(arr[4]));
-          temp.setDisplay((int) Float.parseFloat(arr[1]));
+          temp.setDisplay((int) Float.parseFloat(arr[5]));
           obs.add(temp);
         }
         else if (arr[0].equals("yelloworb")) {
