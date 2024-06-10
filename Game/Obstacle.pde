@@ -48,6 +48,7 @@ abstract class Obstacle implements Comparable<Obstacle>{
 }
 
 class Block extends Obstacle {
+  int display = 0;
   public Block(float xcor, float ycor) {
     super(xcor, ycor);
   }
@@ -58,6 +59,13 @@ class Block extends Obstacle {
     super(xcor, ycor, w, h);
   }
   //Takes in a Sprite and determines if it lies on or within the block. 0 - not touching. 1 - touching the left or right side. 2 - touching the top. 3- touching the bottom.
+  public int getDisplay() {
+    return display;
+  }
+  public void setDisplay(int x) {
+    display = x;
+  }
+  //Takes in a Sprite and determines if it lies on or within the block. 0 - not touching. 1 - touching the left or right side. 2 - touching the top or bottom.
   public float isTouching(Sprite s) {
     float x=this.getX(), y=this.getY();
     float minX = min(x + getWidth(), x), maxX = max(x+getWidth(), x), minY = min(y-getHeight(), y), maxY = max(y-getHeight(), y);
@@ -155,7 +163,18 @@ class JumpPad extends Obstacle {
     }
   }
   public void display(float shift, PImage img) {
+    image(img, getX()-shift, getY()-getHeight(), 0, 0);
+    pushMatrix();
+    float x = 1, y = 1;
+    if (getHeight() < 0) {
+      y = -1;
+    }
+    if (getWidth() < 0) {
+      x = -1;
+    }
+    scale(x, y);
     image(img, getX()-shift, getY()-getHeight(), getWidth(), getHeight());
+    popMatrix();
   }
   public boolean isTouchingMouse(float x, float y) {
     float minX = min(getX() + getWidth(), getX()), maxX = max(getX()+getWidth(), getX()), minY = min(getY()-getHeight(), getY()), maxY = max(getY()-getHeight(), getY());
@@ -163,6 +182,7 @@ class JumpPad extends Obstacle {
   }
 }
 class Spike extends Obstacle {
+  int display = 0;
   public Spike(float x, float y){
     super(x, y, 20, (float) (10 * Math.sqrt(3)));
   }
@@ -171,6 +191,12 @@ class Spike extends Obstacle {
   }
   public Spike(float x, float y, float w, float h){
     super(x, y, w, h);
+  }
+  public int getDisplay() {
+    return display;
+  }
+  public void setDisplay(int x) {
+    display = x;
   }
   public float isTouching(Sprite s) {
     float x=this.getX() + getWidth()/4 , y=this.getY();
