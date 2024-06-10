@@ -10,7 +10,7 @@ boolean invincible = false, buffer = false;
 Obstacle inEdit;
 Text edit = new Text("obstacles.txt", "obstacles.txt");
 String level = "1";
-ArrayList<String> levels = new ArrayList<String>();
+ArrayList<Button> levels = new ArrayList<Button>();
 PImage BlockImg, SpriteImg, SpikeImg, WavePortalImg, YellowOrbImg, YellowPadImg, Background, WaveImg, ButtonImg, HomeImg;  
 PFont font;
 
@@ -45,9 +45,10 @@ void setup() {
   for (int i=0; i<names.length; i++) {
     menu.add(new Button(105+i*85, 20, 25, 80, names[i]));
   }
-  String[] levelNames = new String[]{"Stereo Madness"};
-  for (String s : levelNames) {
-    levels.add(s);
+  String[] levelNames = new String[]{"StereoMadness", "Bloodbath"};
+  for (int i=0; i<levelNames.length; i++) {
+    float padding = 100;
+    levels.add(new Button(padding, (i+1)*(10*(i+1))+150*(i+1), 150, width-2*padding, levelNames[i]));
   }
   BlockImg=loadImage("RegularBlock01.png"); 
   SpriteImg=loadImage("Cube002.png");
@@ -64,28 +65,22 @@ void setup() {
 
 void draw() {
   image(Background, 0, 0, width, height);
-  menu.get(1).display(false, HomeImg, font);
+  menu.get(1).display(false, HomeImg, font, 10);
   if (level.equals("Home")) {
-     for (int i=0; i<levels.size(); i++) {
-       fill(123);
-       float padding = 100;
-       image(ButtonImg, padding, (i+1)*(10*(i+1)), width-2*padding, 75);
-       fill(#3450F7);
-       int size=30;
-       textSize(size);
-       text(levels.get(i), width/2-size/2*levels.get(i).length()/2, (i+1)*(10*(i+1)+25+size/2));
+     for (Button i : levels) {
+       i.display(false, ButtonImg, font, 40);
      }
      return;
   }
   if (mode.equals("Play")) {
-    menu.get(0).display(false, ButtonImg, font);
+    menu.get(0).display(false, ButtonImg, font, 13);
   }
   else {
     for (Button i : menu) {
       if (i.getLabel().equals("Home")) {
         continue;
       }
-      i.display(i.getLabel().equals(editBlock), ButtonImg, font);
+      i.display(i.getLabel().equals(editBlock), ButtonImg, font, 13);
     }
     int x=((int)((mouseX+shift)/20))*20, y=((int)(mouseY/20)+1)*20;
     tint(255, 128);
@@ -345,6 +340,15 @@ void mouseDragged(MouseEvent event) {
 void mouseClicked(MouseEvent event) {
   if (menu.get(1).isTouching(mouseX, mouseY)) {
     level = "Home";
+  }
+  if (level.equals("Home")) {
+    for (Button i : levels) {
+      if (i.isTouching(mouseX, mouseY)) {
+        edit = new Text("obstacles.txt", "obstacles.txt");
+        level = i.getLabel();
+        break;
+      }
+    }
   }
   else if (menu.get(0).isTouching(mouseX, mouseY)) {
     String temp=mode;
