@@ -8,11 +8,11 @@ String mode = "Play", editBlock = "Block";
 float speed = 3.5, shift=speed, editShift=0;
 boolean invincible = false, buffer = false;
 Obstacle inEdit;
-Text edit = new Text("obstacles.txt", "obstacles.txt");
+Text edit = new Text("Polargeist.txt", "Polargeist.txt");
 String level = "Home";
 ArrayList<Button> levels = new ArrayList<Button>();
 PFont font;
-PImage BlockImg, BlockImg2, SpikeImg2, SpriteImg, SpikeImg, WavePortalImg, YellowOrbImg, YellowPadImg, Background, WaveImg, ButtonImg, HomeImg;  
+PImage BlockImg, BlockImg2, SpikeImg2, SpriteImg, SpikeImg, WavePortalImg, YellowOrbImg, YellowPadImg, Background, WaveImg, ButtonImg, HomeImg, CubePortalImg;  
 PImage[] blocks;
 PImage[] spikes;
 public void restart() {
@@ -42,11 +42,16 @@ void setup() {
   s = new Sprite(100, 430);
   menu.add(new Button(0, 30, 30, 100, "Edit Map"));
   menu.add(new Button(0, height, 30, 30, "Home"));
-  String[] names = new String[]{"Block", "JumpPad", "Spike", "YellowOrb", "Portal"};
+  String[] names = new String[]{"Block", "JumpPad", "Spike", "YellowOrb", "WavePortal", "CubePortal"};
   for (int i=0; i<names.length; i++) {
-    menu.add(new Button(105+i*85, 20, 25, 80, names[i]));
+    if (105+i*85+80>width) {
+      menu.add(new Button(105+(i-5)*95, 55, 25, 90, names[i]));
+    }
+    else {
+      menu.add(new Button(105+i*95, 25, 25, 90, names[i]));
+    }
   }
-  String[] levelNames = new String[]{"Polargeist", "FunMap", "Empty Level"};
+  String[] levelNames = new String[]{"Polargeist", "Bloodbath", "EmptyLevel"};
   for (int i=0; i<levelNames.length; i++) {
     float padding = 100;
     levels.add(new Button(padding, (i+1)*(10*(i+1))+150*(i+1), 150, width-2*padding, levelNames[i]));
@@ -63,6 +68,7 @@ void setup() {
   WaveImg = loadImage("Wave001.png");
   ButtonImg = loadImage("Button.png");
   HomeImg = loadImage("Home.png");
+  CubePortalImg = loadImage("CubePortalLabelled.png");
   font = createFont("PUSAB___.otf", 13);
   blocks = new PImage[]{BlockImg, BlockImg2};
   spikes = new PImage[]{SpikeImg, SpikeImg2};
@@ -115,9 +121,13 @@ void draw() {
       YellowOrb temp = new YellowOrb(x,y);
       temp.display(shift, YellowOrbImg);
     }
-    else if (editBlock.equals("Portal")) {
+    else if (editBlock.equals("WavePortal")) {
       Portal temp = new Portal(x,y, 30, 100, "wave");
       temp.display(shift, WavePortalImg);
+    }
+    else if (editBlock.equals("CubePortal")) {
+      Portal temp = new Portal(x,y, 30, 100, "cube");
+      temp.display(shift, CubePortalImg);
     }
     tint(255, 255);
   }
@@ -134,7 +144,13 @@ void draw() {
       i.display(shift, spikes[temp.getDisplay()]);
     }
     else if (i instanceof Portal) {
-      i.display(shift, WavePortalImg);
+      Portal temp = (Portal) i;
+      if (temp.getMode().equals("wave")) {
+        i.display(shift, WavePortalImg);
+      }
+      else if (temp.getMode().equals("cube")) {
+        i.display(shift, CubePortalImg);
+      }
     }
     else if (i instanceof YellowOrb) {
       i.display(shift, YellowOrbImg);
@@ -220,7 +236,9 @@ void draw() {
       Portal p = (Portal)curr;
       if (curr.isTouching(s)==1) {
         s.setMode(p.getMode());
-        s.setJump(false);
+        if (p.getMode().equals("wave")) {
+          s.setJump(false);
+        }
       }
     }
   }
@@ -385,7 +403,8 @@ void mouseClicked(MouseEvent event) {
       if (i.isTouching(mouseX, mouseY)) {
         edit = new Text(i.getLabel()+".txt", i.getLabel()+".txt");
         level = i.getLabel();
-        break;
+        setup();
+        return;
       }
     }
   }
@@ -449,8 +468,11 @@ void mouseClicked(MouseEvent event) {
       else if (editBlock.equals("YellowOrb")) {
         inEdit = new YellowOrb(x, y);
       }
-      else if (editBlock.equals("Portal")) {
+      else if (editBlock.equals("WavePortal")) {
         inEdit = new Portal(x, y, 30, 100, "wave");
+      }
+      else if (editBlock.equals("CubePortal")) {
+        inEdit = new Portal(x, y, 30, 100, "cube");
       }
       if (inEdit != null) {
         obs.add(inEdit);
