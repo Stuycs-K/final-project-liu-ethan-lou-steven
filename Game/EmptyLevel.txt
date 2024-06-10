@@ -1,0 +1,7 @@
+wave portal 400.0 320.0 30.0 100.0
+wave portal 340.0 320.0 30.0 100.0
+wave portal 280.0 320.0 30.0 100.0
+yellow orb 300.0 360.0 20.0
+yellow orb 360.0 360.0 20.0
+jumppad 220.0 420.0 20.0 5.0 yellow
+jumppad 240.0 420.0 20.0 5.0 yellow
