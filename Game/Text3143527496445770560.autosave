@@ -69,11 +69,7 @@ class Text {
       obstacles = createWriter(output);
       while(readObstacles.ready()) {
         String s = readObstacles.readLine();
-        if (s.equals("")) {
-          break;
-        }
         obstacles.println(s);
-        obstacles.flush();
       }
       printType(o);
       obstacles.flush();
@@ -95,8 +91,8 @@ class Text {
           continue;
         }
         obstacles.println(s);
-        obstacles.flush();
       }
+      obstacles.flush();
       obstacles.close();
       readObstacles.close();
     } catch (IOException e) {
@@ -115,16 +111,15 @@ class Text {
       check = "spike " + o.getX()+" "+o.getY() + " " + o.getWidth() + " " + o.getHeight() + " " + temp.getDisplay();
     }
     else if (o instanceof JumpPad) {
-      JumpPad temp = (JumpPad) o;
-      check = "jumppad " + temp.getX()+" "+temp.getY() + " " + temp.getWidth() + " " + temp.getHeight() + " " + temp.getType();
+      check = "jumppad " + o.getX()+" "+o.getY() + " " + o.getWidth() + " " + o.getHeight();
     }
     else if (o instanceof Orb) {
       Orb temp = (Orb) o;
-      check = temp.getType() + " orb " + o.getX()+" "+o.getY() + " " + o.getWidth();
+      check = temp.getType() + "orb " + o.getX()+" "+o.getY() + " " + o.getWidth();
     }
     else if (o instanceof Portal) {
       Portal temp = (Portal) o;
-      check = temp.getMode() + " portal " + o.getX()+" "+ o.getY() + " " + o.getWidth() + " " + o.getHeight();
+      check = temp.getMode() + "portal " + o.getX()+" "+ o.getY() + " " + o.getWidth() + " " + o.getHeight();
     }
     return check;
   }
@@ -144,7 +139,7 @@ class Text {
     }
     else if (o instanceof Orb) {
       Orb temp = (Orb) o;
-      obstacles.println(temp.getType() + " orb " + o.getX()+" "+ o.getY() + " " + o.getWidth());
+      obstacles.println(temp.getType() + "orb " + o.getX()+" "+ o.getY() + " " + o.getWidth());
     }
     else if (o instanceof Portal) {
       Portal temp = (Portal) o;
@@ -161,7 +156,7 @@ class Text {
         String[] arr = s.split(" ", 0);
         if (arr[0].equals("block")) {
           Block temp = new Block(Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3]), Float.parseFloat(arr[4]));
-          temp.setDisplay((int) Float.parseFloat(arr[5]));
+          temp.setDisplay((int) Float.parseFloat(arr[1]));
           obs.add(temp);
         }
         else if (arr[0].equals("jumppad")) {
@@ -169,11 +164,11 @@ class Text {
         }
         else if (arr[0].equals("spike")) {
           Spike temp = new Spike(Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3]), Float.parseFloat(arr[4]));
-          temp.setDisplay((int) Float.parseFloat(arr[5]));
+          temp.setDisplay((int) Float.parseFloat(arr[1]));
           obs.add(temp);
         }
-        else if (arr[1].equals("orb") && arr[0].equals("yellow")) {
-          obs.add(new YellowOrb(Float.parseFloat(arr[2]), Float.parseFloat(arr[3]), Float.parseFloat(arr[4])));
+        else if (arr[0].equals("yelloworb")) {
+          obs.add(new YellowOrb(Float.parseFloat(arr[1]), Float.parseFloat(arr[2]), Float.parseFloat(arr[3])));
         }
         else if (arr[1].equals("portal")) {
           obs.add(new Portal(Float.parseFloat(arr[2]), Float.parseFloat(arr[3]), Float.parseFloat(arr[4]), Float.parseFloat(arr[5]), arr[0]));

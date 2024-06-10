@@ -28,6 +28,7 @@ void setup() {
   //Text.readBlockString(wall);
   //Text.readSpikeString(spike);
   //Text.printFile("StereoMadnessWalls.txt");
+  
   edit.readObstacles(obs);
   //for (Block i : wall) {
   //  print(i.getX()+" "+i.getY()+" "+i.hasJumpPad()+"\\n");
