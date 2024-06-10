@@ -404,6 +404,7 @@ void mouseClicked(MouseEvent event) {
       if (i.isTouching(mouseX, mouseY)) {
         edit = new Text(i.getLabel()+".txt", i.getLabel()+".txt");
         level = i.getLabel();
+        obs.clear();
         setup();
         return;
       }
