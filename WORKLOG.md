@@ -117,3 +117,19 @@
 * Changed placement switching of obstacles
 * Implemented abstract Orb Class
 * Implemented yellowOrb and its physics and display
+
+### 6/7/24
+* Changed Text editing
+
+### 6/8/24
+* Shifting blocks using arrow keys implemented
+* Select and Highlight chosen block
+* MouseDrag to enlarge objects
+* Bug fixes in Game
+
+### 6/9/24
+* Portal and Orb fixed in text editor
+* Fixed save issues with Text
+* Implemented change display
+* Some parts of upside-down/flipped images implemented
+* Made Polargeist map

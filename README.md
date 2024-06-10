@@ -20,6 +20,7 @@ Click the button on the top left to toggle between play mode and edit mode.
 * If you click and drag on an existing obstacle, you can change it's size.
 * You can scroll with your mouse wheel to navigate the level in edit mode.
 * If you click on an existing block or spike and press 'C', you can change it's appearance.
+* Use arrow keys to shift the block up, down, left, and right.
 
 #### Play Mode:
 * Press 'W' to become invincible (for testing purposes)
