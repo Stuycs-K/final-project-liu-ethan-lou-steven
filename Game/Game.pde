@@ -8,7 +8,7 @@ String mode = "Play", editBlock = "Block";
 float speed = 3.5, shift=speed, editShift=0;
 boolean invincible = false, buffer = false;
 Obstacle inEdit;
-Text edit = new Text("obstacles.txt", "obstacles.txt");
+Text edit = new Text("Polargeist.txt", "Polargeist.txt");
 String level = "Home";
 ArrayList<Button> levels = new ArrayList<Button>();
 PFont font;
