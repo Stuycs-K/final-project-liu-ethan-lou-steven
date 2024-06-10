@@ -28,6 +28,7 @@ void setup() {
   //Text.readBlockString(wall);
   //Text.readSpikeString(spike);
   //Text.printFile("StereoMadnessWalls.txt");
+  
   edit.readObstacles(obs);
   //for (Block i : wall) {
   //  print(i.getX()+" "+i.getY()+" "+i.hasJumpPad()+"\\n");
@@ -46,7 +47,7 @@ void setup() {
   for (int i=0; i<names.length; i++) {
     menu.add(new Button(105+i*85, 20, 25, 80, names[i]));
   }
-  String[] levelNames = new String[]{"StereoMadness", "Bloodbath"};
+  String[] levelNames = new String[]{"Polargeist", "Bloodbath"};
   for (int i=0; i<levelNames.length; i++) {
     float padding = 100;
     levels.add(new Button(padding, (i+1)*(10*(i+1))+150*(i+1), 150, width-2*padding, levelNames[i]));
@@ -381,12 +382,10 @@ void mouseClicked(MouseEvent event) {
     level = "Home";
   }
   if (level.equals("Home")) {
-    for (Button i : levels) {
-      if (i.isTouching(mouseX, mouseY)) {
-        edit = new Text("obstacles.txt", "obstacles.txt");
-        level = i.getLabel();
-        break;
-      }
+    if (levels.get(0).isTouching(mouseX, mouseY)) {
+      edit = new Text("Polargeist.txt", "Polargeist.txt");
+      level = levels.get(0).getLabel();
+      setup();
     }
   }
   else if (menu.get(0).isTouching(mouseX, mouseY)) {
